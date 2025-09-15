@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Robot
 {
-    public class ChipsUIHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class ChipUIHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField] private ChipData _chipData;
 
@@ -37,17 +37,39 @@ namespace Robot
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (eventData.pointerEnter != null && eventData.pointerEnter.CompareTag("Slot"))
+            _chipCanvasGroup.blocksRaycasts = true;
+
+            var slotUI = eventData.pointerEnter?.GetComponent<GridSlotUI>();
+            if (slotUI != null)
             {
-                transform.SetParent(eventData.pointerEnter.transform);
-                _chipRectTransform.anchoredPosition = Vector2.zero;
+                TryPlaceItem(slotUI);
             }
             else
             {
-                transform.SetParent(_chipTransform);
-                _chipRectTransform.anchoredPosition = _initialChipPosition;
+                ResetItemPosition();
             }
-            _chipCanvasGroup.blocksRaycasts = true;
+        }
+
+        private void TryPlaceItem(GridSlotUI slotUI)
+        {
+            if (InventoryChips.Source.CanPlaceItem(slotUI.X, slotUI.Y, _chipData))
+            {
+                InventoryChips.Source.PlaceItem(slotUI.X, slotUI.Y, _chipData);
+                transform.SetParent(slotUI.transform);
+                _chipRectTransform.anchoredPosition = Vector2.zero;
+                Debug.Log("Item colocado");
+            }
+            else
+            {
+                ResetItemPosition();
+                Debug.Log("No se puede colocar aquí");
+            }
+        }
+
+        private void ResetItemPosition()
+        {
+            transform.SetParent(_chipTransform);
+            _chipRectTransform.anchoredPosition = _initialChipPosition;
         }
     }
 }
