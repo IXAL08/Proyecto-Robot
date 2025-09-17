@@ -29,7 +29,7 @@ namespace Robot
                 int x = i % InventoryChips.Source.InventoryColums;
                 int y = i / InventoryChips.Source.InventoryColums;
 
-                GridSlotUI slot = child.GetComponent<GridSlotUI>();
+                GridSlotUI slot = child.GetComponentInChildren<GridSlotUI>();
                 slot.AssignCoord(x, y);
 
                 _uiInventoryGridSlots[x,y] = slot;

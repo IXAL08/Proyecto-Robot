@@ -6,21 +6,21 @@ namespace Robot
     public class GridSlotUI : MonoBehaviour
     {
         [SerializeField] private int _x, _y;
-        [SerializeField] private Image _slotImage; //Temporal
+        [SerializeField] private Image _slotImage;
 
         public int X => _x;
         public int Y => _y;
 
         private void Start()
         {
-            InventoryChips.Source.OnItemPlaced += SlotOccupied;
-            InventoryChips.Source.OnItemRemoved += FreeSlot;
+            InventoryChips.Source.OnChipPlaced += SlotOccupied;
+            InventoryChips.Source.OnChipRemoved += FreeSlot;
         }
 
         private void OnDisable()
         {
-            InventoryChips.Source.OnItemPlaced -= SlotOccupied;
-            InventoryChips.Source.OnItemRemoved -= FreeSlot;
+            InventoryChips.Source.OnChipPlaced -= SlotOccupied;
+            InventoryChips.Source.OnChipRemoved -= FreeSlot;
         }
 
         public void AssignCoord(int x, int y)

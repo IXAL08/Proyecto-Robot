@@ -5,12 +5,12 @@ namespace Robot
 {
     public interface IChipsSource
     {
-        event Action<int, int> OnItemPlaced;
-        event Action<int, int> OnItemRemoved;
+        event Action<int, int> OnChipPlaced;
+        event Action<int, int> OnChipRemoved;
 
-        bool CanPlaceItem(int row, int column, ChipData chipData);
-        void PlaceItem(int row, int column, ChipData chipData);
-        void UnPlaceItem();
+        bool CanPlaceChip(int row, int column, ChipData chipData);
+        void PlaceChip(int row, int column, ChipData chipData);
+        void UnPlaceChip();
         int InventoryColums {get;}
         int InventoryRows {get;}
     }
