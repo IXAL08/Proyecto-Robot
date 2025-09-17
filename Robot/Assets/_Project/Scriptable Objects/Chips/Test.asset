@@ -15,5 +15,5 @@ MonoBehaviour:
   ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   ChipName: ChipTest
   ChipWidth: 1
-  ChipHeight: 1
-  IsRotable: 0
+  ChipHeight: 2
+  IsRotable: 1

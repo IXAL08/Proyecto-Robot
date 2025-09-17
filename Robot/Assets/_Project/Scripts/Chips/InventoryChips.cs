@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using static UnityEngine.Rendering.DebugUI.Table;
 using UnityEngine.UIElements;
+using System;
 
 namespace Robot
 {
@@ -9,6 +10,9 @@ namespace Robot
         [SerializeField] private int _inventoryColums, _inventoryRows;
         
         private bool[,] _inventoryGrid;
+
+        public event Action<int, int> OnItemPlaced;
+        public event Action<int, int> OnItemRemoved;
 
         public int InventoryColums => _inventoryColums;
         public int InventoryRows => _inventoryRows;
@@ -40,12 +44,26 @@ namespace Robot
 
         public void PlaceItem(int row, int column, ChipData chipData)
         {
+            var Coords = GetComponentInChildren<ChipPlacementData>();
             for (int x = 0; x < chipData.ChipWidth; x++)
             {
                 for (int y = 0; y < chipData.ChipHeight; y++)
                 {
                     _inventoryGrid[row + x, column + y] = true;
+                    Coords.SaveCoordinates(new Vector2Int(row + x, column + y));
+                    OnItemPlaced?.Invoke(row + x, column + y);
                 }
+            }
+            PrintInventory();
+        }
+
+        public void UnPlaceItem()
+        {
+            var Coords = GetComponentInChildren<ChipPlacementData>();
+            foreach (var coord in Coords.CoordinatesOccupiedOnGrid)
+            {
+                _inventoryGrid[coord.x, coord.y] = false;
+                OnItemRemoved?.Invoke(coord.x, coord.y);
             }
             PrintInventory();
         }
