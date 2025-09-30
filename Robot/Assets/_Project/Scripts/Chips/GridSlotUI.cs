@@ -13,14 +13,14 @@ namespace Robot
 
         private void Start()
         {
-            InventoryChips.Source.OnChipPlaced += SlotOccupied;
-            InventoryChips.Source.OnChipRemoved += FreeSlot;
+            ChipInventoryManager.Source.OnSlotOccupied += SlotOccupied;
+            ChipInventoryManager.Source.OnSlotFreed += FreeSlot;
         }
 
         private void OnDisable()
         {
-            InventoryChips.Source.OnChipPlaced -= SlotOccupied;
-            InventoryChips.Source.OnChipRemoved -= FreeSlot;
+            ChipInventoryManager.Source.OnSlotOccupied -= SlotOccupied;
+            ChipInventoryManager.Source.OnSlotFreed -= FreeSlot;
         }
 
         public void AssignCoord(int x, int y)
