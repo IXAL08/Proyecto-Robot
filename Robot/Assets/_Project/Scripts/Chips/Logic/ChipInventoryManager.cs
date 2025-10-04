@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Robot
 {
@@ -83,6 +84,8 @@ namespace Robot
             }
 
             chip.ChipData.RotationSteps = (chip.ChipData.RotationSteps + 1) % 4;
+
+            chipPivot.position = Mouse.current.position.ReadValue();
         }
 
         public bool IsAlreadyAtPosition(List<Vector2Int> newCoords, List<Vector2Int> coordinatesOccupiedOnGrid)

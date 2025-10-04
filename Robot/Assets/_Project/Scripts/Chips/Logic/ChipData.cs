@@ -9,6 +9,7 @@ namespace Robot
         public string ID;
         public Sprite ChipSprite;
         public string ChipName;
+        public string ChipEffectDescription;
         public bool IsRotable;
         public int RotationSteps = 0;
 
