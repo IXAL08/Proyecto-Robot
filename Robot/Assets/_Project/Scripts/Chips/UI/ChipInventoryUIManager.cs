@@ -6,10 +6,11 @@ namespace Robot
     public class ChipInventoryUIManager : Singleton<IInventoryChipUISource>, IInventoryChipUISource
     {
         [SerializeField] private GridLayoutGroup _inventoryGridLayoutGroup;
-
+        [SerializeField] private RectTransform _displayRectTransform;
         private GridSlotUI[,] _inventorySlotUI;
         private Vector2 _gridLayoutGroupCellsize, _gridLayoutGroupSpacing;
 
+        public RectTransform DisplayRectTransform => _displayRectTransform;
         public Vector2 GridLayoutGroupCellsize => _gridLayoutGroupCellsize;
         public Vector2 GridLayoutGroupSpacing => _gridLayoutGroupSpacing;
         private void Start()
@@ -56,6 +57,13 @@ namespace Robot
             pivotTransform.SetParent(_inventorySlotUI[row,column].transform);
             pivotTransform.localPosition = Vector2.zero;
             pivotTransform.SetParent(canvas.transform);
+        }
+
+        public void ReturnToDisplay(RectTransform ChipPivotRectTransform, Chip chip)
+        {
+            ChipPivotRectTransform.SetParent(_displayRectTransform);
+            ChipPivotRectTransform.localPosition = Vector2.zero;
+            chip.GetComponent<RectTransform>().sizeDelta = chip.SizeDeltaChip;
         }
 
         public void ResizeUIOnHandle(RectTransform chipRectTransform, ChipData chipData, Vector2 cellSize, Vector2 spacing)

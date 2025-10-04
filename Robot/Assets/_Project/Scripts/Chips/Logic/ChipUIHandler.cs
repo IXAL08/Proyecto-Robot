@@ -21,7 +21,7 @@ namespace Robot
         }
         private void Update()
         {
-            if (_isDragging && Input.GetKeyDown(KeyCode.R)) 
+            if (_isDragging && Input.GetKeyDown(KeyCode.R) && _chip.ChipData.IsRotable) 
             {
                 ChipInventoryManager.Source.RotateChip(_chipPivotRectTransform, _chip);
                 ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.ChipData.RotationSteps);
@@ -57,7 +57,16 @@ namespace Robot
             }
             else
             {
-                print("chip no encontrado");
+                if (_chip.HasBeenPlaced)
+                {
+                    ChipInventoryUIManager.Source.SnapToLastSlot(_chip.CurrentRowPlaced, _chip.CurrentColumnPlaced, _chipPivotRectTransform, _chipCanva, _chip);
+                }
+                else
+                {
+                    ChipInventoryUIManager.Source.ReturnToDisplay(_chipPivotRectTransform, _chip);
+                    _firsttouch = false;
+                }
+                print("Slot no encontrado");
             }
         }
 
@@ -90,7 +99,8 @@ namespace Robot
             }
             else
             {
-                ChipInventoryUIManager.Source.SnapToLastSlot(chip.CurrentRowPlaced,chip.CurrentColumnPlaced, _chipPivotRectTransform, _chipCanva, chip);
+                ChipInventoryUIManager.Source.ReturnToDisplay(_chipPivotRectTransform, _chip);
+                _firsttouch = false;
             }
         }
     }

@@ -9,18 +9,29 @@ namespace Robot
     public class ChipInventoryManager : Singleton<IInventoryChipSource>, IInventoryChipSource
     {
         [SerializeField] private int _gridRows, _gridColumns;
+        [Header("ChipDisplaySpawn")]
+        [SerializeField] private GameObject _currentChipOnDisplay;
+        [SerializeField] private GameObject _chipPrefab;
+        [SerializeField] private List<ChipData> _availableChips;
 
         private bool[,] _inventoryGrid;
+        private int _listIndex;
 
         public event Action<int, int> OnSlotOccupied;
         public event Action<int, int> OnSlotFreed;
+        public event Action OnChipSpawned;
+        public event Action OnListEmpty;
+        public event Action OnListNotEmpty;
+
         public int InventoryRows => _gridRows;
         public int InventoryColumns => _gridColumns;
+        public GameObject CurrentChipOnDisplay => _currentChipOnDisplay;
 
         private void Start()
         {
             _inventoryGrid = new bool[_gridRows, _gridColumns];
             print("Inventario inicializado con: " + _inventoryGrid.Length);
+            SpawnNewChip();
             PrintInventory();
         }
 
@@ -45,12 +56,23 @@ namespace Robot
                 int x = row + offset.x;
                 int y = column + offset.y;
 
-                chip.SetPlaced(true);
                 _inventoryGrid[x, y] = true;
                 OnSlotOccupied?.Invoke(y, x);
                 chip.SaveCoordinates(new Vector2Int(x,y));
             }
+            chip.SetPlaced(true);
             chip.SaveCurrentStepAndShape();
+            _availableChips.RemoveAt(_listIndex);
+            if (_availableChips.Count > 0)
+            {
+                OnListNotEmpty?.Invoke();
+                IsChipHasBeenPlaced();
+            }
+            else
+            {
+                OnListEmpty?.Invoke();
+                print("ya no hay chips");
+            }
             PrintInventory();
         }
 
@@ -101,6 +123,34 @@ namespace Robot
                 coords.Add(new Vector2Int(row + cell.x, column + cell.y));
             }
             return coords;
+        }
+
+        private void IsChipHasBeenPlaced()
+        {
+            var chip = _currentChipOnDisplay.GetComponentInChildren<Chip>();
+            if (chip.HasBeenPlaced)
+            {
+                SpawnNewChip();
+            }
+        }
+
+        private void SpawnNewChip()
+        {
+            _currentChipOnDisplay = Instantiate(_chipPrefab, ChipInventoryUIManager.Source.DisplayRectTransform);
+            _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
+            OnChipSpawned?.Invoke();
+        }
+
+        public void NextChipData()
+        {
+            _listIndex = (_listIndex + 1) % _availableChips.Count;
+            _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
+        }
+
+        public void PreviousChipData()
+        {
+            _listIndex = (_listIndex - 1 + _availableChips.Count) % _availableChips.Count;
+            _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
         }
 
         private void PrintInventory()

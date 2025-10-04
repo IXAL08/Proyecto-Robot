@@ -8,10 +8,11 @@ namespace Robot
         [SerializeField] private ChipData _chipData;
         [SerializeField] private int _currentColumnPlaced, _currentRowPlaced;
         [SerializeField] private bool _hasBeenPlaced;
-        [SerializeField] private List<Vector2Int> _coordinatesOccupiedOnGrid = new List<Vector2Int>();
+        [SerializeField] private List<Vector2Int> _coordinatesOccupiedOnGrid;
 
-        private List<Vector2Int> _lastShapeRotation = new List<Vector2Int>();
+        private List<Vector2Int> _lastShapeRotation;
         private int _rotationStepsBeforeRotation;
+        private Vector2 _sizeDeltaChip;
 
 
         public int CurrentColumnPlaced => _currentColumnPlaced;
@@ -19,6 +20,14 @@ namespace Robot
         public ChipData ChipData => _chipData;
         public bool HasBeenPlaced => _hasBeenPlaced;
         public List<Vector2Int> CoordinatesOccupiedOnGrid => _coordinatesOccupiedOnGrid;
+        public Vector2 SizeDeltaChip => _sizeDeltaChip;
+
+        private void Start()
+        {
+            _sizeDeltaChip = gameObject.GetComponent<RectTransform>().sizeDelta;
+            _coordinatesOccupiedOnGrid = new List<Vector2Int>();
+            _lastShapeRotation = new List<Vector2Int>();
+        }
 
         public void SetPlaced(bool value)
         {
@@ -50,5 +59,11 @@ namespace Robot
                 _chipData.RotationSteps = _rotationStepsBeforeRotation;
             }
         }
+
+        public void AssignChipData(ChipData chip)
+        {
+            _chipData = chip;
+        }
+
     }
 }
