@@ -60,19 +60,23 @@ namespace Robot
                 OnSlotOccupied?.Invoke(y, x);
                 chip.SaveCoordinates(new Vector2Int(x,y));
             }
-            chip.SetPlaced(true);
             chip.SaveCurrentStepAndShape();
-            _availableChips.RemoveAt(_listIndex);
-            if (_availableChips.Count > 0)
+            if (!IsChipHasBeenPlaced(chip))
             {
-                OnListNotEmpty?.Invoke();
-                IsChipHasBeenPlaced();
+                chip.SetPlaced(true);
+                _availableChips.RemoveAt(_listIndex);
+                if (_availableChips.Count > 0)
+                {
+                    OnListNotEmpty?.Invoke();
+                    SpawnNewChip();
+                }
+                else 
+                {
+                    OnListEmpty?.Invoke();
+                    print("ya no hay chips");
+                }
             }
-            else
-            {
-                OnListEmpty?.Invoke();
-                print("ya no hay chips");
-            }
+
             PrintInventory();
         }
 
@@ -125,17 +129,20 @@ namespace Robot
             return coords;
         }
 
-        private void IsChipHasBeenPlaced()
+        private bool IsChipHasBeenPlaced(Chip handleChip)
         {
-            var chip = _currentChipOnDisplay.GetComponentInChildren<Chip>();
-            if (chip.HasBeenPlaced)
+            if (handleChip.HasBeenPlaced)
             {
-                SpawnNewChip();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
         private void SpawnNewChip()
-        {
+        {            
             _currentChipOnDisplay = Instantiate(_chipPrefab, ChipInventoryUIManager.Source.DisplayRectTransform);
             _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
             OnChipSpawned?.Invoke();

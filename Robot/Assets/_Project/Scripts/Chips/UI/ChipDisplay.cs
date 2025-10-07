@@ -9,7 +9,7 @@ namespace Robot
         [SerializeField] private TextMeshProUGUI _chipName, _chipDescription;
         [SerializeField] private Button _leftArrow, _rightArrow;
 
-        private void OnEnable()
+        private void Start()
         {
             ChipInventoryManager.Source.OnChipSpawned += RefreshChipDescription;
             ChipInventoryManager.Source.OnListEmpty += ListEmptyEvent;

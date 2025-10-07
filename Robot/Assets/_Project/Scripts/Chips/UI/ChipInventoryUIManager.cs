@@ -103,5 +103,6 @@ namespace Robot
             };
             chipRectTransform.localRotation = Quaternion.Euler(0, 0, angle);
         }
+
     }
 }

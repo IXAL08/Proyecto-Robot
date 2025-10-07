@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace Robot
 {
@@ -37,6 +38,7 @@ namespace Robot
             }
             ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.ChipData.RotationSteps);
             _chipCanvasGroup.blocksRaycasts = false;
+            _chipPivotRectTransform.position = Mouse.current.position.ReadValue();
         }
 
         public void OnDrag(PointerEventData eventData)
