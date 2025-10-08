@@ -4,149 +4,205 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movimiento")]
-    public float MovementSpeed = 5f;
-    public float jumpForce = 5f;
+    public float moveSpeed = 5f;
+    public float jumpForce = 10f;
+    public float airControl = 0.5f;
     
     [Header("Dash")]
     public float dashForce = 15f;
-    public float dashDuration = 0.2f;
-    public float dashCooldown = 1f;
+    public float dashDuration = 0.5f;
+    public float dashCooldown = 0.5f;
     
-    [Header("Componentes")]
-    public LayerMask groundLayer = 1;
-    public float groundCheckDistance  = 0.1f;
-        
+    [Header("Configuración de Salto")]
+    public Transform groundCheck;
+    public float checkRadius = 0.2f;
+    public LayerMask whatIsGround;
+    
+    [Header("Detección de Paredes")]
+    public Transform wallCheck;
+    public float wallCheckDistance = 0.5f;
+    public LayerMask wallLayer;
+    
     private Rigidbody rb;
-    private Collider playerCollider;
-    
-    private float horizontalInput;
-    private bool jumpInput;
-    private bool dashInput;
-    
     private bool isGrounded;
+    private bool isTouchingWall;
     private bool isDashing;
-    private float dashTimer;
-    private float dashCooldownTimer;
     private bool canDash = true;
+    private float dashTimer = 0f;
+    private float dashCooldownTimer = 0f;
     private Vector3 dashDirection;
-
-     void Start()
+    
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerCollider = GetComponent<Collider>();
         
-        rb.freezeRotation = true;
     }
 
     private void Update()
     {
-        GetInput();
         CheckGrounded();
-        HandleDashCooldown();
+        CheckWalls();
+        HandleJump();
+        HandleDash();
+        UpdateTimers();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isDashing)
+        {
+            HandleMovement();
+        }
+        else
+        {
+            HandleDashMovement();
+        }
+    }
+
+    void CheckGrounded()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, whatIsGround);
+    }
+
+    void CheckWalls()
+    {
+        RaycastHit hit;
+        Vector3 rayDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0).normalized;
+
+        if (rayDirection != Vector3.zero)
+        {
+            isTouchingWall = Physics.Raycast(transform.position, rayDirection, out hit, wallCheckDistance, wallLayer);
+        }
+        else
+        {
+            isTouchingWall = false;
+        }
+    }
+
+    float GetWallDirection()
+    {
+        RaycastHit hitLeft, hitRight;
         
-        // Handle dash input in Update for better responsiveness
-        if (dashInput && canDash && !isDashing)
+        bool wallLeft = Physics.Raycast(transform.position, Vector3.left, out hitLeft, wallCheckDistance, wallLayer);
+        bool wallRight = Physics.Raycast(transform.position, Vector3.right, out hitRight, wallCheckDistance, wallLayer);
+        
+        if(wallLeft) return -1;
+        if(wallRight) return 1;
+        
+        return 0;
+    }
+
+    void HandleMovement()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        if (isTouchingWall && Mathf.Sign(horizontalInput) == Mathf.Sign(GetWallDirection()))
+        {
+            horizontalInput = 0;
+        }
+        float currentSpeed = moveSpeed;
+        
+        if (!isGrounded)
+        {
+            currentSpeed *= airControl;
+        }
+        
+            Vector3 movement = new Vector3(horizontalInput * currentSpeed, rb.linearVelocity.y, 0);
+            rb.linearVelocity = movement;
+            
+    }
+
+    void HandleJump()
+    {
+        if (isGrounded && Input.GetButtonDown("Jump"))
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+        }
+    }
+
+    
+
+    void HandleDash()
+    {
+        if (canDash && Input.GetKeyDown(KeyCode.LeftShift))
         {
             StartDash();
         }
     }
-    
-    void FixedUpdate()
+
+    void StartDash()
     {
-        if (isDashing)
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (horizontalInput == 0 && verticalInput == 0)
         {
-            HandleDash();
+            dashDirection = transform.right;
         }
         else
         {
-            HandleMovement();
-            HandleJump();
+            dashDirection = new Vector3(horizontalInput, 0,0).normalized;
         }
-    }
-    
-    void GetInput()
-    {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        jumpInput = Input.GetButtonDown("Jump");
-        dashInput = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift);
-    }
-    
-    void CheckGrounded()
-    {
-        // Raycast downward to check if player is grounded
-        Vector3 rayStart = transform.position;
-        float rayLength = playerCollider.bounds.extents.y + groundCheckDistance;
         
-        isGrounded = Physics.Raycast(rayStart, Vector3.down, rayLength, groundLayer);
-        
-        // Optional: Visualize the ray in the scene view
-        Debug.DrawRay(rayStart, Vector3.down * rayLength, isGrounded ? Color.green : Color.red);
-    }
-    
-    void HandleMovement()
-    {
-        // Only move horizontally (X-axis)
-        Vector3 movement = new Vector3(horizontalInput * MovementSpeed, rb.linearVelocity.y, 0f);
-        rb.linearVelocity = movement;
-    }
-    
-    void HandleJump()
-    {
-        if (jumpInput && isGrounded)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, 0f);
-        }
-    }
-    void StartDash()
-    {
         isDashing = true;
         canDash = false;
         dashTimer = dashDuration;
+        dashCooldownTimer = dashCooldown;
         
-        // Determine dash direction based on input
-        dashDirection = new Vector3(horizontalInput, 0f, 0f).normalized;
-        
-        // If no horizontal input, dash in facing direction (right by default)
-        if (dashDirection == Vector3.zero)
-        {
-            dashDirection = Vector3.right;
-        }
-        
-        // Apply initial dash force
         rb.linearVelocity = dashDirection * dashForce;
         
-        // Start cooldown
-        dashCooldownTimer = dashCooldown;
+        //rb.useGravity = false;
     }
-    
-    void HandleDash()
+
+    void HandleDashMovement()
     {
-        dashTimer -= Time.fixedDeltaTime;
-        
-        if (dashTimer <= 0f)
-        {
-            EndDash();
-        }
+        rb.linearVelocity = dashDirection * dashForce;
     }
-    
+
     void EndDash()
     {
         isDashing = false;
-        
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x * 0.5f, rb.linearVelocity.y, 0f);
+        //rb.useGravity = true;
+
+        if (rb.linearVelocity.magnitude > moveSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * moveSpeed;
+        }
     }
-    
-    void HandleDashCooldown()
+
+    void UpdateTimers()
     {
-        if (!canDash)
+        if (isDashing)
+        {
+            dashTimer -= Time.deltaTime;
+            if (dashTimer <= 0)
+            {
+                EndDash();
+            }
+        }
+
+        if (!canDash && !isDashing)
         {
             dashCooldownTimer -= Time.deltaTime;
-            
-            if (dashCooldownTimer <= 0f)
+            if (dashCooldownTimer <= 0)
             {
                 canDash = true;
             }
         }
     }
     
+    void OnDrawGizmosSelected()
+    {
+        if (groundCheck != null)
+        {
+            Gizmos.color = isGrounded ? Color.green : Color.red;
+            Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
+        }
+        
+        if (wallCheck != null)
+        {
+            Gizmos.color = isTouchingWall ? Color.green : Color.red;
+            Gizmos.DrawWireSphere(wallCheck.position, wallCheckDistance);
+        }
+    }
 }
