@@ -27,6 +27,11 @@ namespace Robot
                 ChipInventoryManager.Source.RotateChip(_chipPivotRectTransform, _chip);
                 ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.ChipData.RotationSteps);
             } 
+
+            if (_isDragging && Input.GetKeyDown(KeyCode.X) && _chip.HasBeenPlaced)
+            {
+                ChipInventoryManager.Source.ReturnChipToList(_chipPivotRectTransform,_chip);
+            }
         }
         public void OnBeginDrag(PointerEventData eventData)
         {
