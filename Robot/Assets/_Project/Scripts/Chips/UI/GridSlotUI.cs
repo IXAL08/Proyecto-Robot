@@ -11,7 +11,7 @@ namespace Robot
         public int X => _x;
         public int Y => _y;
 
-        private void Start()
+        private void OnEnable()
         {
             ChipInventoryManager.Source.OnSlotOccupied += SlotOccupied;
             ChipInventoryManager.Source.OnSlotFreed += FreeSlot;

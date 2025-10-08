@@ -18,8 +18,8 @@ namespace Robot
         private void Start()
         {
             InitializeGridData();
-            RefreshPlayerStats();
             IntializeGridSlot();
+            RefreshPlayerStats();
         }
 
         private void InitializeGridData()
@@ -31,7 +31,7 @@ namespace Robot
 
         public void RefreshPlayerStats()
         {
-            _healthStat.text = PlayerStatsManager.Source.PlayerMaxHealth.ToString();
+            _healthStat.text = (PlayerStatsManager.Source.PlayerMaxHealth/10).ToString();
             _attackStat.text = PlayerStatsManager.Source.PlayerAttackPower.ToString();
             _speedStat.text = PlayerStatsManager.Source.PlayerSpeedPower.ToString();
         }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Robot
@@ -9,11 +10,13 @@ namespace Robot
         [SerializeField] private float _currentPlayerAttackPower;
         [SerializeField] private float _currentPlayerSpeedPower;
 
+        public event Action<float, float, float> OnStatsChanged;
+
         public float PlayerMaxHealth => _currentPlayerMaxHealth;
         public float PlayerAttackPower => _currentPlayerAttackPower;
         public float PlayerSpeedPower => _currentPlayerSpeedPower;
 
-        private void Start()
+        private void OnEnable()
         {
             InitializeStats();
         }
@@ -22,6 +25,7 @@ namespace Robot
             _currentPlayerMaxHealth = _playerStats.MaxHealth;
             _currentPlayerAttackPower = _playerStats.AttackPower;
             _currentPlayerSpeedPower = _playerStats.SpeedPower;
+            OnStatsChanged?.Invoke(_currentPlayerMaxHealth, _currentPlayerAttackPower, _currentPlayerSpeedPower);
         }
 
         public void AddModifierToPlayer(BonusStatsChip bonusStats)
@@ -29,6 +33,7 @@ namespace Robot
             _currentPlayerMaxHealth += bonusStats.BonusHealth;
             _currentPlayerAttackPower += bonusStats.BonusDamage;
             _currentPlayerSpeedPower += bonusStats.BonusSpeed;
+            OnStatsChanged?.Invoke(_currentPlayerMaxHealth,_currentPlayerAttackPower,_currentPlayerSpeedPower);
         }
 
         public void SubstractModifierToPlayer(BonusStatsChip bonusStats)
@@ -36,6 +41,7 @@ namespace Robot
             _currentPlayerMaxHealth -= bonusStats.BonusHealth;
             _currentPlayerAttackPower -= bonusStats.BonusDamage;
             _currentPlayerSpeedPower -= bonusStats.BonusSpeed;
+            OnStatsChanged?.Invoke(_currentPlayerMaxHealth, _currentPlayerAttackPower, _currentPlayerSpeedPower);
         }
     }
 }

@@ -16,6 +16,7 @@ MonoBehaviour:
   ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   ChipName: ChipTest 2
   ChipEffectDescription: 
+  BonusStatsChip: {fileID: 11400000, guid: 0280b8f57b09571418a0300010325c81, type: 2}
   IsRotable: 0
   RotationSteps: 3
   ChipWidth: 3

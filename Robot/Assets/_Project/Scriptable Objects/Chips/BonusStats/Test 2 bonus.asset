@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Test 2 bonus
   m_EditorClassIdentifier: 
   BonusHealth: 0
-  BonusDamage: 0
-  BonusSpeed: 0
+  BonusDamage: 0.5
+  BonusSpeed: 2

@@ -55,11 +55,11 @@ namespace Robot
 
             chip.SaveCurrentStepAndShape();
 
+            PrintInventory();
             if (chip.HasBeenPlaced) return;
 
             ApplyChipEffects(chip);
             HandleChipInventory(chip);
-            PrintInventory();
 
             PrintInventory();
         }
@@ -110,8 +110,10 @@ namespace Robot
         }
 
         private void SpawnNewChip()
-        {            
+        { 
+            if(_availableChips.Count <=  0) return;
             _currentChipOnDisplay = Instantiate(_chipPrefab, ChipInventoryUIManager.Source.DisplayRectTransform);
+            _listIndex = 0;
             _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
             OnChipSpawned?.Invoke();
         }
@@ -189,6 +191,11 @@ namespace Robot
                 OnListEmpty?.Invoke();
                 Debug.Log("Ya no hay chips disponibles.");
             }
+        }
+
+        public void AddToAvailableChips(ChipData chipData)
+        {
+            _availableChips.Add(chipData);
         }
 
         private void PrintInventory()

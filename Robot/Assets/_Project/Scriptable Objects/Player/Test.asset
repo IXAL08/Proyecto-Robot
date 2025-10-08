@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   MaxHealth: 40
-  AttackPower: 1
-  SpeedPower: 5
+  AttackPower: 3.5
+  SpeedPower: 10

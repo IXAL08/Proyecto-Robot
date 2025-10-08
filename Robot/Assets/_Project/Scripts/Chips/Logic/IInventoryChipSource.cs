@@ -22,6 +22,7 @@ namespace Robot
         void NextChipData();
         void PreviousChipData();
         void ReturnChipToList(RectTransform pivotChip, Chip chip);
+        void AddToAvailableChips(ChipData chipData);
 
         //Eventos
         event Action<int, int> OnSlotOccupied;
