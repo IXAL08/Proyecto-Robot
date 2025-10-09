@@ -111,7 +111,6 @@ namespace Robot
 
         private void SpawnNewChip()
         { 
-            if(_availableChips.Count <=  0) return;
             _currentChipOnDisplay = Instantiate(_chipPrefab, ChipInventoryUIManager.Source.DisplayRectTransform);
             _listIndex = 0;
             _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
@@ -167,14 +166,21 @@ namespace Robot
 
         public void ReturnChipToList(RectTransform pivotChip, Chip chip)
         {
-            _availableChips.Add(chip.ChipData);
             RemoveChipEffects(chip);
             UnPlaceChip(chip);
             OnListNotEmpty?.Invoke();
             Destroy(pivotChip.gameObject);
 
-            if(!(_availableChips.Count > 0)) return;
-            SpawnNewChip();
+            if(_availableChips.Count <= 0)
+            {
+                _availableChips.Add(chip.ChipData);
+                SpawnNewChip();
+            }
+            else if(_availableChips.Count > 0)
+            {
+                _availableChips.Add(chip.ChipData);
+            }
+
         }
 
         private void HandleChipInventory(Chip chip)
