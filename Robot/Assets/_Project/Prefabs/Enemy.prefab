@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 2364448008305558759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 65.1, y: -2.34, z: 1.159}
-  m_LocalScale: {x: 2.0113, y: 1, z: 1}
+  m_LocalPosition: {x: 65.1, y: -1.694, z: 1.159}
+  m_LocalScale: {x: 2.0113, y: 2.292, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 277803456733911579}
@@ -153,7 +153,7 @@ MonoBehaviour:
   moveSpeed: 5
   patrolDistance: 5
   waitTimeAtPatrol: 1
-  maxHealth: 30
+  maxHealth: 10
   attackDamage: 1
   attackCooldown: 2
   detectionRange: 10
@@ -166,6 +166,7 @@ MonoBehaviour:
   attackColor: {r: 1, g: 0, b: 0, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   EnemyRenderer: {fileID: 7729663316248954757}
+  currentHealth: 0
 --- !u!1 &4159248004814034033
 GameObject:
   m_ObjectHideFlags: 0
