@@ -21,6 +21,8 @@ namespace Robot
         List<Vector2Int> GetNewChipCoordinates(int row, int column, Chip chip);
         void NextChipData();
         void PreviousChipData();
+        void ReturnChipToList(RectTransform pivotChip, Chip chip);
+        void AddToAvailableChips(ChipData chipData);
 
         //Eventos
         event Action<int, int> OnSlotOccupied;

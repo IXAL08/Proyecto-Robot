@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ namespace Robot
     {
         [SerializeField] private GridLayoutGroup _inventoryGridLayoutGroup;
         [SerializeField] private RectTransform _displayRectTransform;
+        [SerializeField] private TextMeshProUGUI _healthStat, _attackStat, _speedStat;
         private GridSlotUI[,] _inventorySlotUI;
         private Vector2 _gridLayoutGroupCellsize, _gridLayoutGroupSpacing;
 
@@ -17,6 +19,7 @@ namespace Robot
         {
             InitializeGridData();
             IntializeGridSlot();
+            RefreshPlayerStats();
         }
 
         private void InitializeGridData()
@@ -24,6 +27,13 @@ namespace Robot
             _inventorySlotUI = new GridSlotUI[ChipInventoryManager.Source.InventoryRows,ChipInventoryManager.Source.InventoryColumns];
             _gridLayoutGroupCellsize = _inventoryGridLayoutGroup.cellSize;
             _gridLayoutGroupSpacing = _inventoryGridLayoutGroup.spacing;
+        }
+
+        public void RefreshPlayerStats()
+        {
+            _healthStat.text = (PlayerStatsManager.Source.PlayerMaxHealth/10).ToString();
+            _attackStat.text = PlayerStatsManager.Source.PlayerAttackPower.ToString();
+            _speedStat.text = PlayerStatsManager.Source.PlayerSpeedPower.ToString();
         }
 
         private void IntializeGridSlot()

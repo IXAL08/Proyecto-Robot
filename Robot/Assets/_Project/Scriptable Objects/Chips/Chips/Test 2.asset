@@ -10,19 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68a0c68c2e2c01340a1d9200c6e80b3b, type: 3}
-  m_Name: Test
+  m_Name: Test 2
   m_EditorClassIdentifier: 
   ID: 
   ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  ChipName: ChipTest
+  ChipName: ChipTest 2
   ChipEffectDescription: 
-  IsRotable: 1
+  BonusStatsChip: {fileID: 11400000, guid: 0280b8f57b09571418a0300010325c81, type: 2}
+  IsRotable: 0
   RotationSteps: 3
-  ChipWidth: 2
-  ChipHeight: 2
+  ChipWidth: 3
+  ChipHeight: 3
   Shape:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
+  - {x: 2, y: 0}
   - {x: 0, y: -1}
   - {x: 1, y: -1}
   - {x: 2, y: -1}
+  - {x: 0, y: -2}
+  - {x: 1, y: -2}
+  - {x: 2, y: -2}

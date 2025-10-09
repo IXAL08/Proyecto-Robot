@@ -1,11 +1,12 @@
+using Robot;
 using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     [Header("Bala")]
-    public float speed = 10f;
-    public int damage = 10;
+    public float speed;
+    public float damage;
     public float destroyTime = 3f;
 
     public LayerMask collisionMask = ~0; 
@@ -14,6 +15,10 @@ public class Bullet : MonoBehaviour
     private bool hasCollided = false;
     private Vector3 movementDirection = Vector3.right;
 
+    private void OnEnable()
+    {
+        damage = PlayerStatsManager.Source.PlayerAttackPower;
+    }
 
     private void Start()
     {
@@ -30,6 +35,7 @@ public class Bullet : MonoBehaviour
         {
             rb.linearVelocity = movementDirection * speed;
         }
+
     }
 
     private void Update()
@@ -97,4 +103,5 @@ public class Bullet : MonoBehaviour
             rb.linearVelocity = movementDirection * speed;
         }
     }
+
 }

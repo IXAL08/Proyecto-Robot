@@ -1,3 +1,4 @@
+using Robot;
 using System;
 using UnityEngine;
 
@@ -22,7 +23,9 @@ public class RangeAttack : MonoBehaviour
     private void Start()
     {
         currentFacingDirection = GetPlayerFacingDirection();
+        PlayerStatsManager.Source.OnStatsChanged += ModifyBulletSpeed;
         UpdateFirePointDirection();
+        bulletSpeed = (PlayerStatsManager.Source.PlayerSpeedPower + 4);
     }
 
     private void Update()
@@ -114,6 +117,11 @@ public class RangeAttack : MonoBehaviour
       
         canShoot = false;
         cooldownTimer = attackCooldown;
+    }
+
+    private void ModifyBulletSpeed(float x, float y, float speed)
+    {
+        bulletSpeed = (PlayerStatsManager.Source.PlayerSpeedPower + 4);
     }
    
 }

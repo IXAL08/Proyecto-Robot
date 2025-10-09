@@ -1863,6 +1863,9 @@ MonoBehaviour:
   _isPersistent: 0
   _inventoryGridLayoutGroup: {fileID: 8502916998411573745}
   _displayRectTransform: {fileID: 9186452902652920757}
+  _healthStat: {fileID: 7764387164627557343}
+  _attackStat: {fileID: 4935093148045720821}
+  _speedStat: {fileID: 8958123844922950555}
 --- !u!1 &2761259774139087501
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Robot;
 using System;
 using UnityEngine;
 
@@ -31,11 +32,20 @@ public class PlayerMovement : MonoBehaviour
     private float dashTimer = 0f;
     private float dashCooldownTimer = 0f;
     private Vector3 dashDirection;
-    
+
+    private void OnEnable()
+    {
+        PlayerStatsManager.Source.OnStatsChanged += UpdatePlayerVelocity;
+        moveSpeed = PlayerStatsManager.Source.PlayerSpeedPower;
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+    }
+
+    private void OnDisable()
+    {
+        PlayerStatsManager.Source.OnStatsChanged -= UpdatePlayerVelocity;
     }
 
     private void Update()
@@ -189,6 +199,11 @@ public class PlayerMovement : MonoBehaviour
                 canDash = true;
             }
         }
+    }
+
+    private void UpdatePlayerVelocity(float x, float y, float Velocity)
+    {
+        moveSpeed = Velocity;
     }
     
     void OnDrawGizmosSelected()

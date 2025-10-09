@@ -12,6 +12,7 @@ namespace Robot
         public string ChipName;
         [TextArea]
         public string ChipEffectDescription;
+        public BonusStatsChip BonusStatsChip;
         public bool IsRotable;
         public int RotationSteps = 0;
 

@@ -51,42 +51,22 @@ namespace Robot
         public void PlaceChip(int row, int column, Chip chip)
         {
             chip.SetRowAndColumn(row, column);
-            foreach (var offset in chip.ChipData.Shape)
-            {
-                int x = row + offset.x;
-                int y = column + offset.y;
+            OccupySlotsForChip(chip, row, column);
 
-                _inventoryGrid[x, y] = true;
-                OnSlotOccupied?.Invoke(y, x);
-                chip.SaveCoordinates(new Vector2Int(x,y));
-            }
             chip.SaveCurrentStepAndShape();
-            if (!IsChipHasBeenPlaced(chip))
-            {
-                chip.SetPlaced(true);
-                _availableChips.RemoveAt(_listIndex);
-                if (_availableChips.Count > 0)
-                {
-                    OnListNotEmpty?.Invoke();
-                    SpawnNewChip();
-                }
-                else 
-                {
-                    OnListEmpty?.Invoke();
-                    print("ya no hay chips");
-                }
-            }
+
+            PrintInventory();
+            if (chip.HasBeenPlaced) return;
+
+            ApplyChipEffects(chip);
+            HandleChipInventory(chip);
 
             PrintInventory();
         }
 
         public void UnPlaceChip(Chip chip)
         {
-            foreach (var coord in chip.CoordinatesOccupiedOnGrid)
-            {
-                _inventoryGrid[coord.x, coord.y] = false;
-                OnSlotFreed?.Invoke(coord.y, coord.x);
-            }
+            FreeChipSlots(chip);
             chip.CoordinatesOccupiedOnGrid.Clear();
             PrintInventory();
         }
@@ -129,21 +109,10 @@ namespace Robot
             return coords;
         }
 
-        private bool IsChipHasBeenPlaced(Chip handleChip)
-        {
-            if (handleChip.HasBeenPlaced)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         private void SpawnNewChip()
-        {            
+        { 
             _currentChipOnDisplay = Instantiate(_chipPrefab, ChipInventoryUIManager.Source.DisplayRectTransform);
+            _listIndex = 0;
             _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
             OnChipSpawned?.Invoke();
         }
@@ -158,6 +127,81 @@ namespace Robot
         {
             _listIndex = (_listIndex - 1 + _availableChips.Count) % _availableChips.Count;
             _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
+        }
+
+        private void OccupySlotsForChip(Chip chip, int startRow, int startColumn)
+        {
+            foreach (var offset in chip.ChipData.Shape)
+            {
+                int x = startRow + offset.x;
+                int y = startColumn + offset.y;
+
+                _inventoryGrid[x, y] = true;
+                chip.SaveCoordinates(new Vector2Int(x, y));
+                OnSlotOccupied?.Invoke(y, x);
+            }
+        }
+
+        private void FreeChipSlots(Chip chip)
+        {
+            foreach (var coord in chip.CoordinatesOccupiedOnGrid)
+            {
+                _inventoryGrid[coord.x, coord.y] = false;
+                OnSlotFreed?.Invoke(coord.y, coord.x);
+            }
+        }
+
+        private void ApplyChipEffects(Chip chip)
+        {
+            PlayerStatsManager.Source.AddModifierToPlayer(chip.ChipData.BonusStatsChip);
+            ChipInventoryUIManager.Source.RefreshPlayerStats();
+            chip.SetPlaced(true);
+        }
+
+        private void RemoveChipEffects(Chip chip)
+        {
+            PlayerStatsManager.Source.SubstractModifierToPlayer(chip.ChipData.BonusStatsChip);
+            ChipInventoryUIManager.Source.RefreshPlayerStats();
+        }
+
+        public void ReturnChipToList(RectTransform pivotChip, Chip chip)
+        {
+            RemoveChipEffects(chip);
+            UnPlaceChip(chip);
+            OnListNotEmpty?.Invoke();
+            Destroy(pivotChip.gameObject);
+
+            if(_availableChips.Count <= 0)
+            {
+                _availableChips.Add(chip.ChipData);
+                SpawnNewChip();
+            }
+            else if(_availableChips.Count > 0)
+            {
+                _availableChips.Add(chip.ChipData);
+            }
+
+        }
+
+        private void HandleChipInventory(Chip chip)
+        {
+            _availableChips.RemoveAt(_listIndex);
+
+            if (_availableChips.Count > 0)
+            {
+                OnListNotEmpty?.Invoke();
+                SpawnNewChip();
+            }
+            else
+            {
+                OnListEmpty?.Invoke();
+                Debug.Log("Ya no hay chips disponibles.");
+            }
+        }
+
+        public void AddToAvailableChips(ChipData chipData)
+        {
+            _availableChips.Add(chipData);
         }
 
         private void PrintInventory()
