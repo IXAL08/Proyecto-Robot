@@ -69,6 +69,13 @@ public class Bullet : MonoBehaviour
         
         hasCollided = true;
 
+        EnemigoMelee enemyHealth = other.GetComponent<EnemigoMelee>();
+        if (enemyHealth != null)
+        {
+            enemyHealth.TakeDamage((int)damage);
+        }
+        
+
         DestroyBullet();
     }
 
