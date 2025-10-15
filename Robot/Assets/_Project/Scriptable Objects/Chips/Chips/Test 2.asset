@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a0c68c2e2c01340a1d9200c6e80b3b, type: 3}
   m_Name: Test 2
   m_EditorClassIdentifier: 
-  Name: Chip Test 2
-  Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  Description: Tampoco se que haga este XDDD
-  ID: 
+  ID: 1
   ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   ChipName: ChipTest 2
   ChipEffectDescription: 
   BonusStatsChip: {fileID: 11400000, guid: 0280b8f57b09571418a0300010325c81, type: 2}
+  GUIBonusEffect: {fileID: 11400000, guid: 64ba9a5c060238a448d8a99388356e4a, type: 2}
   IsRotable: 0
   RotationSteps: 3
   ChipWidth: 3

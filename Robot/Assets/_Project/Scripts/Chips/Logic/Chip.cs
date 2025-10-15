@@ -6,7 +6,7 @@ namespace Robot
     public class Chip : MonoBehaviour
     {
         [SerializeField] private ChipData _chipData;
-        [SerializeField] private int _currentColumnPlaced, _currentRowPlaced;
+        [SerializeField] private int _currentColumnPlaced, _currentRowPlaced, _currentRotationStep;
         [SerializeField] private bool _hasBeenPlaced;
         [SerializeField] private List<Vector2Int> _coordinatesOccupiedOnGrid;
 
@@ -17,6 +17,7 @@ namespace Robot
 
         public int CurrentColumnPlaced => _currentColumnPlaced;
         public int CurrentRowPlaced => _currentRowPlaced;
+        public int CurrentRotationStep => _currentRotationStep;
         public ChipData ChipData => _chipData;
         public bool HasBeenPlaced => _hasBeenPlaced;
         public List<Vector2Int> CoordinatesOccupiedOnGrid => _coordinatesOccupiedOnGrid;
@@ -48,7 +49,7 @@ namespace Robot
         public void SaveCurrentStepAndShape()
         {
             _lastShapeRotation = new List<Vector2Int>(_chipData.Shape);
-            _rotationStepsBeforeRotation = _chipData.RotationSteps;
+            _rotationStepsBeforeRotation = _currentRotationStep;
         }
 
         public void RestoreLastStepAndShape() 
@@ -56,13 +57,19 @@ namespace Robot
             if (_lastShapeRotation.Count > 0)
             {
                 _chipData.Shape = new List<Vector2Int>(_lastShapeRotation);
-                _chipData.RotationSteps = _rotationStepsBeforeRotation;
+                _currentRotationStep = _rotationStepsBeforeRotation;
             }
+        }
+
+        public void ChangeRotationStep()
+        {
+            _currentRotationStep = (_currentRotationStep + 1) % 4;
         }
 
         public void AssignChipData(ChipData chip)
         {
             _chipData = chip;
+            _currentRotationStep = _chipData.RotationSteps;
         }
 
     }

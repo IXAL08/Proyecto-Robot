@@ -6,9 +6,8 @@ namespace Robot
     public class PlayerStatsManager : Singleton<IPlayerStats>, IPlayerStats
     {
         [SerializeField] private PlayerStats _playerStats;
-        [SerializeField] private float _currentPlayerMaxHealth;
-        [SerializeField] private float _currentPlayerAttackPower;
-        [SerializeField] private float _currentPlayerSpeedPower;
+        [SerializeField] private float _currentPlayerMaxHealth, _currentPlayerAttackPower, _currentPlayerSpeedPower;
+        [SerializeField] private GameObject _playerHealthBar, _playerConsumibles;
 
         public event Action<float, float, float> OnStatsChanged;
 
@@ -19,6 +18,12 @@ namespace Robot
         private void OnEnable()
         {
             InitializeStats();
+        }
+
+        private void Start()
+        {
+            ChipInventoryManager.Source.OnChipPlaced += ActiveGUI;
+            ChipInventoryManager.Source.OnChipRemoved += DeactiveGUI;
         }
         private void InitializeStats()
         {
@@ -42,6 +47,33 @@ namespace Robot
             _currentPlayerAttackPower -= bonusStats.BonusDamage;
             _currentPlayerSpeedPower -= bonusStats.BonusSpeed;
             OnStatsChanged?.Invoke(_currentPlayerMaxHealth, _currentPlayerAttackPower, _currentPlayerSpeedPower);
+        }
+
+        public void ActiveGUI(Chip chip)
+        {
+            if (chip.ChipData.GUIBonusEffect.ActiveHealthBar)
+            {
+                _playerHealthBar.SetActive(true);
+                _playerHealthBar.GetComponent<HealthBar>().InitializeHealthBar();
+            }
+
+            if (chip.ChipData.GUIBonusEffect.ActiveConsumiblesVisualizer)
+            {
+                _playerConsumibles.SetActive(true);
+            }
+        }
+
+        public void DeactiveGUI(Chip chip)
+        {
+            if (chip.ChipData.GUIBonusEffect.ActiveHealthBar)
+            {
+                _playerHealthBar.SetActive(false);                
+            }
+
+            if (chip.ChipData.GUIBonusEffect.ActiveConsumiblesVisualizer)
+            {
+                _playerConsumibles.SetActive(false);
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ MonoBehaviour:
   ChipName: ChipTest
   ChipEffectDescription: 
   BonusStatsChip: {fileID: 11400000, guid: f12da61b4c5eac54fa30363aea65acd1, type: 2}
+  GUIBonusEffect: {fileID: 11400000, guid: bd42b8c49c8db9b4c96fdd175d147b21, type: 2}
   IsRotable: 1
   RotationSteps: 3
   ChipWidth: 2

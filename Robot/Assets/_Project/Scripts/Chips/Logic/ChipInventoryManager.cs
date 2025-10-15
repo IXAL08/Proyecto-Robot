@@ -14,14 +14,18 @@ namespace Robot
         [SerializeField] private GameObject _chipPrefab;
         [SerializeField] private List<ChipData> _availableChips;
 
+
         private bool[,] _inventoryGrid;
         private int _listIndex;
+        private Dictionary<string, Chip> _activeChips = new Dictionary<string, Chip>();
 
         public event Action<int, int> OnSlotOccupied;
         public event Action<int, int> OnSlotFreed;
         public event Action OnChipSpawned;
         public event Action OnListEmpty;
         public event Action OnListNotEmpty;
+        public event Action<Chip> OnChipPlaced;
+        public event Action<Chip> OnChipRemoved;
 
         public int InventoryRows => _gridRows;
         public int InventoryColumns => _gridColumns;
@@ -89,7 +93,7 @@ namespace Robot
                 chip.ChipData.Shape[i] = new Vector2Int(-offset.y, offset.x);
             }
 
-            chip.ChipData.RotationSteps = (chip.ChipData.RotationSteps + 1) % 4;
+            chip.ChangeRotationStep();
 
             chipPivot.position = Mouse.current.position.ReadValue();
         }
@@ -155,6 +159,7 @@ namespace Robot
         {
             PlayerStatsManager.Source.AddModifierToPlayer(chip.ChipData.BonusStatsChip);
             ChipInventoryUIManager.Source.RefreshPlayerStats();
+            OnChipPlaced?.Invoke(chip);
             chip.SetPlaced(true);
         }
 
@@ -162,6 +167,7 @@ namespace Robot
         {
             PlayerStatsManager.Source.SubstractModifierToPlayer(chip.ChipData.BonusStatsChip);
             ChipInventoryUIManager.Source.RefreshPlayerStats();
+            OnChipRemoved?.Invoke(chip);
         }
 
         public void ReturnChipToList(RectTransform pivotChip, Chip chip)

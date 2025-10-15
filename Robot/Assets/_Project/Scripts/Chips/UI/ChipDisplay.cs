@@ -23,7 +23,7 @@ namespace Robot
             ChipInventoryManager.Source.OnListNotEmpty -= ListNotEmptyEvent;
         }
 
-        private void RefreshChipDescription()
+        public void RefreshChipDescription()
         {
             var chip = ChipInventoryManager.Source.CurrentChipOnDisplay.GetComponentInChildren<Chip>();
             _chipName.text = chip.ChipData.ChipName;
