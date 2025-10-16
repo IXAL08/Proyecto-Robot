@@ -4,9 +4,9 @@ using UnityEngine;
 namespace Robot
 {
     [CreateAssetMenu(fileName = "NewChips", menuName = "Inventory/Item/Chips")]
-    public class ChipData : ScriptableObject
+    public class ChipData : ItemData
     {
-        [Header("Información del chip")]
+        [Header("Informaciï¿½n del chip")]
         public string ID;
         public Sprite ChipSprite;
         public string ChipName;
@@ -16,7 +16,7 @@ namespace Robot
         public bool IsRotable;
         public int RotationSteps = 0;
 
-        [Header("Tamaño")]
+        [Header("Tamaï¿½o")]
         [Tooltip("Usar solo para UI inicial y chips rectangulares")]
         public int ChipWidth = 1;
         public int ChipHeight = 1;
@@ -37,12 +37,12 @@ namespace Robot
 
         private void Reset()
         {
-            // Genera la forma automáticamente al crear el ScriptableObject
+            // Genera la forma automï¿½ticamente al crear el ScriptableObject
             EnsureShape();
         }
 
         /// <summary>
-        /// Genera la forma predeterminada si la lista está vacía
+        /// Genera la forma predeterminada si la lista estï¿½ vacï¿½a
         /// </summary>
         private void EnsureShape()
         {
