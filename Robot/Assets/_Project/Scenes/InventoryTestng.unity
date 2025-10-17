@@ -223,6 +223,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CraftingUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1454124887276176281, guid: 074a910ba2c288445924d2eefdc947cc, type: 3}
+      propertyPath: _recipesToCraft.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1454124887276176281, guid: 074a910ba2c288445924d2eefdc947cc, type: 3}
+      propertyPath: '_recipesToCraft.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c2fdf5ba6c0a18f4eb09f57b5959228a, type: 2}
+    - target: {fileID: 1454124887276176281, guid: 074a910ba2c288445924d2eefdc947cc, type: 3}
+      propertyPath: '_recipesToCraft.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: fe884e40430de9d4696c49699e590d6c, type: 2}
     - target: {fileID: 8983730001111694392, guid: 074a910ba2c288445924d2eefdc947cc, type: 3}
       propertyPath: m_Pivot.x
       value: 0

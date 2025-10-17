@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a0c68c2e2c01340a1d9200c6e80b3b, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
+  Name: Chip Test 1
+  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Description: No se que haga xd
   ID: 
   ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   ChipName: ChipTest
