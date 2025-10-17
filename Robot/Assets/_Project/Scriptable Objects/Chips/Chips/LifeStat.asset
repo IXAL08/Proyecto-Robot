@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68a0c68c2e2c01340a1d9200c6e80b3b, type: 3}
-  m_Name: Test 2
+  m_Name: LifeStat
   m_EditorClassIdentifier: 
-  Name: 
-  Icon: {fileID: 0}
-  Description: 
-  ID: 1
+  Name: "M\xF3dulo BioCore"
+  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Description: "A\xF1ade mas aguante a los golpes a tu robot."
+  ID: 2
   ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  ChipName: ChipTest 2
-  ChipEffectDescription: 
-  BonusStatsChip: {fileID: 11400000, guid: 0280b8f57b09571418a0300010325c81, type: 2}
-  IsRotable: 0
+  ChipName: "M\xF3dulo BioCore"
+  ChipEffectDescription: "Ojal\xE1 los obreros pudieran aguantar m\xE1s... Espera,
+    ahora pueden. A\xF1ade medio modulo de vida al robot."
+  BonusStatsChip: {fileID: 11400000, guid: afbba4d5734447d42ab296394e447d2b, type: 2}
+  IsRotable: 1
   RotationSteps: 0
   ChipWidth: 2
   ChipHeight: 2
   Shape:
   - {x: 0, y: 0}
   - {x: 0, y: 1}
-  - {x: 1, y: 0}
   - {x: 1, y: 1}

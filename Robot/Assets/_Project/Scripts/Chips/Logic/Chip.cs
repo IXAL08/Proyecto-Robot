@@ -10,6 +10,7 @@ namespace Robot
         [SerializeField] private bool _hasBeenPlaced;
         [SerializeField] private List<Vector2Int> _coordinatesOccupiedOnGrid;
 
+        private List<Vector2Int> _shapeRotation;
         private List<Vector2Int> _lastShapeRotation;
         private int _rotationStepsBeforeRotation;
         private Vector2 _sizeDeltaChip;
@@ -21,11 +22,13 @@ namespace Robot
         public ChipData ChipData => _chipData;
         public bool HasBeenPlaced => _hasBeenPlaced;
         public List<Vector2Int> CoordinatesOccupiedOnGrid => _coordinatesOccupiedOnGrid;
+        public List<Vector2Int> ShapeRotation => _shapeRotation;
         public Vector2 SizeDeltaChip => _sizeDeltaChip;
 
         private void Start()
         {
             _sizeDeltaChip = gameObject.GetComponent<RectTransform>().sizeDelta;
+            _shapeRotation = new List<Vector2Int>(_chipData.Shape);
             _coordinatesOccupiedOnGrid = new List<Vector2Int>();
             _lastShapeRotation = new List<Vector2Int>();
         }
@@ -48,7 +51,7 @@ namespace Robot
 
         public void SaveCurrentStepAndShape()
         {
-            _lastShapeRotation = new List<Vector2Int>(_chipData.Shape);
+            _lastShapeRotation = new List<Vector2Int>(_shapeRotation);
             _rotationStepsBeforeRotation = _currentRotationStep;
         }
 
@@ -56,7 +59,7 @@ namespace Robot
         {
             if (_lastShapeRotation.Count > 0)
             {
-                _chipData.Shape = new List<Vector2Int>(_lastShapeRotation);
+                _shapeRotation = new List<Vector2Int>(_lastShapeRotation);
                 _currentRotationStep = _rotationStepsBeforeRotation;
             }
         }

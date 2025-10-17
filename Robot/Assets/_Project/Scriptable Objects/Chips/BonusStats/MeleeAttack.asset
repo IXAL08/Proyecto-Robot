@@ -9,10 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b4d7b8c10ad1914bb4a36ae7290ba50, type: 3}
-  m_Name: Test 2 GUIB
+  m_Script: {fileID: 11500000, guid: b5c4b3b3115f6284b9adf23a1c16fe93, type: 3}
+  m_Name: MeleeAttack
   m_EditorClassIdentifier: 
+  BonusHealth: 0
+  BonusDamage: 0
+  BonusSpeed: 0
   ActiveHealthBar: 0
   ActiveEnemyHealth: 0
   ActiveDamageVisualizer: 0
   ActiveConsumiblesVisualizer: 0
+  ActiveMeleeAttack: 1
+  ActiveRangeAttack: 0
+  ActiveDash: 0

@@ -63,7 +63,7 @@ namespace Robot
         public void SnapToLastSlot(int row, int column, Transform pivotTransform, Canvas canvas, Chip chip)
         {
             chip.RestoreLastStepAndShape();
-            ApplyVisualRotation((RectTransform)pivotTransform, chip.ChipData.RotationSteps);
+            ApplyVisualRotation((RectTransform)pivotTransform, chip.CurrentRotationStep);
             pivotTransform.SetParent(_inventorySlotUI[row,column].transform);
             pivotTransform.localPosition = Vector2.zero;
             pivotTransform.SetParent(canvas.transform);

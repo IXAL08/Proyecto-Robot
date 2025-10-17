@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68a0c68c2e2c01340a1d9200c6e80b3b, type: 3}
-  m_Name: Test
+  m_Name: Dash
   m_EditorClassIdentifier: 
-  Name: Chip Test 1
+  Name: Impulso empresarial
   Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  Description: No se que haga xd
-  ID: 
-  ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  ChipName: ChipTest
-  ChipEffectDescription: 
-  BonusStatsChip: {fileID: 11400000, guid: f12da61b4c5eac54fa30363aea65acd1, type: 2}
+  Description: "Dale a tu robot un peque\xF1o impulso para su vida."
+  ID: 3
+  ChipSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  ChipName: Impulso empresarial
+  ChipEffectDescription: Creado para empresas que quieren que sus empleados de un
+    plus. Permite al robot realizar un Dash.
+  BonusStatsChip: {fileID: 11400000, guid: 0e777537da4586942802d4f74ae9df83, type: 2}
   IsRotable: 1
   RotationSteps: 1
   ChipWidth: 3
-  ChipHeight: 2
+  ChipHeight: 1
   Shape:
   - {x: 0, y: 0}
   - {x: 0, y: 1}
   - {x: 0, y: 2}
-  - {x: -1, y: 1}

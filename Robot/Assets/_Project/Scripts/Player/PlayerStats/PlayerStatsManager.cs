@@ -51,13 +51,13 @@ namespace Robot
 
         public void ActiveGUI(Chip chip)
         {
-            if (chip.ChipData.GUIBonusEffect.ActiveHealthBar)
+            if (chip.ChipData.BonusStatsChip.ActiveHealthBar)
             {
                 _playerHealthBar.SetActive(true);
                 _playerHealthBar.GetComponent<HealthBar>().InitializeHealthBar();
             }
 
-            if (chip.ChipData.GUIBonusEffect.ActiveConsumiblesVisualizer)
+            if (chip.ChipData.BonusStatsChip.ActiveConsumiblesVisualizer)
             {
                 _playerConsumibles.SetActive(true);
             }
@@ -65,12 +65,12 @@ namespace Robot
 
         public void DeactiveGUI(Chip chip)
         {
-            if (chip.ChipData.GUIBonusEffect.ActiveHealthBar)
+            if (chip.ChipData.BonusStatsChip.ActiveHealthBar)
             {
                 _playerHealthBar.SetActive(false);                
             }
 
-            if (chip.ChipData.GUIBonusEffect.ActiveConsumiblesVisualizer)
+            if (chip.ChipData.BonusStatsChip.ActiveConsumiblesVisualizer)
             {
                 _playerConsumibles.SetActive(false);
             }

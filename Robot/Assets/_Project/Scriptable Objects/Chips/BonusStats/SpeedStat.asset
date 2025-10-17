@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5c4b3b3115f6284b9adf23a1c16fe93, type: 3}
-  m_Name: Test 1 bonus
+  m_Name: SpeedStat
   m_EditorClassIdentifier: 
-  BonusHealth: 5
+  BonusHealth: 0
   BonusDamage: 0
-  BonusSpeed: 0
-  ActiveHealthBar: 1
+  BonusSpeed: 3
+  ActiveHealthBar: 0
   ActiveEnemyHealth: 0
   ActiveDamageVisualizer: 0
   ActiveConsumiblesVisualizer: 0

@@ -41,7 +41,7 @@ namespace Robot
 
         public bool CanPlaceChip(int row, int column, Chip chip)
         {
-            foreach (var offset in chip.ChipData.Shape)
+            foreach (var offset in chip.ShapeRotation)
             {
                 int x = row + offset.x;
                 int y = column + offset.y;
@@ -87,10 +87,10 @@ namespace Robot
 
         public void RotateChip(Transform chipPivot, Chip chip)
         {
-            for (int i = 0; i < chip.ChipData.Shape.Count; i++)
+            for (int i = 0; i < chip.ShapeRotation.Count; i++)
             {
-                var offset = chip.ChipData.Shape[i];
-                chip.ChipData.Shape[i] = new Vector2Int(-offset.y, offset.x);
+                var offset = chip.ShapeRotation[i];
+                chip.ShapeRotation[i] = new Vector2Int(-offset.y, offset.x);
             }
 
             chip.ChangeRotationStep();
@@ -106,7 +106,7 @@ namespace Robot
         public List<Vector2Int> GetNewChipCoordinates(int row, int column,Chip chip)
         {
             var coords = new List<Vector2Int>();
-            foreach (var cell in chip.ChipData.Shape)
+            foreach (var cell in chip.ShapeRotation)
             {
                 coords.Add(new Vector2Int(row + cell.x, column + cell.y));
             }
@@ -135,7 +135,7 @@ namespace Robot
 
         private void OccupySlotsForChip(Chip chip, int startRow, int startColumn)
         {
-            foreach (var offset in chip.ChipData.Shape)
+            foreach (var offset in chip.ShapeRotation)
             {
                 int x = startRow + offset.x;
                 int y = startColumn + offset.y;
