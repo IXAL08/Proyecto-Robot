@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -12,7 +13,6 @@ namespace Robot
         private Chip _chip;
         private bool _isDragging, _firsttouch;
 
-
         private void Awake()
         {
             _chipPivotRectTransform = GetComponent<RectTransform>();
@@ -25,7 +25,7 @@ namespace Robot
             if (_isDragging && Input.GetKeyDown(KeyCode.R) && _chip.ChipData.IsRotable) 
             {
                 ChipInventoryManager.Source.RotateChip(_chipPivotRectTransform, _chip);
-                ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.ChipData.RotationSteps);
+                ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.CurrentRotationStep);
             } 
 
             if (_isDragging && Input.GetKeyDown(KeyCode.X) && _chip.HasBeenPlaced)
@@ -41,7 +41,7 @@ namespace Robot
                 ChipInventoryUIManager.Source.ResizeUIOnHandle((RectTransform)_chip.transform, _chip.ChipData, ChipInventoryUIManager.Source.GridLayoutGroupCellsize, ChipInventoryUIManager.Source.GridLayoutGroupSpacing);
                 _firsttouch = true;
             }
-            ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.ChipData.RotationSteps);
+            ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.CurrentRotationStep);
             _chipCanvasGroup.blocksRaycasts = false;
             _chipPivotRectTransform.position = Mouse.current.position.ReadValue();
         }
@@ -56,8 +56,9 @@ namespace Robot
             _chipCanvasGroup.blocksRaycasts = true;
             _isDragging = false;
             
-            var slotUI = eventData.pointerEnter?.GetComponent<GridSlotUI>();
+            var slotUI = GetSlotUnderPointer(eventData, LayerMask.GetMask("SlotLayer"));
 
+            print(slotUI);
 
             if (slotUI != null) {
                 TryPlaceChip(slotUI, _chip);
@@ -109,6 +110,20 @@ namespace Robot
                 ChipInventoryUIManager.Source.ReturnToDisplay(_chipPivotRectTransform, _chip);
                 _firsttouch = false;
             }
+        }
+
+        public GridSlotUI GetSlotUnderPointer(PointerEventData eventData, LayerMask layerMask)
+        {
+            var results = new System.Collections.Generic.List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+
+            // Filtramos por Layer y obtenemos el primero que tenga GridSlotUI
+            var slotResult = results
+                .Where(r => ((1 << r.gameObject.layer) & layerMask) != 0)
+                .Select(r => r.gameObject.GetComponent<GridSlotUI>())
+                .FirstOrDefault(slot => slot != null);
+
+            return slotResult;
         }
     }
 }

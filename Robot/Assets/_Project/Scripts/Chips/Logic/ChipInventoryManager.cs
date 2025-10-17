@@ -14,14 +14,18 @@ namespace Robot
         [SerializeField] private GameObject _chipPrefab;
         [SerializeField] private List<ChipData> _availableChips;
 
+
         private bool[,] _inventoryGrid;
         private int _listIndex;
+        private Dictionary<string, Chip> _activeChips = new Dictionary<string, Chip>();
 
         public event Action<int, int> OnSlotOccupied;
         public event Action<int, int> OnSlotFreed;
         public event Action OnChipSpawned;
         public event Action OnListEmpty;
         public event Action OnListNotEmpty;
+        public event Action<Chip> OnChipPlaced;
+        public event Action<Chip> OnChipRemoved;
 
         public int InventoryRows => _gridRows;
         public int InventoryColumns => _gridColumns;
@@ -37,7 +41,7 @@ namespace Robot
 
         public bool CanPlaceChip(int row, int column, Chip chip)
         {
-            foreach (var offset in chip.ChipData.Shape)
+            foreach (var offset in chip.ShapeRotation)
             {
                 int x = row + offset.x;
                 int y = column + offset.y;
@@ -83,13 +87,13 @@ namespace Robot
 
         public void RotateChip(Transform chipPivot, Chip chip)
         {
-            for (int i = 0; i < chip.ChipData.Shape.Count; i++)
+            for (int i = 0; i < chip.ShapeRotation.Count; i++)
             {
-                var offset = chip.ChipData.Shape[i];
-                chip.ChipData.Shape[i] = new Vector2Int(-offset.y, offset.x);
+                var offset = chip.ShapeRotation[i];
+                chip.ShapeRotation[i] = new Vector2Int(-offset.y, offset.x);
             }
 
-            chip.ChipData.RotationSteps = (chip.ChipData.RotationSteps + 1) % 4;
+            chip.ChangeRotationStep();
 
             chipPivot.position = Mouse.current.position.ReadValue();
         }
@@ -102,7 +106,7 @@ namespace Robot
         public List<Vector2Int> GetNewChipCoordinates(int row, int column,Chip chip)
         {
             var coords = new List<Vector2Int>();
-            foreach (var cell in chip.ChipData.Shape)
+            foreach (var cell in chip.ShapeRotation)
             {
                 coords.Add(new Vector2Int(row + cell.x, column + cell.y));
             }
@@ -131,7 +135,7 @@ namespace Robot
 
         private void OccupySlotsForChip(Chip chip, int startRow, int startColumn)
         {
-            foreach (var offset in chip.ChipData.Shape)
+            foreach (var offset in chip.ShapeRotation)
             {
                 int x = startRow + offset.x;
                 int y = startColumn + offset.y;
@@ -155,6 +159,7 @@ namespace Robot
         {
             PlayerStatsManager.Source.AddModifierToPlayer(chip.ChipData.BonusStatsChip);
             ChipInventoryUIManager.Source.RefreshPlayerStats();
+            OnChipPlaced?.Invoke(chip);
             chip.SetPlaced(true);
         }
 
@@ -162,6 +167,7 @@ namespace Robot
         {
             PlayerStatsManager.Source.SubstractModifierToPlayer(chip.ChipData.BonusStatsChip);
             ChipInventoryUIManager.Source.RefreshPlayerStats();
+            OnChipRemoved?.Invoke(chip);
         }
 
         public void ReturnChipToList(RectTransform pivotChip, Chip chip)

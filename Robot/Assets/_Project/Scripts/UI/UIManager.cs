@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Robot
@@ -6,27 +5,41 @@ namespace Robot
     public class UIManager : MonoBehaviour
     {
         [SerializeField] private GameObject _chipUIInventory;
+        [SerializeField] private CanvasGroup _guiUI;
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.I))
             {
-                OpenChipInventory(true);
+                OpenOrCloseChipMenu(_chipUIInventory, true);
+                HideGUI();
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                OpenChipInventory(false);
+                OpenOrCloseMenu(_chipUIInventory, false);
+                ShowGUI();
             }
         }
 
-        private void OpenChipInventory(bool value)
+        private void OpenOrCloseMenu(GameObject menu, bool value)
         {
-            _chipUIInventory.SetActive(value);
+            menu.SetActive(value);
         }
 
-        private async UniTask InitializeUI()
+        private void OpenOrCloseChipMenu(GameObject menu, bool value)
         {
-            await UniTask.WaitForSeconds(0.5f);
+            menu.SetActive(value);
+            menu.GetComponentInChildren<ChipDisplay>().RefreshChipDescription();
+        }
+
+        private void HideGUI()
+        {
+            _guiUI.alpha = 0;
+        }
+
+        private void ShowGUI()
+        {
+            _guiUI.alpha = 1;
         }
     }
 }

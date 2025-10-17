@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2603290601535438473}
   - component: {fileID: 2555766102447451545}
   - component: {fileID: 586610478762028324}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Chip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,6 +91,7 @@ MonoBehaviour:
   _chipData: {fileID: 11400000, guid: 4e3eb3aa3606556439aec52f6dba9e21, type: 2}
   _currentColumnPlaced: 0
   _currentRowPlaced: 0
+  _currentRotationStep: 0
   _hasBeenPlaced: 0
   _coordinatesOccupiedOnGrid: []
 --- !u!1 &8246224157766132777
@@ -104,7 +105,7 @@ GameObject:
   - component: {fileID: 7409138561052349931}
   - component: {fileID: 7414093943913350064}
   - component: {fileID: 6959922975108161318}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Chip Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,6 +144,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2af88aed2e8f9142b193d6e8d956c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ignoredLayers:
+    serializedVersion: 2
+    m_Bits: 4
 --- !u!225 &6959922975108161318
 CanvasGroup:
   m_ObjectHideFlags: 0

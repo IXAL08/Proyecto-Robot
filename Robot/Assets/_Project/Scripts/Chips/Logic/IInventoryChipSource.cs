@@ -30,5 +30,7 @@ namespace Robot
         event Action OnChipSpawned;
         event Action OnListEmpty;
         event Action OnListNotEmpty;
+        event Action<Chip> OnChipPlaced;
+        event Action<Chip> OnChipRemoved;
     }
 }

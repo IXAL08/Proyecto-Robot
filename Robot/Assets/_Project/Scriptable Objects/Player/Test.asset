@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4206141a14de748aa079bcb8d6b38e, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  MaxHealth: 40
+  MaxHealth: 45
   AttackPower: 3.5
   SpeedPower: 10

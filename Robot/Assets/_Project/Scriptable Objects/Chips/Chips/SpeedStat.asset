@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68a0c68c2e2c01340a1d9200c6e80b3b, type: 3}
-  m_Name: Test
+  m_Name: SpeedStat
   m_EditorClassIdentifier: 
-  Name: Chip Test 1
+  Name: "N\xFAcleo de velocidad"
   Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  Description: No se que haga xd
-  ID: 
+  Description: Aumenta la velocidad de tus trabajadores.
+  ID: 5
   ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  ChipName: ChipTest
-  ChipEffectDescription: 
-  BonusStatsChip: {fileID: 11400000, guid: f12da61b4c5eac54fa30363aea65acd1, type: 2}
+  ChipName: "N\xFAcleo de velocidad"
+  ChipEffectDescription: "Aumenta la velocidad para esos trabajadores que son m\xE1s
+    lentos que las tortugas. Aumenta la velocidad del movimiento del robot."
+  BonusStatsChip: {fileID: 11400000, guid: 25e67f4ae5b6d714db34fb5cc08828da, type: 2}
   IsRotable: 1
-  RotationSteps: 1
-  ChipWidth: 3
-  ChipHeight: 2
+  RotationSteps: 0
+  ChipWidth: 1
+  ChipHeight: 1
   Shape:
   - {x: 0, y: 0}
   - {x: 0, y: 1}

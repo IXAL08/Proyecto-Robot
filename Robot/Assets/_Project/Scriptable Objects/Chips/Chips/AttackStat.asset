@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68a0c68c2e2c01340a1d9200c6e80b3b, type: 3}
-  m_Name: Test 2
+  m_Name: AttackStat
   m_EditorClassIdentifier: 
-  Name: 
-  Icon: {fileID: 0}
-  Description: 
-  ID: 1
+  Name: "N\xFAcleo de Ataque"
+  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Description: "Aumenta un 10 el da\xF1o que inflijes a enemigos."
+  ID: 4
   ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  ChipName: ChipTest 2
-  ChipEffectDescription: 
-  BonusStatsChip: {fileID: 11400000, guid: 0280b8f57b09571418a0300010325c81, type: 2}
+  ChipName: "N\xFAcleo de Ataque"
+  ChipEffectDescription: "Aumenta la fuerza de tus empleados sin necesidad de pagarles
+    m\xE1a. Aumenta 10 al da\xF1o que inflije el robot."
+  BonusStatsChip: {fileID: 11400000, guid: ce882d73dd5e01041b21607ef660e179, type: 2}
   IsRotable: 0
   RotationSteps: 0
   ChipWidth: 2
