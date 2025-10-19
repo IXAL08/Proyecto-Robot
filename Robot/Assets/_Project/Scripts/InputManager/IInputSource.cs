@@ -13,6 +13,10 @@ namespace Robot
 
         //OnPlayMode
         event Action OpenChipsInventory;
+        event Action<float> MovePlayer;
+        event Action Jump;
+        event Action Dash;
+        event Action Attack;
 
         //OnInventoryChips
         event Action CloseChipsInventory;

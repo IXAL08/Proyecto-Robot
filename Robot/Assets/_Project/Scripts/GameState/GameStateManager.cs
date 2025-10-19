@@ -33,9 +33,6 @@ namespace Robot
 
             switch (CurrentGameState)
             {
-                case GameState.OnPlay:
-                    ChangeState(GameState.OnPause);
-                    break;
                 case GameState.OnPause:
                     ChangeState(GameState.OnPlay);
                     break;

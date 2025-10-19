@@ -15,6 +15,10 @@ namespace Robot
         public event Action CloseChipsInventory;
         public event Action DeleteChip;
         public event Action RotateChip;
+        public event Action<float> MovePlayer;
+        public event Action Jump;
+        public event Action Dash;
+        public event Action Attack;
 
         private void Start()
         {
@@ -49,6 +53,12 @@ namespace Robot
                 case GameState.OnChipMenu:
                     CheckOnChipMenuInputs();
                     break;
+                case GameState.OnCraftingMenu:
+                    CheckOnCraftingMenuInputs();
+                    break;
+                case GameState.OnInventoryMenu:
+                    CheckOnInventoryMenuInputs();
+                    break;
 
             }
         }
@@ -64,16 +74,38 @@ namespace Robot
 
         private void CheckOnPlayInputs()
         {
+            float horizontalInput = Input.GetAxis("Horizontal");
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 OpenUIPause?.Invoke();
-                BackToOnPlay?.Invoke();
+                GameStateManager.Source.ChangeState(GameState.OnPause);
             }
 
             if (Input.GetKeyDown(KeyCode.I))
             {
                 OpenChipsInventory?.Invoke();
                 GameStateManager.Source.ChangeState(GameState.OnChipMenu);
+            }
+
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            {
+                MovePlayer?.Invoke(horizontalInput);
+            }
+
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump?.Invoke();
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                Dash?.Invoke();
+            }
+
+            if (Input.GetButton("Fire1"))
+            {
+                Attack?.Invoke();
             }
         }
 
@@ -94,6 +126,16 @@ namespace Robot
             {
                 RotateChip?.Invoke();
             }
+        }
+
+        private void CheckOnCraftingMenuInputs()
+        {
+            /// Coloca los inputs aqui
+        }
+
+        private void CheckOnInventoryMenuInputs()
+        {
+            /// colocar los inputs
         }
     }
 }

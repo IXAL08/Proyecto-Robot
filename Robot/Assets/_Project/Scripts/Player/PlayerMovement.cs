@@ -36,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         PlayerStatsManager.Source.OnStatsChanged += UpdatePlayerVelocity;
+        InputManager.Source.MovePlayer += HandleMovement;
+        InputManager.Source.Jump += HandleJump;
+        InputManager.Source.Dash += HandleDash;
         moveSpeed = PlayerStatsManager.Source.PlayerSpeedPower;
     }
     private void Start()
@@ -46,27 +49,24 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         PlayerStatsManager.Source.OnStatsChanged -= UpdatePlayerVelocity;
+        InputManager.Source.MovePlayer -= HandleMovement;
+        InputManager.Source.Dash -= HandleDash;
     }
 
     private void Update()
     {
         CheckGrounded();
         CheckWalls();
-        HandleJump();
-        HandleDash();
         UpdateTimers();
     }
 
     private void FixedUpdate()
     {
-        if (!isDashing)
-        {
-            HandleMovement();
-        }
-        else
+        if (isDashing)
         {
             HandleDashMovement();
         }
+
     }
 
     void CheckGrounded()
@@ -102,9 +102,10 @@ public class PlayerMovement : MonoBehaviour
         return 0;
     }
 
-    void HandleMovement()
+    void HandleMovement(float horizontalInput)
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
+        if (isDashing) return;
+
 
         if (isTouchingWall && Mathf.Sign(horizontalInput) == Mathf.Sign(GetWallDirection()))
         {
@@ -124,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleJump()
     {
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
         }
@@ -134,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleDash()
     {
-        if (canDash && Input.GetKeyDown(KeyCode.LeftShift))
+        if (canDash)
         {
             StartDash();
         }
