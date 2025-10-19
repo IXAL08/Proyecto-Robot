@@ -20,19 +20,19 @@ namespace Robot
             _chipCanvasGroup = GetComponent<CanvasGroup>();
             _chipCanva = GetComponentInParent<Canvas>();
         }
-        private void Update()
-        {
-            if (_isDragging && Input.GetKeyDown(KeyCode.R) && _chip.ChipData.IsRotable) 
-            {
-                ChipInventoryManager.Source.RotateChip(_chipPivotRectTransform, _chip);
-                ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.CurrentRotationStep);
-            } 
 
-            if (_isDragging && Input.GetKeyDown(KeyCode.X) && _chip.HasBeenPlaced)
-            {
-                ChipInventoryManager.Source.ReturnChipToList(_chipPivotRectTransform,_chip);
-            }
+        private void Start()
+        {
+            InputManager.Source.DeleteChip += DeleteChipPlaced;
+            InputManager.Source.RotateChip += RotateChip;
         }
+
+        private void OnDestroy()
+        {
+            InputManager.Source.DeleteChip -= DeleteChipPlaced;
+            InputManager.Source.RotateChip -= RotateChip;
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             _isDragging = true;
@@ -124,6 +124,23 @@ namespace Robot
                 .FirstOrDefault(slot => slot != null);
 
             return slotResult;
+        }
+
+        private void RotateChip()
+        {
+            if (_isDragging && _chip.ChipData.IsRotable)
+            {
+                ChipInventoryManager.Source.RotateChip(_chipPivotRectTransform, _chip);
+                ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.CurrentRotationStep);
+            }
+        }
+
+        private void DeleteChipPlaced()
+        {
+            if(_isDragging && _chip.HasBeenPlaced)
+            {
+                ChipInventoryManager.Source.ReturnChipToList(_chipPivotRectTransform, _chip);
+            }
         }
     }
 }

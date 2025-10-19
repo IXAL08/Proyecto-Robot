@@ -10,6 +10,16 @@ namespace Robot
 
         public event Action<GameState> OnGameStateChanged;
 
+        private void Start()
+        {
+            InputManager.Source.BackToOnPlay += SetGameState;
+        }
+
+        private void OnDestroy()
+        {
+            InputManager.Source.BackToOnPlay -= SetGameState;
+        }
+
         public void ChangeState(GameState state)
         {
             if (CurrentGameState == state) return;
@@ -18,9 +28,8 @@ namespace Robot
             OnGameStateChanged?.Invoke(CurrentGameState);
         }
 
-        private void SetPauseState()
+        private void SetGameState()
         {
-            if (SceneManager.GetActiveScene().name == "MainMenu") return;
 
             switch (CurrentGameState)
             {
@@ -30,8 +39,14 @@ namespace Robot
                 case GameState.OnPause:
                     ChangeState(GameState.OnPlay);
                     break;
-                case GameState.OnMenus:
-                    ChangeState(GameState.OnMenus);
+                case GameState.OnChipMenu:
+                    ChangeState(GameState.OnPlay);
+                    break;
+                case GameState.OnInventoryMenu:
+                    ChangeState(GameState.OnPlay);
+                    break;
+                case GameState.OnCraftingMenu:
+                    ChangeState(GameState.OnPlay);
                     break;
                 case GameState.OnGameOver:
                     ChangeState(GameState.OnGameOver);
@@ -45,7 +60,9 @@ namespace Robot
     {
         OnPlay,
         OnPause,
-        OnMenus,
+        OnChipMenu,
+        OnInventoryMenu,
+        OnCraftingMenu,
         OnGameOver
     }
 }

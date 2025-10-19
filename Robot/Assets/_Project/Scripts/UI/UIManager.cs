@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace Robot
@@ -7,29 +8,29 @@ namespace Robot
         [SerializeField] private GameObject _chipUIInventory;
         [SerializeField] private CanvasGroup _guiUI;
 
-        private void Update()
+        private void Start()
         {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                OpenOrCloseChipMenu(_chipUIInventory, true);
-                HideGUI();
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                OpenOrCloseMenu(_chipUIInventory, false);
-                ShowGUI();
-            }
+            InputManager.Source.OpenChipsInventory += OpenChipInventory;
+            InputManager.Source.CloseChipsInventory += CloseChipInventory;
         }
 
-        private void OpenOrCloseMenu(GameObject menu, bool value)
+        private void OnDisable()
         {
-            menu.SetActive(value);
+            InputManager.Source.OpenChipsInventory -= OpenChipInventory;
+            InputManager.Source.CloseChipsInventory -= CloseChipInventory;
         }
 
-        private void OpenOrCloseChipMenu(GameObject menu, bool value)
+        private void CloseChipInventory()
         {
-            menu.SetActive(value);
-            menu.GetComponentInChildren<ChipDisplay>().RefreshChipDescription();
+            _chipUIInventory.SetActive(false);
+            ShowGUI();
+        }
+
+        private void OpenChipInventory()
+        {
+            _chipUIInventory.SetActive(true);
+            _chipUIInventory.GetComponentInChildren<ChipDisplay>().RefreshChipDescription();
+            HideGUI();
         }
 
         private void HideGUI()
