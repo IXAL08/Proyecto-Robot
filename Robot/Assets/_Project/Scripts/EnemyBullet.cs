@@ -1,8 +1,7 @@
 using Robot;
-using System;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
     [Header("Bala")]
     public float speed;
@@ -14,12 +13,7 @@ public class Bullet : MonoBehaviour
     private float lifeTimer;
     private bool hasCollided = false;
     private Vector3 movementDirection = Vector3.right;
-
-    private void OnEnable()
-    {
-        damage = PlayerStatsManager.Source.PlayerAttackPower;
-    }
-
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -37,7 +31,7 @@ public class Bullet : MonoBehaviour
         }
 
     }
-
+    
     private void Update()
     {
         lifeTimer -= Time.deltaTime;
@@ -46,7 +40,7 @@ public class Bullet : MonoBehaviour
             DestroyBullet();
         }
     }
-
+    
     private void FixedUpdate()
     {
         if (rb == null)
@@ -62,36 +56,14 @@ public class Bullet : MonoBehaviour
             HandleCollision(other.collider);
         }
     }
-
+    
     void HandleCollision(Collider other)
     {
         if(hasCollided) return;
         
         hasCollided = true;
 
-        EnemigoMelee meleeHealth = other.GetComponent<EnemigoMelee>();
-        if (meleeHealth != null)
-        {
-            meleeHealth.TakeDamage((int)damage);
-        }
-        
-        /*RangeEnemy rangeHealth = other.GetComponent<RangeEnemy>();
-        if (rangeHealth != null)
-        {
-            rangeHealth.TakeDamage((int)damage);
-        }*/
-        
-        FlyingEnemy flyingHealth = other.GetComponent<FlyingEnemy>();
-        if (flyingHealth != null)
-        {
-            flyingHealth.TakeDamage((int)damage);
-        }
-        
-        HeavyEnemy heavyHealth = other.GetComponent<HeavyEnemy>();
-        if (heavyHealth != null)
-        {
-            heavyHealth.TakeDamage((int)damage);
-        }
+        PlayerStatsManager.Source.TakeDamage(damage);
         
 
         DestroyBullet();
@@ -103,11 +75,6 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 0.1f);
     }
     
-    public void SetDamage(int newDamage)
-    {
-        damage = newDamage;
-    }
-    
     public void SetSpeed(float newSpeed)
     {
         speed = newSpeed;
@@ -115,6 +82,11 @@ public class Bullet : MonoBehaviour
         {
             rb.linearVelocity = transform.right * speed;
         }
+    }
+    
+    public void SetDamage(int newDamage)
+    {
+        damage = newDamage;
     }
     
     public void SetDirection(Vector3 direction)

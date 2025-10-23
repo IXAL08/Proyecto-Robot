@@ -1,4 +1,5 @@
 using System.Collections;
+using Robot;
 using UnityEngine;
 
 public class EnemigoMelee : MonoBehaviour
@@ -10,7 +11,7 @@ public class EnemigoMelee : MonoBehaviour
     
     [Header("Combate")]
     public int maxHealth = 30;
-    public int attackDamage = 1;
+    public float attackDamage = 5;
     public float attackCooldown = 2f;
     public float detectionRange = 4f;
     public float attackRange = 1.5f;
@@ -192,16 +193,12 @@ public class EnemigoMelee : MonoBehaviour
     
     void ApplyDamage()
     {
-        /*Collider[] hitPlayers = Physics.OverlapSphere(attackPoint.position, attackRange * 0.5f, playerLayer);
+        Collider[] hitPlayers = Physics.OverlapSphere(attackPoint.position, attackRange * 0.5f, playerMask);
         
         foreach (Collider playerCollider in hitPlayers)
         {
-            Health playerHealth = playerCollider.GetComponent<Health>();
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(attackDamage);
-            }
-        }*/
+                PlayerStatsManager.Source.TakeDamage(attackDamage);
+        }
     }
     
     IEnumerator WaitAtPoint()

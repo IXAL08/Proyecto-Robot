@@ -16,6 +16,10 @@ public class RangeAttack : MonoBehaviour
     public bool usePlayerFacing = true; 
     public bool autoUpdateDirection = true;
    
+    [Header("Apuntado Libre")]
+    public bool useFreeAim = true;
+    public Transform aimPointer;
+   
     private float cooldownTimer = 0f;
     private bool canShoot = true;
     private Vector3 currentFacingDirection = Vector3.right;
@@ -49,6 +53,11 @@ public class RangeAttack : MonoBehaviour
                 canShoot = true;
             }
         }
+        
+        if (useFreeAim && aimPointer != null)
+        {
+            UpdateAimPointer();
+        }
 
     }
 
@@ -64,6 +73,12 @@ public class RangeAttack : MonoBehaviour
 
     Vector3 GetPlayerFacingDirection()
     {
+        
+        if (useFreeAim)
+        {
+            return GetMouseDirection();
+        }
+        
         float horizontalInput = Input.GetAxisRaw("Horizontal");
 
         if (horizontalInput >= 0.1f)
@@ -75,6 +90,16 @@ public class RangeAttack : MonoBehaviour
         }
         return currentFacingDirection;
     }
+    
+    Vector3 GetMouseDirection()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 11;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector3 direction = (worldPos - transform.position).normalized;
+        return direction;
+    }
+
 
     void UpdateFirePointDirection()
     {
@@ -85,6 +110,11 @@ public class RangeAttack : MonoBehaviour
             float xOffset = Mathf.Abs(firePoint.localPosition.x);
             firePoint.localPosition = new Vector3(currentFacingDirection.x * xOffset, firePoint.localPosition.y, firePoint.localPosition.z);
         }
+    }
+    
+    void UpdateAimPointer()
+    {
+        aimPointer.position = transform.position + currentFacingDirection * 2f;
     }
 
     void HandleShooting()
