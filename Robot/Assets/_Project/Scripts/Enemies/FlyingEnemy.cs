@@ -43,7 +43,7 @@ public class FlyingEnemy : MonoBehaviour
         enemyRenderer = GetComponentInChildren<Renderer>();
         
         startPos = transform.position;
-        currentHealth = 50;
+        currentHealth = 3;
 
         if (player == null)
         {
