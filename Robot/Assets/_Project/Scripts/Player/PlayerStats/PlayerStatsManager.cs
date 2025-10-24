@@ -34,11 +34,6 @@ namespace Robot
             ChipInventoryManager.Source.OnChipRemoved += DeactiveGUI;
         }
 
-        private void Start()
-        {
-            ChipInventoryManager.Source.OnChipPlaced += ActiveGUI;
-            ChipInventoryManager.Source.OnChipRemoved += DeactiveGUI;
-        }
         private void InitializeStats()
         {
             _currentPlayerMaxHealth = _playerStats.MaxHealth;
@@ -160,31 +155,5 @@ namespace Robot
             }
         }
 
-        public void ActiveGUI(Chip chip)
-        {
-            if (chip.ChipData.BonusStatsChip.ActiveHealthBar)
-            {
-                _playerHealthBar.SetActive(true);
-                _playerHealthBar.GetComponent<HealthBar>().InitializeHealthBar();
-            }
-
-            if (chip.ChipData.BonusStatsChip.ActiveConsumiblesVisualizer)
-            {
-                _playerConsumibles.SetActive(true);
-            }
-        }
-
-        public void DeactiveGUI(Chip chip)
-        {
-            if (chip.ChipData.BonusStatsChip.ActiveHealthBar)
-            {
-                _playerHealthBar.SetActive(false);                
-            }
-
-            if (chip.ChipData.BonusStatsChip.ActiveConsumiblesVisualizer)
-            {
-                _playerConsumibles.SetActive(false);
-            }
-        }
     }
 }
