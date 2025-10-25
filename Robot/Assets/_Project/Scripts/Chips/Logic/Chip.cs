@@ -73,6 +73,7 @@ namespace Robot
         {
             _chipData = chip;
             _currentRotationStep = _chipData.RotationSteps;
+            _shapeRotation = new List<Vector2Int>(_chipData.Shape);
         }
 
     }
