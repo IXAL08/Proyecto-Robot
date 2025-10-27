@@ -27,10 +27,10 @@ public class RangeAttack : MonoBehaviour
     private void Start()
     {
         currentFacingDirection = GetPlayerFacingDirection();
-        PlayerStatsManager.Source.OnStatsChanged += ModifyBulletSpeed;
+        //PlayerStatsManager.Source.OnStatsChanged += ModifyBulletSpeed;
         InputManager.Source.Attack += HandleShooting;
         UpdateFirePointDirection();
-        bulletSpeed = (PlayerStatsManager.Source.PlayerSpeedPower + 4);
+        //bulletSpeed = (PlayerStatsManager.Source.PlayerSpeedPower + 4);
     }
 
     private void OnDestroy()
@@ -156,7 +156,7 @@ public class RangeAttack : MonoBehaviour
 
     private void ModifyBulletSpeed(float x, float y, float speed)
     {
-        bulletSpeed = (PlayerStatsManager.Source.PlayerSpeedPower + 4);
+        //bulletSpeed = (PlayerStatsManager.Source.PlayerSpeedPower + 4);
     }
    
 }

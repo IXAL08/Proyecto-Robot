@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        damage = PlayerStatsManager.Source.PlayerAttackPower;
+        damage = PlayerStatsManager.Source.PlayerDamage;
     }
 
     private void Start()

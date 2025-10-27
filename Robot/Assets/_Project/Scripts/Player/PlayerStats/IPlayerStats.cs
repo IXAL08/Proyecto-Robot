@@ -6,24 +6,23 @@ namespace Robot
     public interface IPlayerStats
     {
         //Eventos
-        event Action<float, float, float> OnStatsChanged;
-        event Action<float> OnHealthChanged;
+        event Action<float, float, float> OnBaseStatsChanged;
+        event Action OnDamageRecieved;
+        event Action OnHealRecieved;
+        event Action OnHealthChanges;
         event Action OnPlayerDeath;
+
         //Variables
+        float CurrentHealth {  get;}
         float PlayerMaxHealth { get; }
-        float PlayerAttackPower { get; }
-        float PlayerSpeedPower { get; }
-        
-        
+        float PlayerDamage { get; }
+        float PlayerMovementSpeed { get; }
 
         //Funciones
         void AddModifierToPlayer(BonusStatsChip bonusStats);
         void SubstractModifierToPlayer(BonusStatsChip bonusStats);
-
         void TakeDamage(float damage);
-
-        void Die();
-
-       void Respawn();
+        void Heal(float healAmount);
+        void Respawn();
     }
 }

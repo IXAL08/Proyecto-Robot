@@ -35,11 +35,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerStatsManager.Source.OnStatsChanged += UpdatePlayerVelocity;
+        //PlayerStatsManager.Source.OnStatsChanged += UpdatePlayerVelocity;
         InputManager.Source.MovePlayer += HandleMovement;
         InputManager.Source.Jump += HandleJump;
         InputManager.Source.Dash += HandleDash;
-        moveSpeed = PlayerStatsManager.Source.PlayerSpeedPower;
+        //moveSpeed = PlayerStatsManager.Source.PlayerSpeedPower;
     }
     private void Start()
     {
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerStatsManager.Source.OnStatsChanged -= UpdatePlayerVelocity;
+        //PlayerStatsManager.Source.OnStatsChanged -= UpdatePlayerVelocity;
         InputManager.Source.MovePlayer -= HandleMovement;
         InputManager.Source.Dash -= HandleDash;
     }

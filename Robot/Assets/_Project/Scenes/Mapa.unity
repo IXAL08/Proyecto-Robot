@@ -24279,13 +24279,14 @@ GameObject:
   m_Component:
   - component: {fileID: 879854092}
   - component: {fileID: 879854093}
+  - component: {fileID: 879854094}
   m_Layer: 5
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &879854092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24303,7 +24304,6 @@ RectTransform:
   - {fileID: 809369338}
   - {fileID: 259752772}
   - {fileID: 845578790}
-  - {fileID: 1585572848}
   m_Father: {fileID: 2077810462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -24323,19 +24323,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c46efe0125e8244c8e6508c85c0b240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 0
-  _currentHealth: 0
-  _damage: 0
-  _healthBar:
+  _healthHearts:
   - {fileID: 1732469819}
   - {fileID: 1639101826}
   - {fileID: 809369337}
   - {fileID: 259752771}
   - {fileID: 845578789}
-  - {fileID: 1585572847}
   _fullHeartSprite: {fileID: 21300000, guid: 60096362657747348b759442195d9db4, type: 3}
   _halfHeartSprite: {fileID: 21300000, guid: f0a454f7e8a563e4a9c740384068146c, type: 3}
   _emptyHeartSprite: {fileID: 21300000, guid: 24f4a7a66b5fab649a551cf6e780a7cd, type: 3}
+--- !u!225 &879854094
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879854091}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &881040085
 GameObject:
   m_ObjectHideFlags: 0
@@ -30483,6 +30491,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3393382073245666039, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: _healthBar
+      value: 
+      objectReference: {fileID: 879854091}
+    - target: {fileID: 3393382073245666039, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: _basePlayerStats
+      value: 
+      objectReference: {fileID: 11400000, guid: aa9d41537c4add04eabfe5154c2139bc, type: 2}
     - target: {fileID: 3393382073245666039, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
       propertyPath: _playerHealthBar
       value: 
