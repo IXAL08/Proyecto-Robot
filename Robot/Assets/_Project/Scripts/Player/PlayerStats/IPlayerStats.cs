@@ -14,6 +14,8 @@ namespace Robot
         event Action<bool> OnMeleeChipActivation;
         event Action<bool> OnRangeChipActivation;
         event Action<bool> OnDashChipActivation;
+        event Action<bool> OnHealthBarActivation;
+        event Action<bool> OnConsumiblesUIActivation;
 
         //Variables
         float CurrentHealth {  get;}

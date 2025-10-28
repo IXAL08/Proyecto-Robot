@@ -29,6 +29,8 @@ namespace Robot
         public event Action<bool> OnMeleeChipActivation;
         public event Action<bool> OnRangeChipActivation;
         public event Action<bool> OnDashChipActivation;
+        public event Action<bool> OnHealthBarActivation;
+        public event Action<bool> OnConsumiblesUIActivation;
 
         private void OnEnable()
         {
