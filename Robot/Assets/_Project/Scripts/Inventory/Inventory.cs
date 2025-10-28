@@ -15,14 +15,14 @@ namespace Robot
         public ItemData Item => _item;
         public int Quantity => _quantity;
 
-        public void ModifyQuantity(int amount)
+        public void SetQuantity(int quantity)
         {
-            _quantity += amount;
+            _quantity = quantity;
         }
         
-        public void ModifyQuantity(int quantity)
+        public void ModifyQuantity(int amount)
         {
-            int newQuantity = _quantity+quantity;
+            int newQuantity = _quantity+amount;
             SetQuantity(newQuantity);
         }
 
