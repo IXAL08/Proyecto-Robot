@@ -13,11 +13,11 @@ namespace Robot
         public ItemData Item => _item;
         public int Quantity => _quantity;
 
-        public void SetQuantity(int quantity)
+        public void ModifyQuantity(int amount)
         {
-            _quantity = Mathf.Max(0, quantity);
+            _quantity += amount;
         }
-
+        
         public InventorySlot(ItemData item, int quantity)
         {
             _item = item;
@@ -69,7 +69,7 @@ namespace Robot
             foreach (var item in _itemsList)
             {
                 if (item.Item != newItem) continue;
-                item.SetQuantity(quantity);
+                item.ModifyQuantity(quantity);
                 return;
             }
         }
@@ -95,6 +95,16 @@ namespace Robot
             }
 
             return false;
+        }
+
+        public int GetItemQuantity(ItemData item)
+        {
+            foreach (var i in _itemsList)
+            {
+                if(i.Item == item) return i.Quantity;
+            }
+
+            return 0;
         }
 
         public List<InventorySlot> GetInventory()

@@ -8,6 +8,8 @@ namespace Robot
         public void RemoveItemFromInventory(ItemData newItem, int quantity = -1);
         public bool IsItemInInventory(ItemData newItem);
         public bool IsItemQuantityInInventory(ItemData newItem, int quantity);
+        
+        public int GetItemQuantity(ItemData item);
 
         public List<InventorySlot> GetInventory();
     }
