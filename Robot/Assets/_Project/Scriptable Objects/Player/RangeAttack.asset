@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d4206141a14de748aa079bcb8d6b38e, type: 3}
-  m_Name: Test
+  m_Name: RangeAttack
   m_EditorClassIdentifier: 
-  MaxHealth: 30
-  AttackPower: 35
-  SpeedPower: 10
+  MaxHealth: 25
+  AttackPower: 10
+  SpeedPower: 12

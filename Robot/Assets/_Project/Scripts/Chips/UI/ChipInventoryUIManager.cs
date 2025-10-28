@@ -32,8 +32,8 @@ namespace Robot
         public void RefreshPlayerStats()
         {
             _healthStat.text = (PlayerStatsManager.Source.PlayerMaxHealth/10).ToString();
-            _attackStat.text = PlayerStatsManager.Source.PlayerAttackPower.ToString();
-            _speedStat.text = PlayerStatsManager.Source.PlayerSpeedPower.ToString();
+            _attackStat.text = (PlayerStatsManager.Source.PlayerDamage/10).ToString();
+            _speedStat.text = PlayerStatsManager.Source.PlayerMovementSpeed.ToString();
         }
 
         private void IntializeGridSlot()

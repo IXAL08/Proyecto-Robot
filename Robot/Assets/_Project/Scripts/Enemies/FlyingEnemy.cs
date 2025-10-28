@@ -12,7 +12,7 @@ public class FlyingEnemy : MonoBehaviour
     public float minDistanceFromPlayer = 2f;
 
     [Header("Ataque")]
-    public int damage = 1;
+    public int damage = 10;
     public float cooldown = 2f;
     public float attackDuration = 0.5f;
 
@@ -43,7 +43,7 @@ public class FlyingEnemy : MonoBehaviour
         enemyRenderer = GetComponentInChildren<Renderer>();
         
         startPos = transform.position;
-        currentHealth = 3;
+        currentHealth = 50;
 
         if (player == null)
         {

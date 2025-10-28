@@ -43,7 +43,7 @@ public class HeavyEnemy : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         enemyRenderer = GetComponentInChildren<Renderer>();
         
-        currentHealth = 10;
+        currentHealth = 120;
         
         if (player == null)
         {

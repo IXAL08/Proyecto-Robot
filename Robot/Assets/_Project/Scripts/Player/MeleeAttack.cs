@@ -1,3 +1,4 @@
+using Robot;
 using System;
 using UnityEngine;
 
@@ -14,17 +15,28 @@ public class MeleeAttack : MonoBehaviour
 
     [Header("Efecto de Partículas")] public ParticleSystem attackParticles;
 
+    private bool isActivate = false;
     private float cooldownTimer = 0f;
     private bool canAttack = true;
     private bool facingRight = true;
 
     private void Start()
     {
+        InputManager.Source.Attack += OnButtonPressed;
+        PlayerStatsManager.Source.OnMeleeChipActivation += ActivateMeleeAttack;
         UpdateAttackDirection();
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Source.Attack -= OnButtonPressed;
+        PlayerStatsManager.Source.OnMeleeChipActivation -= ActivateMeleeAttack;
     }
 
     void Update()
     {
+        if (!isActivate) return;
+
         // Actualizar cooldown
         if (!canAttack)
         {
@@ -41,11 +53,6 @@ public class MeleeAttack : MonoBehaviour
             DetectFacingDirection();
         }
 
-        // Ejecutar ataque
-        if (Input.GetButton("Fire1") && canAttack)
-        {
-            Attack();
-        }
     }
 
     void DetectFacingDirection()
@@ -63,6 +70,16 @@ public class MeleeAttack : MonoBehaviour
         }
 
         UpdateAttackDirection();
+    }
+
+    private void OnButtonPressed()
+    {
+        if (!isActivate) return;
+
+        if (canAttack)
+        {
+            Attack();
+        }
     }
 
     void Attack()
@@ -105,5 +122,10 @@ public class MeleeAttack : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         }
+    }
+
+    private void ActivateMeleeAttack(bool value)
+    {
+        isActivate = value;
     }
 }

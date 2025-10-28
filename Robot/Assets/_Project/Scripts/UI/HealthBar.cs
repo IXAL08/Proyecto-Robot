@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,98 +8,98 @@ namespace Robot
 {
     public class HealthBar : MonoBehaviour
     {
-        [SerializeField] private float _maxHealth, _currentHealth, _damage;
-        [SerializeField] private GameObject[] _healthBar;
+        [SerializeField] private GameObject[] _healthHearts;
         [SerializeField] private Sprite _fullHeartSprite, _halfHeartSprite, _emptyHeartSprite;
 
         private List<GameObject> _hearthActive = new List<GameObject>();
-        private void Start()
+        private void Awake()
         {
-            _maxHealth = (PlayerStatsManager.Source.PlayerMaxHealth / 10);
-            _currentHealth = _maxHealth;
-            PlayerStatsManager.Source.OnStatsChanged += UpdateMaxHealth;
-            InitializeHealthBar();
+            PlayerStatsManager.Source.OnHealthChanges += InitializeHearts;
+            PlayerStatsManager.Source.OnDamageRecieved += RecieveDamageUI;
+            PlayerStatsManager.Source.OnHealRecieved += RecieveHealUI;
+            InitializeHearts();
         }
 
         private void OnDisable()
         {
-            PlayerStatsManager.Source.OnStatsChanged -= UpdateMaxHealth;
+            PlayerStatsManager.Source.OnHealthChanges -= InitializeHearts;
+            PlayerStatsManager.Source.OnDamageRecieved -= RecieveDamageUI;
+            PlayerStatsManager.Source.OnHealRecieved -= RecieveHealUI;
         }
-
-        private void Update()
+        private void InitializeHearts()
         {
-            if (Input.GetKeyUp(KeyCode.O)) 
-            {
-                RecieveDamageUI();
-            }
+            ResetHealthBar();
 
-            if (Input.GetKeyUp(KeyCode.P))
-            {
-                RecieveHealUI();
-            }
-        }
+            var RoundHealth = Mathf.Ceil(PlayerStatsManager.Source.PlayerMaxHealth/10);
 
-        public void InitializeHealthBar()
-        {
-            var RoundHealth = Mathf.Ceil(_maxHealth);
-            
             for (int i = 0; i < RoundHealth; i++)
             {
-                _healthBar[i].SetActive(true);
-                _hearthActive.Add(_healthBar[i]);
+                _healthHearts[i].SetActive(true);
+                _hearthActive.Add(_healthHearts[i]);
             }
 
-            InitializeHealthBarSprite();
+            InitializeSprites();
         }
 
-        private void InitializeHealthBarSprite()
+        private void InitializeSprites()
         {
-            foreach (var item in _healthBar)
-            {
-                var sprite = item.GetComponent<Image>();
-                sprite.sprite = _fullHeartSprite;
-            }
+            float health = PlayerStatsManager.Source.CurrentHealth / 10;
+            int FullHeartCount = Mathf.FloorToInt(health);
+            bool isHaveHalfHeart = false;
 
-            if (_maxHealth % 1 == 0.5f)
+            for (int i = 0; i < _hearthActive.Count; i++)
             {
-                _hearthActive.Last().GetComponent<Image>().sprite = _halfHeartSprite;
+                if (i < FullHeartCount)
+                {
+                    _hearthActive[i].GetComponent<Image>().sprite = _fullHeartSprite;
+                }
+                else if (health % 1 == 0.5f && !isHaveHalfHeart)
+                {
+                    _hearthActive[i].GetComponent<Image>().sprite = _halfHeartSprite;
+                    isHaveHalfHeart = true;
+                }
+                else
+                {
+                    _hearthActive[i].GetComponent<Image>().sprite = _emptyHeartSprite;
+                }
             }
         }
 
         private void RecieveDamageUI()
         {
-            _currentHealth -= _damage;
-            var RemaingHeart = Mathf.Ceil(_maxHealth - _currentHealth);
+            var Remainghearts = Mathf.Ceil((PlayerStatsManager.Source.PlayerMaxHealth - PlayerStatsManager.Source.CurrentHealth) / 10);
             int j = 0, lastHeart = 0;
 
-            for (int i = (_hearthActive.Count - 1); j < RemaingHeart; i--)
+            for (int i = (_hearthActive.Count - 1); j < Remainghearts; i--)
             {
                 _hearthActive[i].GetComponent<Image>().sprite = _emptyHeartSprite;
                 lastHeart = i;
                 j++;
             }
-            
-            if (!(_currentHealth % 1 == 0.5f)) return;
-            _hearthActive[lastHeart - 1].GetComponent<Image>().sprite = _halfHeartSprite;
+
+            if (!((PlayerStatsManager.Source.CurrentHealth/10) % 1 == 0.5f)) return;
+            _hearthActive[lastHeart].GetComponent<Image>().sprite = _halfHeartSprite;
         }
 
         private void RecieveHealUI()
         {
-            _currentHealth += _damage; //cambiar _damage por heal
-
-            for (int i = 0; i < Mathf.Ceil(_currentHealth); i++)
+            for (int i = 0; i < Mathf.Ceil((PlayerStatsManager.Source.CurrentHealth / 10)); i++)
             {
                 _hearthActive[i].GetComponent<Image>().sprite = _fullHeartSprite;
             }
 
-            if (!(_currentHealth % 1 == 0.5f)) return;
-            _hearthActive[((int)Mathf.Ceil(_currentHealth)) - 1].GetComponent<Image>().sprite = _halfHeartSprite;
+            if (!((PlayerStatsManager.Source.CurrentHealth / 10) % 1 == 0.5f)) return;
+            _hearthActive[((int)Mathf.Ceil((PlayerStatsManager.Source.CurrentHealth / 10))) - 1].GetComponent<Image>().sprite = _halfHeartSprite;
         }
 
-        private void UpdateMaxHealth(float maxhealth, float y, float z)
+        private void ResetHealthBar()
         {
-            _maxHealth = (maxhealth / 10);
-            InitializeHealthBarSprite();
+            _hearthActive.Clear();
+
+            for (int i = 0; i < _healthHearts.Count(); i++)
+            {
+                _healthHearts[i].SetActive(false);
+            }
         }
     }
 }

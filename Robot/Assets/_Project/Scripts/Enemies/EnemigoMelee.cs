@@ -10,7 +10,7 @@ public class EnemigoMelee : MonoBehaviour
     public float waitTimeAtPatrol = 1f;
     
     [Header("Combate")]
-    public int maxHealth = 30;
+    public int maxHealth = 60;
     public float attackDamage = 5;
     public float attackCooldown = 2f;
     public float detectionRange = 4f;

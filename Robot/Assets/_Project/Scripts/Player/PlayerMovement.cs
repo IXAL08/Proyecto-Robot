@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask wallLayer;
     
     private Rigidbody rb;
+    private bool isDashActivate;
     private bool isGrounded;
     private bool isTouchingWall;
     private bool isDashing;
@@ -35,23 +36,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerStatsManager.Source.OnStatsChanged += UpdatePlayerVelocity;
+        PlayerStatsManager.Source.OnBaseStatsChanged += UpdatePlayerVelocity;
         InputManager.Source.MovePlayer += HandleMovement;
         InputManager.Source.Jump += HandleJump;
         InputManager.Source.Dash += HandleDash;
-        moveSpeed = PlayerStatsManager.Source.PlayerSpeedPower;
+        PlayerStatsManager.Source.OnDashChipActivation += ActivateDash;
+        moveSpeed = PlayerStatsManager.Source.PlayerMovementSpeed;
     }
+
+    private void OnDisable()
+    {
+        PlayerStatsManager.Source.OnBaseStatsChanged -= UpdatePlayerVelocity;
+        InputManager.Source.MovePlayer -= HandleMovement;
+        InputManager.Source.Dash -= HandleDash;
+        PlayerStatsManager.Source.OnDashChipActivation -= ActivateDash;
+    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void OnDisable()
-    {
-        PlayerStatsManager.Source.OnStatsChanged -= UpdatePlayerVelocity;
-        InputManager.Source.MovePlayer -= HandleMovement;
-        InputManager.Source.Dash -= HandleDash;
-    }
 
     private void Update()
     {
@@ -135,6 +140,8 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleDash()
     {
+        if (!isDashActivate) return;
+
         if (canDash)
         {
             StartDash();
@@ -202,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void UpdatePlayerVelocity(float x, float y, float Velocity)
+    private void UpdatePlayerVelocity(float x, float Velocity, float z)
     {
         moveSpeed = Velocity;
     }
@@ -220,5 +227,10 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.color = isTouchingWall ? Color.green : Color.red;
             Gizmos.DrawWireSphere(wallCheck.position, wallCheckDistance);
         }
+    }
+
+    private void ActivateDash(bool value)
+    {
+        isDashActivate = value;
     }
 }
