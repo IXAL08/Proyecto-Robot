@@ -111,7 +111,7 @@ public class CraftingUIManager : MonoBehaviour
         {
             foreach (var item in _currentSelectedRecipe._itemsNeeded)
             {
-                Inventory.Source.RemoveItemFromInventory(item.Item, item.Quantity);
+                Inventory.Source.RemoveItemFromInventory(item.Item, item.Quantity*-1);
             }
             Inventory.Source.AddItemToInventory(_currentSelectedRecipe._itemToCraft);
             _recipesToCraft.Remove(_currentSelectedRecipe);
