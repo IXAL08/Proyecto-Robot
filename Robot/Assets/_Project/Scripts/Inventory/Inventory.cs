@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Robot
@@ -8,6 +9,7 @@ namespace Robot
     public class InventorySlot
     {
         [SerializeField] private ItemData _item;
+        
         [SerializeField] private int _quantity;
 
         public ItemData Item => _item;
@@ -18,20 +20,55 @@ namespace Robot
             _quantity += amount;
         }
         
+        public void ModifyQuantity(int quantity)
+        {
+            int newQuantity = _quantity+quantity;
+            SetQuantity(newQuantity);
+        }
+
+        public InventorySlot() { } // ← necesario para la deserialización
+
         public InventorySlot(ItemData item, int quantity)
         {
             _item = item;
             _quantity = quantity;
         }
     }
+
     
     public class Inventory : Singleton<IInventorySource>, IInventorySource
     {
+        [SerializeField] private InventorySaveFileData _saveFileData;
         [SerializeField] private List<InventorySlot> _itemsList;
         [SerializeField] private GameObject _inventoryUIPrefab;
         private GameObject _inventoryUI;
-        
-        
+
+        private void Start()
+        {
+            LoadFromSaveSystem();
+        }
+
+        public void LoadFromSaveSystem()
+        {
+            if (!_saveFileData)
+            {
+                _saveFileData = SaveSystemManager.Source.GetFileData<InventorySaveFileData>();
+                if (!_saveFileData)
+                {
+                    _saveFileData = ScriptableObject.CreateInstance<InventorySaveFileData>();
+                    SaveToSaveFile();
+                }
+            }
+            
+            _itemsList = _saveFileData._currentItemsList;
+        }
+
+        public void SaveToSaveFile()
+        {
+            _saveFileData._currentItemsList = _itemsList;
+            SaveSystemManager.Source.SaveFileData(_saveFileData);
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.I))
@@ -49,6 +86,7 @@ namespace Robot
 
         public void AddItemToInventory(ItemData newItem, int quantity = 1)
         {
+            ScriptablesDataBase.Source.AddToDatabase(newItem);
             if (IsItemInInventory(newItem))
             {
                 ModifyItemQuantity(newItem, quantity);
@@ -57,11 +95,14 @@ namespace Robot
             {
                 _itemsList.Add(new InventorySlot(newItem, quantity));
             }
+
+            SaveToSaveFile();
         }
 
         public void RemoveItemFromInventory(ItemData newItem, int quantity = -1)
         {
             ModifyItemQuantity(newItem, quantity);
+            SaveToSaveFile();
         }
 
         private void ModifyItemQuantity(ItemData newItem, int quantity)

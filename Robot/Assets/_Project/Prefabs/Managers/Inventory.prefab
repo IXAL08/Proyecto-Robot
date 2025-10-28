@@ -45,9 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPersistent: 0
-  _itemsList:
-  - _item: {fileID: 11400000, guid: e3cae71f246a4504fb7696f439e6607c, type: 2}
-    _quantity: 2
-  - _item: {fileID: 11400000, guid: ffa7b275939563241b3acf0de0f03b0d, type: 2}
-    _quantity: 3
+  _saveFileData: {fileID: 0}
+  _itemsList: []
   _inventoryUIPrefab: {fileID: 6248245760238681237, guid: 7b7fd7e841850a94a8e1a53a70ef0eb4, type: 3}
