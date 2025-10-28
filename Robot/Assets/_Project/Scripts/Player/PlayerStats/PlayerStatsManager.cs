@@ -26,6 +26,9 @@ namespace Robot
         public event Action OnHealRecieved;
         public event Action OnHealthChanges;
         public event Action OnPlayerDeath;
+        public event Action<bool> OnMeleeChipActivation;
+        public event Action<bool> OnRangeChipActivation;
+        public event Action<bool> OnDashChipActivation;
 
         private void OnEnable()
         {
@@ -34,14 +37,14 @@ namespace Robot
 
         private void Start()
         {
-            ChipInventoryManager.Source.OnChipPlaced += ActiveGUI;
-            ChipInventoryManager.Source.OnChipRemoved += DeactiveGUI;
+            ChipInventoryManager.Source.OnChipPlaced += ActiveChipEffects;
+            ChipInventoryManager.Source.OnChipRemoved += DeactiveChipEffects;
         }
 
         private void OnDisable()
         {
-            ChipInventoryManager.Source.OnChipPlaced -= ActiveGUI;
-            ChipInventoryManager.Source.OnChipRemoved -= DeactiveGUI;
+            ChipInventoryManager.Source.OnChipPlaced -= ActiveChipEffects;
+            ChipInventoryManager.Source.OnChipRemoved -= DeactiveChipEffects;
         }
 
         private void InitializeStatManager()
@@ -128,7 +131,7 @@ namespace Robot
             OnHealthChanges?.Invoke();
         }
 
-        public void ActiveGUI(Chip chip)
+        public void ActiveChipEffects(Chip chip)
         {
             if (chip.ChipData.BonusStatsChip.ActiveHealthBar)
             {
@@ -139,9 +142,24 @@ namespace Robot
             {
                 _consumiblesUI.GetComponent<CanvasGroup>().alpha = 1;
             }
+
+            if (chip.ChipData.BonusStatsChip.ActiveMeleeAttack)
+            {
+                OnMeleeChipActivation?.Invoke(true);
+            }
+
+            if (chip.ChipData.BonusStatsChip.ActiveRangeAttack)
+            {
+                OnRangeChipActivation?.Invoke(true);
+            }
+
+            if (chip.ChipData.BonusStatsChip.ActiveDash)
+            {
+                OnDashChipActivation?.Invoke(true);
+            }
         }
 
-        public void DeactiveGUI(Chip chip)
+        public void DeactiveChipEffects(Chip chip)
         {
             if (chip.ChipData.BonusStatsChip.ActiveHealthBar)
             {
@@ -151,6 +169,21 @@ namespace Robot
             if (chip.ChipData.BonusStatsChip.ActiveConsumiblesVisualizer)
             {
                 _consumiblesUI.GetComponent<CanvasGroup>().alpha = 0;
+            }
+
+            if (chip.ChipData.BonusStatsChip.ActiveMeleeAttack)
+            {
+                OnMeleeChipActivation?.Invoke(false);
+            }
+
+            if (chip.ChipData.BonusStatsChip.ActiveRangeAttack)
+            {
+                OnRangeChipActivation?.Invoke(false);
+            }
+
+            if (chip.ChipData.BonusStatsChip.ActiveDash)
+            {
+                OnDashChipActivation?.Invoke(false);
             }
         }
     }

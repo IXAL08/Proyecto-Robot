@@ -11,6 +11,9 @@ namespace Robot
         event Action OnHealRecieved;
         event Action OnHealthChanges;
         event Action OnPlayerDeath;
+        event Action<bool> OnMeleeChipActivation;
+        event Action<bool> OnRangeChipActivation;
+        event Action<bool> OnDashChipActivation;
 
         //Variables
         float CurrentHealth {  get;}

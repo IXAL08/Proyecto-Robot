@@ -20,6 +20,7 @@ public class RangeAttack : MonoBehaviour
     public bool useFreeAim = true;
     public Transform aimPointer;
    
+    private bool isActivate = false;
     private float cooldownTimer = 0f;
     private bool canShoot = true;
     private Vector3 currentFacingDirection = Vector3.right;
@@ -27,19 +28,24 @@ public class RangeAttack : MonoBehaviour
     private void Start()
     {
         currentFacingDirection = GetPlayerFacingDirection();
-        //PlayerStatsManager.Source.OnStatsChanged += ModifyBulletSpeed;
+        PlayerStatsManager.Source.OnBaseStatsChanged += ModifyBulletSpeed;
         InputManager.Source.Attack += HandleShooting;
+        PlayerStatsManager.Source.OnRangeChipActivation += ActivateRangeAttack;
         UpdateFirePointDirection();
-        //bulletSpeed = (PlayerStatsManager.Source.PlayerSpeedPower + 4);
+        bulletSpeed = (PlayerStatsManager.Source.PlayerMovementSpeed + 4);
     }
 
     private void OnDestroy()
     {
         InputManager.Source.Attack -= HandleShooting;
+        PlayerStatsManager.Source.OnRangeChipActivation -= ActivateRangeAttack;
+        PlayerStatsManager.Source.OnBaseStatsChanged -= ModifyBulletSpeed;
     }
 
     private void Update()
     {
+        if (!isActivate) return;
+
         if (autoUpdateDirection && usePlayerFacing)
         {
             UpdateFacingDirection();
@@ -63,6 +69,8 @@ public class RangeAttack : MonoBehaviour
 
     void UpdateFacingDirection()
     {
+        if (GameStateManager.Source.CurrentGameState != GameState.OnPlay) return;
+
         Vector3 newDirection = GetPlayerFacingDirection();
         if (newDirection != Vector3.zero && newDirection != currentFacingDirection)
         {
@@ -119,6 +127,8 @@ public class RangeAttack : MonoBehaviour
 
     void HandleShooting()
     {
+        if (!isActivate) return;
+
         if (canShoot)
         {
             Shoot();
@@ -156,7 +166,12 @@ public class RangeAttack : MonoBehaviour
 
     private void ModifyBulletSpeed(float x, float y, float speed)
     {
-        //bulletSpeed = (PlayerStatsManager.Source.PlayerSpeedPower + 4);
+        bulletSpeed = (PlayerStatsManager.Source.PlayerMovementSpeed + 4);
     }
    
+    private void ActivateRangeAttack(bool value)
+    {
+        isActivate = value;
+        firePoint.gameObject.SetActive(value);
+    }
 }
