@@ -58,8 +58,6 @@ namespace Robot
             
             var slotUI = GetSlotUnderPointer(eventData, LayerMask.GetMask("SlotLayer"));
 
-            print(slotUI);
-
             if (slotUI != null) {
                 TryPlaceChip(slotUI, _chip);
             }

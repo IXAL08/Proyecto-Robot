@@ -30717,6 +30717,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2330649711304528848, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: _healthBar
+      value: 
+      objectReference: {fileID: 879854091}
+    - target: {fileID: 2330649711304528848, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: _consumiblesUI
+      value: 
+      objectReference: {fileID: 107685173}
     - target: {fileID: 3393382073245666039, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
       propertyPath: _healthBar
       value: 
@@ -30733,6 +30741,26 @@ PrefabInstance:
       propertyPath: _playerHealthBar
       value: 
       objectReference: {fileID: 879854091}
+    - target: {fileID: 3393382073245666039, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: _currentBasePlayerStats
+      value: 
+      objectReference: {fileID: 11400000, guid: aa9d41537c4add04eabfe5154c2139bc, type: 2}
+    - target: {fileID: 3393382073245666039, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: _basePlayerStats.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393382073245666039, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: '_basePlayerStats.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0392b27fda68a0a4cb9468503e0a2dbb, type: 2}
+    - target: {fileID: 3393382073245666039, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: '_basePlayerStats.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ad64bbbc6c285c641863e80e2f91f55e, type: 2}
+    - target: {fileID: 3393382073245666039, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: '_basePlayerStats.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ad64bbbc6c285c641863e80e2f91f55e, type: 2}
     - target: {fileID: 4674208705453224507, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
       propertyPath: m_Name
       value: PlayerStatManager

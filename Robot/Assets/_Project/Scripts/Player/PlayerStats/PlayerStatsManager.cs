@@ -5,7 +5,8 @@ namespace Robot
 {
     public class PlayerStatsManager : Singleton<IPlayerStats>, IPlayerStats
     {
-        [SerializeField] private PlayerStats _basePlayerStats;
+        [SerializeField] private PlayerStats _currentBasePlayerStats;
+        [SerializeField] private PlayerStats[] _basePlayerStats;
         [Header("CurrentStats")]
         [SerializeField] private float _currentHealth;
         [SerializeField] private float _currentMaxHealth;
@@ -51,9 +52,9 @@ namespace Robot
 
         private void InitializeStatManager()
         {
-            _currentMaxHealth = _basePlayerStats.MaxHealth; ///
-            _currentMovementSpeed = _basePlayerStats.SpeedPower; ///  Colocar datos del savesystem
-            _currentDamage = _basePlayerStats.AttackPower;///
+            _currentMaxHealth = _currentBasePlayerStats.MaxHealth; ///
+            _currentMovementSpeed = _currentBasePlayerStats.SpeedPower; ///  Colocar datos del savesystem
+            _currentDamage = _currentBasePlayerStats.AttackPower;///
             _currentHealth = _currentMaxHealth;
             _isDead = false;
 
@@ -147,11 +148,17 @@ namespace Robot
 
             if (chip.ChipData.BonusStatsChip.ActiveMeleeAttack)
             {
+                _currentBasePlayerStats = _basePlayerStats[0];
+                RefreshBaseStats();
+                OnHealthChanges?.Invoke();
                 OnMeleeChipActivation?.Invoke(true);
             }
 
             if (chip.ChipData.BonusStatsChip.ActiveRangeAttack)
             {
+                _currentBasePlayerStats = _basePlayerStats[1];
+                RefreshBaseStats();
+                OnHealthChanges?.Invoke();
                 OnRangeChipActivation?.Invoke(true);
             }
 
@@ -186,6 +193,17 @@ namespace Robot
             if (chip.ChipData.BonusStatsChip.ActiveDash)
             {
                 OnDashChipActivation?.Invoke(false);
+            }
+        }
+
+        private void RefreshBaseStats()
+        {
+            _currentDamage = _currentBasePlayerStats.AttackPower;
+            _currentMovementSpeed = _currentBasePlayerStats.SpeedPower;
+            _currentMaxHealth = _currentBasePlayerStats.MaxHealth;
+            if(_currentHealth > _currentMaxHealth)
+            {
+                _currentHealth = _currentMaxHealth;
             }
         }
     }
