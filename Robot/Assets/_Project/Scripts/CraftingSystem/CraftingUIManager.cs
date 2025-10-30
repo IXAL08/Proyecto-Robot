@@ -21,7 +21,7 @@ public class CraftingUIManager : MonoBehaviour
 
     private void Start()
     {
-        LoadCurrentRecipeData();
+        LateStartSystem.ExecuteOnLateStart(LoadCurrentRecipeData);
     }
     private void Update()
     {
