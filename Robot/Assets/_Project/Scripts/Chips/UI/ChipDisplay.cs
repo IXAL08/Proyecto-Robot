@@ -25,10 +25,29 @@ namespace Robot
 
         public void RefreshChipDescription()
         {
-            var chip = ChipInventoryManager.Source.CurrentChipOnDisplay.GetComponentInChildren<Chip>();
-            _chipName.text = chip.ChipData.ChipName;
-            _chipDescription.text = chip.ChipData.ChipEffectDescription;
+            var currentChipObject = ChipInventoryManager.Source.CurrentChipOnDisplay;
+
+            if (currentChipObject == null)
+            {
+                ListEmptyEvent();
+                return;
+            }
+
+            var chip = currentChipObject.GetComponentInChildren<Chip>();
+
+            if (chip != null)
+            {
+                _chipName.text = chip.ChipData.ChipName;
+                _chipDescription.text = chip.ChipData.ChipEffectDescription;
+            }
+            else
+            {
+                Debug.LogWarning("El objeto actual no tiene componente 'Chip', ejecutando ListEmptyEvent()");
+                ListEmptyEvent();
+            }
+
         }
+
         public void LeftArrow()
         {
             ChipInventoryManager.Source.PreviousChipData();

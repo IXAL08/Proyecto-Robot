@@ -131,10 +131,18 @@ namespace Robot
 
         private void SpawnNewChip()
         { 
-            _currentChipOnDisplay = Instantiate(_chipPrefab, ChipInventoryUIManager.Source.DisplayRectTransform);
-            _listIndex = 0;
-            _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
-            OnChipSpawned?.Invoke();
+            if(_availableChips.Count == 0)
+            {
+                OnListEmpty?.Invoke();
+            }
+            else
+            {
+                _currentChipOnDisplay = Instantiate(_chipPrefab, ChipInventoryUIManager.Source.DisplayRectTransform);
+                _listIndex = 0;
+                _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
+                OnChipSpawned?.Invoke();
+            }
+
         }
 
         public void NextChipData()
