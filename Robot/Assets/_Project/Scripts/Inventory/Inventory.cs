@@ -165,6 +165,20 @@ namespace Robot
             return result;
         }
 
+        public List<T> GetUniqueItemsOfType<T>() where T : ItemData
+        {
+            var result = new List<T>();
+            foreach (var a in _itemsList)
+            {
+                if (a.Item.GetType() == typeof(T))
+                {
+                    result.Add(a.Item as T);
+                }
+            }
+            
+            return result;
+        }
+
         public List<InventorySlot> GetInventory()
         {
             return _itemsList;

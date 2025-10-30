@@ -14,6 +14,7 @@ namespace Robot
         public int GetItemQuantity(ItemData item);
         
         public List<T> GetItemsOfType<T>() where T : ItemData;
+        public List<T> GetUniqueItemsOfType<T>() where T : ItemData;
 
         public List<InventorySlot> GetInventory();
     }
