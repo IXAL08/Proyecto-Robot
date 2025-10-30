@@ -33,10 +33,26 @@ namespace Robot
 
         private void Start()
         {
+            LateStartSystem.ExecuteOnLateStart(InitializeChipsSystem);
+        }
+
+        private void InitializeChipsSystem()
+        {
+            GetChipsFromInventory();
             _inventoryGrid = new bool[_gridRows, _gridColumns];
             print("Inventario inicializado con: " + _inventoryGrid.Length);
             SpawnNewChip();
             PrintInventory();
+        }
+
+        private void GetChipsFromInventory()
+        {
+            _activeChips.Clear();
+            _availableChips = Inventory.Source.GetItemsOfType<ChipData>();
+            if (_availableChips.Count == 0)
+            {
+                Debug.Log("No Chips In Inventory");
+            }
         }
 
         public bool CanPlaceChip(int row, int column, Chip chip)

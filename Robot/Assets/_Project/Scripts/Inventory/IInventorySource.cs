@@ -12,6 +12,9 @@ namespace Robot
         public bool IsItemQuantityInInventory(ItemData newItem, int quantity);
         
         public int GetItemQuantity(ItemData item);
+        
+        public List<T> GetItemsOfType<T>() where T : ItemData;
+        public List<T> GetUniqueItemsOfType<T>() where T : ItemData;
 
         public List<InventorySlot> GetInventory();
     }
