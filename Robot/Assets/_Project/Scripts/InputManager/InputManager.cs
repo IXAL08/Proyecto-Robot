@@ -69,6 +69,7 @@ namespace Robot
             {
                 CloseUIPause?.Invoke();
                 BackToOnPlay?.Invoke();
+                UIManager.Source.ClosePause();
             }
         }
 
@@ -79,6 +80,7 @@ namespace Robot
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 OpenUIPause?.Invoke();
+                UIManager.Source.OpenPause();
                 GameStateManager.Source.ChangeState(GameState.OnPause);
             }
 

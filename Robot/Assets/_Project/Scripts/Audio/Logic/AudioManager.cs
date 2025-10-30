@@ -25,7 +25,14 @@ namespace Robot
 
         private void LoadAudioSettings()
         {
+            CurrentSFXVolume = 1f;
+            CurrentMusicVolume = 1f;
 
+            float sfxDb = Mathf.Log10(CurrentSFXVolume == 0f ? 0.0001f : CurrentSFXVolume) * 20f;
+            float musicDb = Mathf.Log10(CurrentMusicVolume == 0f ? 0.0001f : CurrentMusicVolume) * 20f;
+
+            _sfxMixer.SetFloat("sfx_vol", sfxDb);
+            _bgmMixer.SetFloat("bgm_vol", musicDb);
         }
 
         public void PlayLevelMusic(string audioName)

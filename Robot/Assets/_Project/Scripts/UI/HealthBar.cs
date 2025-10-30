@@ -12,7 +12,7 @@ namespace Robot
         [SerializeField] private Sprite _fullHeartSprite, _halfHeartSprite, _emptyHeartSprite;
 
         private List<GameObject> _hearthActive = new List<GameObject>();
-        private void Awake()
+        private void Start()
         {
             PlayerStatsManager.Source.OnHealthChanges += InitializeHearts;
             PlayerStatsManager.Source.OnDamageRecieved += RecieveDamageUI;
