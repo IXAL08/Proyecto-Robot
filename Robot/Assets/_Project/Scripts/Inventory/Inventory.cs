@@ -46,6 +46,8 @@ namespace Robot
         private void Start()
         {
             LoadFromSaveSystem();
+            InputManager.Source.OpenInventory += ShowOrHideUI;
+            InputManager.Source.CloseInventory += ShowOrHideUI;
         }
 
         public void LoadFromSaveSystem()
@@ -69,13 +71,10 @@ namespace Robot
             SaveSystemManager.Source.SaveFileData(_saveFileData);
         }
 
-        private void Update()
+        private void ShowOrHideUI()
         {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                if(!_inventoryUI) SetupUI();
-                _inventoryUI.SetActive(!_inventoryUI.activeSelf);
-            }
+            if (!_inventoryUI) SetupUI();
+            _inventoryUI.SetActive(!_inventoryUI.activeSelf);
         }
 
         private void SetupUI()
