@@ -18,7 +18,7 @@ namespace Robot
         public event Action<float> OnSFXVolumeChange;
         public event Action<float> OnMusicVolumeChange;
 
-        private void Start()
+        private void OnEnable()
         {
             LoadAudioSettings();
         }

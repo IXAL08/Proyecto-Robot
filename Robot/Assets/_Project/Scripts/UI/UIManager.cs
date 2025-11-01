@@ -16,12 +16,6 @@ namespace Robot
             InputManager.Source.CloseChipsInventory += CloseChipInventory;
         }
 
-        private void OnDisable()
-        {
-            InputManager.Source.OpenChipsInventory -= OpenChipInventory;
-            InputManager.Source.CloseChipsInventory -= CloseChipInventory;
-        }
-
         public void OpenPause()
         {
             ShowPauseMenu().Forget();

@@ -22,13 +22,13 @@ public class CraftingUIManager : MonoBehaviour
     private void Start()
     {
         LateStartSystem.ExecuteOnLateStart(LoadCurrentRecipeData);
+        InputManager.Source.OpenCraftingMenu += ShowOrHideCrafting;
+        InputManager.Source.CloseCraftingMenu += ShowOrHideCrafting;
     }
-    private void Update()
+
+    private void ShowOrHideCrafting()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            UIDUMMY.SetActive(!UIDUMMY.activeSelf);
-        }
+        UIDUMMY.SetActive(!UIDUMMY.activeSelf);
     }
 
     public void SelectNextRecipe()
