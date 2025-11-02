@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Robot
 {
@@ -19,6 +18,10 @@ namespace Robot
         public event Action Jump;
         public event Action Dash;
         public event Action Attack;
+        public event Action OpenInventory;
+        public event Action CloseInventory;
+        public event Action OpenCraftingMenu;
+        public event Action CloseCraftingMenu;
 
         private void Start()
         {
@@ -86,6 +89,18 @@ namespace Robot
 
             if (Input.GetKeyDown(KeyCode.I))
             {
+                OpenInventory?.Invoke();
+                GameStateManager.Source.ChangeState(GameState.OnInventoryMenu);
+            }
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                OpenCraftingMenu?.Invoke();
+                GameStateManager.Source.ChangeState(GameState.OnCraftingMenu);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
                 OpenChipsInventory?.Invoke();
                 GameStateManager.Source.ChangeState(GameState.OnChipMenu);
             }
@@ -132,12 +147,20 @@ namespace Robot
 
         private void CheckOnCraftingMenuInputs()
         {
-            /// Coloca los inputs aqui
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseCraftingMenu?.Invoke();
+                BackToOnPlay?.Invoke();
+            }
         }
 
         private void CheckOnInventoryMenuInputs()
         {
-            /// colocar los inputs
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseInventory?.Invoke();
+                BackToOnPlay?.Invoke();
+            }
         }
     }
 }

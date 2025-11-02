@@ -13,6 +13,8 @@ namespace Robot
 
         //OnPlayMode
         event Action OpenChipsInventory;
+        event Action OpenInventory;
+        event Action OpenCraftingMenu;
         event Action<float> MovePlayer;
         event Action Jump;
         event Action Dash;
@@ -22,5 +24,11 @@ namespace Robot
         event Action CloseChipsInventory;
         event Action DeleteChip;
         event Action RotateChip;
+
+        //OnInventory
+        event Action CloseInventory;
+
+        //OnCraftingMenu
+        event Action CloseCraftingMenu;
     }
 }
