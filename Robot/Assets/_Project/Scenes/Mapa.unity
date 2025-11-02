@@ -38278,9 +38278,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894d908bbc759df4088126f2d8471414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
+  moveSpeed: 12
+  acceleration: 25
   jumpForce: 11
-  airControl: 1
+  airControl: 0.7
   dashForce: 15
   dashDuration: 0.5
   dashCooldown: 0.5
