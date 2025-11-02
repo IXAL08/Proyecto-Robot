@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Robot
@@ -27,7 +28,7 @@ namespace Robot
 
         private void QuitButton()
         {
-            ///regresar a menu
+            SceneManager.LoadScene("Menu Inicial");
         }
     }
 }
