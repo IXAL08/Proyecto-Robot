@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6eb6ab8d5057d49a40a9e8c1e0a923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isPersistent: 0
+  _isPersistent: 1
   _audioDataBase: {fileID: 11400000, guid: f0aad966cb546a547b4e264473ac877a, type: 2}
   _sfxMixer: {fileID: 24100000, guid: 76e77f14882b2a0458b7e796e299d487, type: 2}
   _bgmMixer: {fileID: 24100000, guid: 76e77f14882b2a0458b7e796e299d487, type: 2}
