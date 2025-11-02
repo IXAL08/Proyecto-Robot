@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movimiento")]
-    public float moveSpeed = 5f;
-    public float jumpForce = 10f;
-    public float airControl = 0.5f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float acceleration = 15f;
+    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float airControl = 0.5f;
     
     [Header("Dash")]
     public float dashForce = 15f;
@@ -63,6 +64,19 @@ public class PlayerMovement : MonoBehaviour
         CheckGrounded();
         CheckWalls();
         UpdateTimers();
+
+
+        if (rb.linearVelocity.y < 0)
+        {
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * (2f - 1) * Time.deltaTime;
+        }
+        if (isGrounded && rb.linearVelocity.y < 0)
+        {
+            Vector3 vel = rb.linearVelocity;
+            vel.y = 0;
+            rb.linearVelocity = vel;
+        }
+
     }
 
     private void FixedUpdate()
@@ -111,29 +125,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDashing) return;
 
-
         if (isTouchingWall && Mathf.Sign(horizontalInput) == Mathf.Sign(GetWallDirection()))
-        {
             horizontalInput = 0;
-        }
-        float currentSpeed = moveSpeed;
-        
-        if (!isGrounded)
-        {
-            currentSpeed *= airControl;
-        }
-        
-            Vector3 movement = new Vector3(horizontalInput * currentSpeed, rb.linearVelocity.y, 0);
-            rb.linearVelocity = movement;
-            
+
+        float targetSpeed = horizontalInput * moveSpeed;
+        float control = isGrounded ? 1f : airControl;
+
+        float newX = Mathf.MoveTowards(rb.linearVelocity.x, targetSpeed, acceleration * control * Time.fixedDeltaTime);
+
+        rb.linearVelocity = new Vector3(newX, rb.linearVelocity.y, 0);
+
     }
 
     void HandleJump()
     {
-        if (isGrounded)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
-        }
+        if (isGrounded) rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
     }
 
     
