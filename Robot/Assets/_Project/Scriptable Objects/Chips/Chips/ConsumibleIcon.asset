@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68a0c68c2e2c01340a1d9200c6e80b3b, type: 3}
+  m_Name: ConsumibleIcon
+  m_EditorClassIdentifier: 
+  Name: Visualizador de pociones
+  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Description: Te permite ver la cantidad de pociones actual.
+  ID: 6
+  ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  ChipName: Visualizador de pociones
+  ChipEffectDescription: Creado para que seas consciente de tu limitantes. Permite
+    ver las pociones en posesion en la interfaz del robot.
+  BonusStatsChip: {fileID: 11400000, guid: bd767ef2f1d4b1f4c8b2d88de3f5ea4d, type: 2}
+  IsRotable: 0
+  RotationSteps: 0
+  ChipWidth: 1
+  ChipHeight: 1
+  Shape:
+  - {x: 0, y: 0}
