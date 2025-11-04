@@ -1,3 +1,4 @@
+using TerrorConsole;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,7 +29,7 @@ namespace Robot
 
         private void QuitButton()
         {
-            SceneManager.LoadScene("Menu Inicial");
+            ScreenTransitionManager.Source.TransitionToScene("Menu Inicial");
         }
     }
 }

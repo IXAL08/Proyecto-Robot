@@ -1,4 +1,5 @@
 using System.Collections;
+using TerrorConsole;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Search;
@@ -174,12 +175,29 @@ public class MainMenu : MonoBehaviour
 
     void StartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SaveSystemManager.Source.ResetSaveSlot(SaveSystemManager.Source.GetCurrentSaveSlot());
+        SaveSystemManager.Source.LoadGame();
+        GoToNextScene();
+    }
+
+    private static void GoToNextScene()
+    {
+        int next = SceneManager.GetActiveScene().buildIndex + 1;
+        string nextSceneName = next < SceneManager.sceneCountInBuildSettings
+            ? System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(next))
+            : null;
+        if (string.IsNullOrEmpty(nextSceneName))
+        {
+            Debug.LogError($"There is no scene in the index {next}");
+            return;
+        }
+
+        ScreenTransitionManager.Source.TransitionToScene(nextSceneName);
     }
 
     void ContinueGame()
     {
-        Debug.Log("Continue Game");
+        GoToNextScene();
     }
 
     void ShowOptions()

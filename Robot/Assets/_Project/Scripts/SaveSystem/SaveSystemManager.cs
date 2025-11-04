@@ -37,6 +37,11 @@ public class SaveSystemManager : Singleton<ISaveSystemSource>, ISaveSystemSource
         return _saveSlot;
     }
 
+    public void ResetSaveSlot(int saveSlot)
+    {
+        PlayerPrefs.SetString($"GameSave{_saveSlot}", "");
+    }
+
     public void SaveFileData(FileData fileData)
     {
         if (!_saveFilesToSave.Contains(fileData))

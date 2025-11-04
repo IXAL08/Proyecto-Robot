@@ -60,6 +60,7 @@ namespace Robot
         OnChipMenu,
         OnInventoryMenu,
         OnCraftingMenu,
-        OnGameOver
+        OnGameOver,
+        InTransition
     }
 }
