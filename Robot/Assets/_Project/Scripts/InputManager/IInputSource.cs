@@ -19,6 +19,10 @@ namespace Robot
         event Action Jump;
         event Action Dash;
         event Action Attack;
+        event Action Consumable1;
+        event Action Consumable2;
+        event Action Consumable3;
+        event Action Consumable4;
 
         //OnInventoryChips
         event Action CloseChipsInventory;

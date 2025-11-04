@@ -42,6 +42,7 @@ namespace Robot
         [SerializeField] private List<InventorySlot> _itemsList;
         [SerializeField] private GameObject _inventoryUIPrefab;
         private GameObject _inventoryUI;
+        public event Action ConsumableAdded;
 
         private void Start()
         {
@@ -93,6 +94,11 @@ namespace Robot
             else
             {
                 _itemsList.Add(new InventorySlot(newItem, quantity));
+            }
+            
+            if (newItem is ConsumableData)
+            {
+                ConsumableAdded?.Invoke();
             }
 
             SaveToSaveFile();
@@ -169,7 +175,7 @@ namespace Robot
             var result = new List<T>();
             foreach (var a in _itemsList)
             {
-                if (a.Item.GetType() == typeof(T))
+                if (a.Item.GetType() == typeof(T) && a.Quantity > 0)
                 {
                     result.Add(a.Item as T);
                 }

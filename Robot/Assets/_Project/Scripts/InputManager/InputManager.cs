@@ -18,6 +18,10 @@ namespace Robot
         public event Action Jump;
         public event Action Dash;
         public event Action Attack;
+        public event Action Consumable1;
+        public event Action Consumable2;
+        public event Action Consumable3;
+        public event Action Consumable4;
         public event Action OpenInventory;
         public event Action CloseInventory;
         public event Action OpenCraftingMenu;
@@ -123,6 +127,26 @@ namespace Robot
             if (Input.GetButton("Fire1"))
             {
                 Attack?.Invoke();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Consumable1?.Invoke();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                Consumable2?.Invoke();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                Consumable3?.Invoke();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                Consumable4?.Invoke();
             }
         }
 

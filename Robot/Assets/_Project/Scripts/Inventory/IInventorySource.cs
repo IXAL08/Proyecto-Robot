@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Robot
@@ -18,5 +19,7 @@ namespace Robot
         public List<T> GetUniqueItemsOfType<T>() where T : ItemData;
 
         public List<InventorySlot> GetInventory();
+        
+        public event Action ConsumableAdded;
     }
 }
