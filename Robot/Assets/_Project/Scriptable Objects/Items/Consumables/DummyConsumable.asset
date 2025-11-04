@@ -17,4 +17,4 @@ MonoBehaviour:
   Description: 
   isTemporaryEffect: 0
   tempEffectTime: 0
-  BonusStats: {fileID: 0}
+  BonusStats: {fileID: 11400000, guid: f12da61b4c5eac54fa30363aea65acd1, type: 2}
