@@ -87,6 +87,9 @@ namespace Robot
         public void AddItemToInventory(ItemData newItem, int quantity = 1)
         {
             ScriptablesDataBase.Source.AddToDatabase(newItem);
+
+            if (newItem is ChipData) ChipInventoryManager.Source.AddToAvailableChips((ChipData)newItem);
+
             if (IsItemInInventory(newItem))
             {
                 ModifyItemQuantity(newItem, quantity);

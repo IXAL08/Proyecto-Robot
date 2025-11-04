@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b44a25017b24d489a0adb7040a78b7, type: 3}
+  m_Name: Potion
+  m_EditorClassIdentifier: 
+  Name: Recuperador de vida
+  Icon: {fileID: 0}
+  Description: Permite recuperar vida perdida.
+  isTemporaryEffect: 0
+  tempEffectTime: 0
+  BonusStats: {fileID: 0}

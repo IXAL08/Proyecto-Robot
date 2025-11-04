@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45090f5a2e2ab34fb8a820b42ad7d70, type: 3}
+  m_Name: MoveSpeedStatRecipe
+  m_EditorClassIdentifier: 
+  _itemToCraft: {fileID: 11400000, guid: 50a8ec9fec0bef54297000df7da5b3a0, type: 2}
+  _itemsNeeded:
+  - _item: {fileID: 11400000, guid: 0697f1a18624bc144b9e91b689cfe60b, type: 2}
+    _quantity: 4
+  - _item: {fileID: 11400000, guid: 1fbe6349d8b5fa74d863abc1a87205d3, type: 2}
+    _quantity: 1
