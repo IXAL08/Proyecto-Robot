@@ -46745,6 +46745,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CraftingUI
       objectReference: {fileID: 0}
+    - target: {fileID: 96262863101981017, guid: 074a910ba2c288445924d2eefdc947cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8983730001111694392, guid: 074a910ba2c288445924d2eefdc947cc, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -56597,6 +56601,10 @@ PrefabInstance:
       objectReference: {fileID: 403746323}
     - target: {fileID: 5979463105993264911, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979463105993264911, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7488284852756153475, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
