@@ -201,7 +201,7 @@ public class MainMenu : MonoBehaviour
         #endif
     }
 
-    void Volver()
+    public void Volver()
     {
         
         opciones.SetActive(false);
