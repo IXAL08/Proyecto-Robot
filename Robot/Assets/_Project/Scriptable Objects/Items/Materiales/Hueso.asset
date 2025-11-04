@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc43efef99680314fb786a24529fec04, type: 3}
-  m_Name: Madera
+  m_Name: Hueso
   m_EditorClassIdentifier: 
-  Name: Madera
+  Name: Hueso
   Icon: {fileID: 0}
   Description: Originario del planeta. Parece lo suficientemente fuerte para fusionarlo
     con otros materiales.
