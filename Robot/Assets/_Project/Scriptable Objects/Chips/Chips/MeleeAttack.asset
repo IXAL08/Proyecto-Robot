@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: MeleeAttack
   m_EditorClassIdentifier: 
   Name: Unidad de impacto
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 62a4e88cbe4e8f64aadd8daeb7e944b4, type: 3}
   Description: "A\xF1ade ataque cuerpo a cuerpo al robot"
   ID: 1
-  ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  ChipSprite: {fileID: 21300000, guid: 62a4e88cbe4e8f64aadd8daeb7e944b4, type: 3}
   ChipName: Unidad de impacto
   ChipEffectDescription: Creado por tu empresa matriz. Permite a los robots hacer
     ataques cercanos.
   BonusStatsChip: {fileID: 11400000, guid: 89b6456df5373c64f8873e337a31ec6e, type: 2}
   IsRotable: 0
-  RotationSteps: 3
+  RotationSteps: 0
+  UIposition: {x: -590, y: 66}
+  UIsizeDelta: {x: 658, y: 650}
   ChipWidth: 5
   ChipHeight: 5
   Shape:
