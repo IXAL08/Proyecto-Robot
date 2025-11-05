@@ -13,20 +13,22 @@ MonoBehaviour:
   m_Name: SpeedStat
   m_EditorClassIdentifier: 
   Name: "N\xFAcleo de velocidad"
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 95b417333dcf6c041880e7af4eba23ea, type: 3}
   Description: Aumenta la velocidad de tus trabajadores.
   ID: 5
-  ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  ChipSprite: {fileID: 21300000, guid: 95b417333dcf6c041880e7af4eba23ea, type: 3}
   ChipName: "N\xFAcleo de velocidad"
   ChipEffectDescription: "Aumenta la velocidad para esos trabajadores que son m\xE1s
     lentos que las tortugas. Aumenta la velocidad del movimiento del robot."
   BonusStatsChip: {fileID: 11400000, guid: 25e67f4ae5b6d714db34fb5cc08828da, type: 2}
   IsRotable: 1
   RotationSteps: 0
-  ChipWidth: 1
-  ChipHeight: 1
+  UIposition: {x: -64, y: 196}
+  UIsizeDelta: {x: 387, y: 260}
+  ChipWidth: 3
+  ChipHeight: 2
   Shape:
-  - {x: 0, y: 0}
+  - {x: -1, y: 1}
   - {x: 0, y: 1}
   - {x: 0, y: 2}
-  - {x: -1, y: 1}
+  - {x: 0, y: 0}

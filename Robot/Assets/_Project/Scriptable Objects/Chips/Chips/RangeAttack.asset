@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: RangeAttack
   m_EditorClassIdentifier: 
   Name: Tirador lejano
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 01cf25f3e5ae53644b5156c66f1b1ed3, type: 3}
   Description: "A\xF1ade el ataque a distancia al personaje"
   ID: 0
-  ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  ChipSprite: {fileID: 21300000, guid: 01cf25f3e5ae53644b5156c66f1b1ed3, type: 3}
   ChipName: Tirador lejano
   ChipEffectDescription: 'Creado por tu empresa matriz para alcanzar objetivos lejanos,
     permite a cualquier robot disparar con sus propias manos. '
   BonusStatsChip: {fileID: 11400000, guid: 74e2b5250e3367f4d989f766df8b9034, type: 2}
   IsRotable: 0
   RotationSteps: 0
+  UIposition: {x: -64, y: 63}
+  UIsizeDelta: {x: 647, y: 647}
   ChipWidth: 5
   ChipHeight: 5
   Shape:

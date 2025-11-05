@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5c4b3b3115f6284b9adf23a1c16fe93, type: 3}
-  m_Name: Dash
+  m_Name: Dash Bonus
   m_EditorClassIdentifier: 
   BonusHealth: 0
   BonusDamage: 0

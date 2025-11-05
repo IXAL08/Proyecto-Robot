@@ -58,6 +58,7 @@ namespace Robot
             pivotTransform.SetParent(slot.transform);
             pivotTransform.localPosition = Vector2.zero;
             pivotTransform.SetParent(canvas.transform);
+            pivotTransform.SetSiblingIndex(4);
         }
 
         public void SnapToLastSlot(int row, int column, Transform pivotTransform, Canvas canvas, Chip chip)
@@ -67,6 +68,7 @@ namespace Robot
             pivotTransform.SetParent(_inventorySlotUI[row,column].transform);
             pivotTransform.localPosition = Vector2.zero;
             pivotTransform.SetParent(canvas.transform);
+            pivotTransform.SetSiblingIndex(4);
         }
 
         public void ReturnToDisplay(RectTransform ChipPivotRectTransform, Chip chip)
@@ -76,28 +78,10 @@ namespace Robot
             chip.GetComponent<RectTransform>().sizeDelta = chip.SizeDeltaChip;
         }
 
-        public void ResizeUIOnHandle(RectTransform chipRectTransform, ChipData chipData, Vector2 cellSize, Vector2 spacing)
+        public void ResizeUIOnHandle(RectTransform chipRectTransform, ChipData chipData)
         {
-
-            int minX = int.MaxValue, minY = int.MaxValue;
-            int maxX = int.MinValue, maxY = int.MinValue;
-
-            foreach (var offset in chipData.Shape)
-            {
-                if (offset.x < minX) minX = offset.x;
-                if (offset.x > maxX) maxX = offset.x;
-                if (offset.y < minY) minY = offset.y;
-                if (offset.y > maxY) maxY = offset.y;
-            }
-
-            int widthCells = (maxX - minX) + 1;
-            int heightCells = (maxY - minY) + 1;
-
-            float width = (widthCells * cellSize.x) + ((widthCells - 1) * spacing.x);
-            float height = (heightCells * cellSize.y) + ((heightCells - 1) * spacing.y);
-
-            chipRectTransform.sizeDelta = new Vector2(width, height);
-
+            chipRectTransform.anchoredPosition = chipData.UIposition;
+            chipRectTransform.sizeDelta = chipData.UIsizeDelta;
         }
 
         public void ApplyVisualRotation(RectTransform chipRectTransform, int rotationStep)

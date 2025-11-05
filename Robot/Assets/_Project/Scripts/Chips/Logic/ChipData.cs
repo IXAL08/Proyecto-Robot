@@ -15,6 +15,8 @@ namespace Robot
         public BonusStatsChip BonusStatsChip;
         public bool IsRotable;
         public int RotationSteps = 0;
+        public Vector2 UIposition;
+        public Vector2 UIsizeDelta;
 
         [Header("Tama�o")]
         [Tooltip("Usar solo para UI inicial y chips rectangulares")]

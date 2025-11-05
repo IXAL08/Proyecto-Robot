@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a0c68c2e2c01340a1d9200c6e80b3b, type: 3}
   m_Name: ConsumibleUI
   m_EditorClassIdentifier: 
-  Name: Recuperador
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Name: Consumibles UI
+  Icon: {fileID: 21300000, guid: 2730deb3a5b20f8428be387c88eaf703, type: 3}
   Description: Te permite ver la cantidad de pociones actual.
   ID: 7
-  ChipSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  ChipName: Recuperador
+  ChipSprite: {fileID: 21300000, guid: 2730deb3a5b20f8428be387c88eaf703, type: 3}
+  ChipName: Consumibles UI
   ChipEffectDescription: Creado para que seas consciente de tu limitantes. Permite
     ver las pociones en posesion en la interfaz del robot.
   BonusStatsChip: {fileID: 11400000, guid: bd767ef2f1d4b1f4c8b2d88de3f5ea4d, type: 2}
   IsRotable: 0
   RotationSteps: 0
+  UIposition: {x: -50, y: 50}
+  UIsizeDelta: {x: 100, y: 100}
   ChipWidth: 1
   ChipHeight: 1
   Shape:

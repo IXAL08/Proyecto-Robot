@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Robot
 {
@@ -27,10 +28,7 @@ namespace Robot
 
         private void Start()
         {
-            _sizeDeltaChip = gameObject.GetComponent<RectTransform>().sizeDelta;
-            _shapeRotation = new List<Vector2Int>(_chipData.Shape);
-            _coordinatesOccupiedOnGrid = new List<Vector2Int>();
-            _lastShapeRotation = new List<Vector2Int>();
+            InitializeChip();
         }
 
         public void SetPlaced(bool value)
@@ -76,5 +74,13 @@ namespace Robot
             _shapeRotation = new List<Vector2Int>(_chipData.Shape);
         }
 
+        public void InitializeChip()
+        {
+            _sizeDeltaChip = gameObject.GetComponent<RectTransform>().sizeDelta;
+            gameObject.GetComponent<Image>().sprite = _chipData.ChipSprite;
+            _shapeRotation = new List<Vector2Int>(_chipData.Shape);
+            _coordinatesOccupiedOnGrid = new List<Vector2Int>();
+            _lastShapeRotation = new List<Vector2Int>();
+        }
     }
 }

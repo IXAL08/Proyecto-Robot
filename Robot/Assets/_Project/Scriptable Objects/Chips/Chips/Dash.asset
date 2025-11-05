@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: Dash
   m_EditorClassIdentifier: 
   Name: Impulso empresarial
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: ce60e60bf1675e249826806c2aa7daee, type: 3}
   Description: "Dale a tu robot un peque\xF1o impulso para su vida."
   ID: 3
-  ChipSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  ChipSprite: {fileID: 21300000, guid: ce60e60bf1675e249826806c2aa7daee, type: 3}
   ChipName: Impulso empresarial
   ChipEffectDescription: Creado para empresas que quieren que sus empleados de un
     plus. Permite al robot realizar un Dash.
   BonusStatsChip: {fileID: 11400000, guid: 0e777537da4586942802d4f74ae9df83, type: 2}
   IsRotable: 1
-  RotationSteps: 1
+  RotationSteps: 0
+  UIposition: {x: -65, y: 65}
+  UIsizeDelta: {x: 390, y: 130}
   ChipWidth: 3
   ChipHeight: 1
   Shape:

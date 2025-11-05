@@ -38,7 +38,8 @@ namespace Robot
             _isDragging = true;
             if (!_firsttouch)
             {
-                ChipInventoryUIManager.Source.ResizeUIOnHandle((RectTransform)_chip.transform, _chip.ChipData, ChipInventoryUIManager.Source.GridLayoutGroupCellsize, ChipInventoryUIManager.Source.GridLayoutGroupSpacing);
+                ChipInventoryUIManager.Source.ResizeUIOnHandle((RectTransform)_chip.transform, _chip.ChipData);
+                _chip.transform.SetSiblingIndex(4);
                 _firsttouch = true;
             }
             ChipInventoryUIManager.Source.ApplyVisualRotation(_chipPivotRectTransform, _chip.CurrentRotationStep);

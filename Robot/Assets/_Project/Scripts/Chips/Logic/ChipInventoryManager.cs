@@ -80,6 +80,7 @@ namespace Robot
 
             ApplyChipEffects(chip);
             HandleChipInventory(chip);
+            ChipInventoryUIManager.Source.RefreshPlayerStats();
 
             PrintInventory();
         }
@@ -149,12 +150,14 @@ namespace Robot
         {
             _listIndex = (_listIndex + 1) % _availableChips.Count;
             _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
+            _currentChipOnDisplay.GetComponentInChildren<Chip>().InitializeChip();
         }
 
         public void PreviousChipData()
         {
             _listIndex = (_listIndex - 1 + _availableChips.Count) % _availableChips.Count;
             _currentChipOnDisplay.GetComponentInChildren<Chip>().AssignChipData(_availableChips[_listIndex]);
+            _currentChipOnDisplay.GetComponentInChildren<Chip>().InitializeChip();
         }
 
         private void OccupySlotsForChip(Chip chip, int startRow, int startColumn)
@@ -232,6 +235,10 @@ namespace Robot
         public void AddToAvailableChips(ChipData chipData)
         {
             _availableChips.Add(chipData);
+            if (_currentChipOnDisplay == null) 
+            {
+                SpawnNewChip();
+            }
         }
 
         private void PrintInventory()
