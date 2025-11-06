@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 2364448008305558759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 65.1, y: -1.694, z: 1.159}
-  m_LocalScale: {x: 2.0113, y: 2.292, z: 1}
+  m_LocalPosition: {x: 65.1, y: -2.0329, z: 1.159}
+  m_LocalScale: {x: 2.0113, y: 1.6140265, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 277803456733911579}
@@ -154,7 +154,7 @@ MonoBehaviour:
   patrolDistance: 5
   waitTimeAtPatrol: 1
   maxHealth: 10
-  attackDamage: 1
+  attackDamage: 5
   attackCooldown: 2
   detectionRange: 10
   attackRange: 2
@@ -163,6 +163,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackEffect: {fileID: 1242815995211787617, guid: 3bcb1acc22e9575428d0b078d457fa20, type: 3}
+  drops:
+  - {fileID: 2143135355272814630, guid: a33a940d067203041aaef7acb87f3e6b, type: 3}
+  - {fileID: 6428363534944223248, guid: 47e4fb0934bd1934fb0d9172cd3da593, type: 3}
+  dropChance: 0.5
   attackColor: {r: 1, g: 0, b: 0, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   EnemyRenderer: {fileID: 7729663316248954757}

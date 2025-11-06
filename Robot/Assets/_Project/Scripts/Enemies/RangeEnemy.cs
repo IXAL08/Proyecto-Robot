@@ -6,8 +6,9 @@ public class RangeEnemy : MonoBehaviour
     public float moveSpeed = 3f;
     public float retreatDistance = 3f;
     public float stoppingDistance = 5f;
-    
+
     [Header("Configuración de Ataque")]
+    public int maxHealth = 20;
     public float attackRange = 7f;
     public float attackCooldown = 2f;
     public int damage = 10;
@@ -22,7 +23,12 @@ public class RangeEnemy : MonoBehaviour
     public bool canMove = true;
     public bool canAttack = true;
     
+    [Header("Sistema de Drops")]
+    public GameObject[] drops;
+    public float dropChance = 0.5f;
+    
     // Variables privadas
+    public int currentHealth;
     private float attackTimer;
     private bool isRetreating = false;
     private Rigidbody rb;
@@ -38,6 +44,8 @@ public class RangeEnemy : MonoBehaviour
             if (playerObj != null)
                 player = playerObj.transform;
         }
+        
+        currentHealth = maxHealth;
     }
     
     void Update()
@@ -113,6 +121,39 @@ public class RangeEnemy : MonoBehaviour
             if (lookDirection != Vector3.zero)
             {
                 transform.rotation = Quaternion.LookRotation(lookDirection);
+            }
+        }
+    }
+    
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        
+        
+       
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        TryDropItem();
+        Destroy(gameObject);
+    }
+    
+    void TryDropItem()
+    {
+        if (drops != null && drops.Length > 0 && Random.value <= dropChance)
+        {
+            GameObject itemToDrop = drops[Random.Range(0, drops.Length)];
+
+            if (itemToDrop != null)
+            {
+                Instantiate(itemToDrop, transform.position, Quaternion.identity);
+                Debug.Log("Enemigo soltó un item: " + itemToDrop.name);
             }
         }
     }
