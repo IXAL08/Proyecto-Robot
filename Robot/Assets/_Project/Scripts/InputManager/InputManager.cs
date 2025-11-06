@@ -6,7 +6,9 @@ namespace Robot
     public class InputManager : Singleton<IInputSource>, IInputSource
     {
         public GameState _currentGameState;
-
+        
+        public bool IsMoving { get; private set; }
+        public bool IsJumpPressed { get; private set; }
         public event Action BackToOnPlay;
         public event Action OpenUIPause;
         public event Action CloseUIPause;
@@ -83,7 +85,9 @@ namespace Robot
         private void CheckOnPlayInputs()
         {
             float horizontalInput = Input.GetAxis("Horizontal");
-
+            
+            IsMoving = Mathf.Abs(horizontalInput) > 0.01f;
+            
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 OpenUIPause?.Invoke();
@@ -118,6 +122,7 @@ namespace Robot
             {
                 Jump?.Invoke();
             }
+            IsJumpPressed = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space);
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {

@@ -12,6 +12,8 @@ namespace Robot
         event Action CloseUIPause;
 
         //OnPlayMode
+        bool IsMoving { get; }
+        bool IsJumpPressed { get; }
         event Action OpenChipsInventory;
         event Action OpenInventory;
         event Action OpenCraftingMenu;
