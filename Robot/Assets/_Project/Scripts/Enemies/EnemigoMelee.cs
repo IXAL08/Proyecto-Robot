@@ -21,6 +21,10 @@ public class EnemigoMelee : MonoBehaviour
     public LayerMask playerMask;
     public GameObject attackEffect;
     
+    [Header("Sistema de Drops")]
+    public GameObject[] drops;
+    public float dropChance = 0.5f;
+    
     [Header("Efectos Visuales")]
     public Color attackColor = Color.red;
     public Color normalColor = Color.white;
@@ -245,7 +249,22 @@ public class EnemigoMelee : MonoBehaviour
     
     void Die()
     {
+        TryDropItem();
         Destroy(gameObject);
+    }
+
+    void TryDropItem()
+    {
+        if (drops != null && drops.Length > 0 && Random.value <= dropChance)
+        {
+            GameObject itemToDrop = drops[Random.Range(0, drops.Length)];
+
+            if (itemToDrop != null)
+            {
+                Instantiate(itemToDrop, transform.position, Quaternion.identity);
+                Debug.Log("Enemigo soltó un item: " + itemToDrop.name);
+            }
+        }
     }
 
     bool IsPlayerInRange(float range)

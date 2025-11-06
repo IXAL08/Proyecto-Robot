@@ -16,11 +16,7 @@ public class MenasRompibles : MonoBehaviour
     public int minMaterials = 20;
     public float dropForce = 3f;
     public Vector3 dropArea = new Vector3(1, 0, 0);
-
-    [Header("Efectos Visuales")]
-    public Renderer _renderer;
-    public Color damagedMaterial = Color.yellow;
-    public Color brokenMaterial = Color.black;
+    
 
     private int currentHits;
     private int currentHealth;
@@ -32,18 +28,6 @@ public class MenasRompibles : MonoBehaviour
         currentHits = 0;
         currentHealth = maxHits;
         
-        if(_renderer != null)
-        {
-        originalMaterial = _renderer.material;
-        }
-        else
-        {
-            _renderer = GetComponentInChildren<Renderer>();
-            if (_renderer != null)
-            {
-                originalMaterial = _renderer.material;
-            }
-        }
     }
 
     public void TakeDamage(int damage = 1, Vector3 hitDirection = default(Vector3))
@@ -52,34 +36,14 @@ public class MenasRompibles : MonoBehaviour
         
         currentHits += damage;
         currentHealth = maxHits - currentHits;
-
-        UpdateAppearance();
+        
 
         if (currentHits >= maxHits)
         {
             BreakObject(hitDirection);
         }
     }
-
-    void UpdateAppearance()
-    {
-        if(_renderer == null) return;
-        
-        float healthPercentage = (float)currentHealth / maxHits;
-
-        if (healthPercentage < 0.3f && brokenMaterial != null)
-        {
-            _renderer.material.color = brokenMaterial;
-        }
-        else if (healthPercentage < 0.6f && damagedMaterial != null)
-        {
-            _renderer.material.color = damagedMaterial;
-        }
-        else if (originalMaterial != null)
-        {
-            _renderer.material = originalMaterial;
-        }
-    }
+    
 
     void BreakObject(Vector3 hitDirection = default(Vector3))
     {
@@ -89,7 +53,7 @@ public class MenasRompibles : MonoBehaviour
 
         DropMaterials(hitDirection);
         
-        //Destroy(gameObject, 0.1f);
+        Destroy(gameObject, 0.1f);
     }
 
     void DropMaterials(Vector3 hitDirection)
@@ -152,6 +116,13 @@ public class MenasRompibles : MonoBehaviour
                 
                 return;
             }
+        }
+
+        if (canBeHit)
+        {
+            MeleeAttack attack = other.gameObject.GetComponent<MeleeAttack>();
+            Vector3 hitDirection = other.contacts[0].point - transform.position;
+            HitByMelee(attack.damage, hitDirection.normalized);
         }
     }
 }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc43efef99680314fb786a24529fec04, type: 3}
   m_Name: Dummy1
   m_EditorClassIdentifier: 
-  Name: Dummy1
-  Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  Name: Cobre
+  Icon: {fileID: 21300000, guid: b1a2124684c35214090f0013e3cafb39, type: 3}
   Description: Ur mom gay

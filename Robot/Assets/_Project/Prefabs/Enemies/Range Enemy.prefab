@@ -157,6 +157,7 @@ MonoBehaviour:
   moveSpeed: 3
   retreatDistance: 3
   stoppingDistance: 5
+  maxHealth: 20
   attackRange: 7
   attackCooldown: 2
   damage: 10
@@ -166,6 +167,11 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8827590450794369698, guid: c8e8a0491a6e459429b82f370bedb1c5, type: 3}
   canMove: 1
   canAttack: 1
+  drops:
+  - {fileID: 2143135355272814630, guid: a33a940d067203041aaef7acb87f3e6b, type: 3}
+  - {fileID: 6428363534944223248, guid: 47e4fb0934bd1934fb0d9172cd3da593, type: 3}
+  dropChance: 0.5
+  currentHealth: 0
 --- !u!54 &109611396112391632
 Rigidbody:
   m_ObjectHideFlags: 0

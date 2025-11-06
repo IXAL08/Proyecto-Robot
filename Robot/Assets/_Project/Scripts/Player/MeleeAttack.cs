@@ -98,10 +98,25 @@ public class MeleeAttack : MonoBehaviour
 
         foreach (Collider enemy in hitEnemies)
         {
-            EnemigoMelee enemyHealth = enemy.GetComponent<EnemigoMelee>();
-            if (enemyHealth != null)
+            EnemigoMelee meleeHealth = enemy.GetComponent<EnemigoMelee>();
+            if (meleeHealth != null)
             {
-                enemyHealth.TakeDamage(damage);
+                meleeHealth.TakeDamage(damage);
+            }
+            RangeEnemy rangeHealth = enemy.GetComponent<RangeEnemy>();
+            if (rangeHealth != null)
+            {
+                rangeHealth.TakeDamage(damage);
+            }
+            FlyingEnemy flyingHealth = enemy.GetComponent<FlyingEnemy>();
+            if (flyingHealth != null)
+            {
+                flyingHealth.TakeDamage(damage);
+            }
+            HeavyEnemy heavyHealth = enemy.GetComponent<HeavyEnemy>();
+            if (heavyHealth != null)
+            {
+                heavyHealth.TakeDamage(damage);
             }
         }
     }

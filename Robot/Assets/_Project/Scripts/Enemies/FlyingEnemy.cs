@@ -22,6 +22,10 @@ public class FlyingEnemy : MonoBehaviour
     public LayerMask playerLayer;
     public GameObject attackEffect;
     
+    [Header("Sistema de Drops")]
+    public GameObject[] drops;
+    public float dropChance = 0.5f;
+    
     [Header("Feedback")]
     public Color attackColor = Color.red;
     public Color idleColor = Color.green;
@@ -287,7 +291,22 @@ public class FlyingEnemy : MonoBehaviour
 
         void Die()
         {
+            TryDropItem();
             Destroy(gameObject);
+        }
+        
+        void TryDropItem()
+        {
+            if (drops != null && drops.Length > 0 && Random.value <= dropChance)
+            {
+                GameObject itemToDrop = drops[Random.Range(0, drops.Length)];
+
+                if (itemToDrop != null)
+                {
+                    Instantiate(itemToDrop, transform.position, Quaternion.identity);
+                    Debug.Log("Enemigo soltó un item: " + itemToDrop.name);
+                }
+            }
         }
         
         bool IsPlayerInRange(float range)
