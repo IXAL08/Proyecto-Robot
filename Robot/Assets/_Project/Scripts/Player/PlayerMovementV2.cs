@@ -7,6 +7,7 @@ namespace Robot
     public class PlayerMovementV2 : MonoBehaviour
     {
         private Rigidbody rb;
+        [SerializeField] private Animator anim;
         [Header("Ground Check")]
         [SerializeField] private Transform groundCheckerPoint;
         [SerializeField] private LayerMask groundLayerMask;
@@ -21,6 +22,10 @@ namespace Robot
         [SerializeField] private float jumpForce = 5f;
         [SerializeField] private float drag = 60f;
         private Vector3 linearDrag;
+        
+        [SerializeField] private float rotationSpeed = 10f;
+        private Quaternion targetRotation;
+
 
         [Header("Jumps")]
         [SerializeField] private int extraJumps = 1;
@@ -70,6 +75,7 @@ namespace Robot
         private void CheckGround()
         {
             isGrounded = Physics.CheckSphere(groundCheckerPoint.position, groundCheckRadius, groundLayerMask);
+            anim.SetBool("isGrounded", isGrounded);
 
             if (isGrounded)
                 jumpsLeft = extraJumps;
@@ -96,7 +102,7 @@ namespace Robot
 
             if (InputManager.Source.IsMoving)
             {
-                if (isRWall && horizontalInput > 0 || isLWall && horizontalInput < 0)
+                if ((isRWall && horizontalInput > 0) || (isLWall && horizontalInput < 0))
                 {
                     velocity.x = 0;
                 }
@@ -104,13 +110,27 @@ namespace Robot
                 {
                     velocity.x = horizontalInput * moveSpeed;
                 }
-            }else
+
+                if (horizontalInput > 0)
+                {
+                    targetRotation = Quaternion.Euler(0, 0, 0); 
+                }
+                else if (horizontalInput < 0)
+                {
+                    targetRotation = Quaternion.Euler(0, -180, 0);
+                }
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+            else
             {
                 velocity.x = Mathf.Lerp(velocity.x, 0, drag);
             }
 
             rb.linearVelocity = velocity;
+            anim.SetFloat("X", Mathf.Abs(velocity.x));
         }
+
 
         private void HandleJump()
         {
@@ -121,6 +141,7 @@ namespace Robot
                 var velocity = rb.linearVelocity;
                 velocity.y = jumpForce;
                 rb.linearVelocity = velocity;
+                anim.SetTrigger("Jump");
 
                 if (!isGrounded)
                     jumpsLeft--;

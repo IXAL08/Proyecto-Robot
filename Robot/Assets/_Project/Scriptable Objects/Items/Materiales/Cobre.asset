@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Cobre
   m_EditorClassIdentifier: 
   Name: Cobre
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b1a2124684c35214090f0013e3cafb39, type: 3}
   Description: Cobre encontrado en los confines del planeta.

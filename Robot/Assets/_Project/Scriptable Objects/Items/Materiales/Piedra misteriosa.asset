@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Piedra misteriosa
   m_EditorClassIdentifier: 
   Name: Piedra misteriosa
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: d9a83c54c73ffd64e9b2a4b9a364fd89, type: 3}
   Description: Piedra con forma rara. Puede funcionar con algo.

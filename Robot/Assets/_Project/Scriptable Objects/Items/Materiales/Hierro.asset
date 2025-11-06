@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Hierro
   m_EditorClassIdentifier: 
   Name: Hierro
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 866674038ca819a4ca08f8ed3aa6ff03, type: 3}
   Description: Hierro similar al que se encuentra en la tierra.

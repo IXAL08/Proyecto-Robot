@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tierra compactada
   m_EditorClassIdentifier: 
   Name: Tierra compactada
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 72b4c2010eaf1674a9e58118b1fb6658, type: 3}
   Description: Tierra que fue compactada por algo fuera de nuestro entendimiento.

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Hueso
   m_EditorClassIdentifier: 
   Name: Hueso
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 309fd22e23600b245b9c13d6b5921c27, type: 3}
   Description: Originario del planeta. Parece lo suficientemente fuerte para fusionarlo
     con otros materiales.
