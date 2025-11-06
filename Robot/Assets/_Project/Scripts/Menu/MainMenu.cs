@@ -1,8 +1,6 @@
 using System.Collections;
 using TerrorConsole;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;

@@ -4428,6 +4428,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6.0563126, y: 4, z: 4.615489}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &91001423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 91001424}
+  m_Layer: 0
+  m_Name: LWallCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &91001424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91001423}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1471983633}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &91786637
 GameObject:
   m_ObjectHideFlags: 0
@@ -26688,10 +26719,10 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0.05}
     DeadZone:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 0.55, y: 0.8}
     HardLimits:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 0.94, y: 0.92}
       Offset: {x: 0, y: -0.55}
   CenterOnActivate: 1
@@ -26700,7 +26731,7 @@ MonoBehaviour:
   Lookahead:
     Enabled: 1
     Time: 1
-    Smoothing: 3.1
+    Smoothing: 10
     IgnoreY: 0
 --- !u!114 &651635856
 MonoBehaviour:
@@ -64146,11 +64177,11 @@ GameObject:
   - component: {fileID: 1471983633}
   - component: {fileID: 1471983632}
   - component: {fileID: 1471983631}
-  - component: {fileID: 1471983634}
   - component: {fileID: 1471983637}
   - component: {fileID: 1471983638}
   - component: {fileID: 1471983636}
   - component: {fileID: 1471983635}
+  - component: {fileID: 1471983639}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -64226,39 +64257,11 @@ Transform:
   m_Children:
   - {fileID: 2105159281}
   - {fileID: 1678368193}
+  - {fileID: 91001424}
   - {fileID: 400926015}
   - {fileID: 1989357359}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1471983634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1471983629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894d908bbc759df4088126f2d8471414, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 12
-  acceleration: 25
-  jumpForce: 11
-  airControl: 0.7
-  dashForce: 15
-  dashDuration: 0.5
-  dashCooldown: 0.5
-  groundCheck: {fileID: 2105159281}
-  checkRadius: 0.1
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  wallCheck: {fileID: 1678368193}
-  wallCheckDistance: 0.6
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 72
 --- !u!54 &1471983635
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -64348,6 +64351,37 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   attackParticles: {fileID: 8192811149522809767, guid: 3bcb1acc22e9575428d0b078d457fa20, type: 3}
+--- !u!114 &1471983639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471983629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cdf39ad0a1a1db43818373e6b73dc30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheckerPoint: {fileID: 2105159281}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckRadius: 0.15
+  leftWallCheckPoints: {fileID: 91001424}
+  rightWallCheckPoints: {fileID: 1678368193}
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 72
+  wallCheckRadius: 0.15
+  moveSpeed: 10
+  jumpForce: 11
+  drag: 1
+  extraJumps: 0
+  jumpDelay: 0.2
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
+  freeze: 0
 --- !u!1 &1473564563
 GameObject:
   m_ObjectHideFlags: 0
@@ -73040,7 +73074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1678368193}
   m_Layer: 0
-  m_Name: WallCheck
+  m_Name: RWallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73055,7 +73089,7 @@ Transform:
   m_GameObject: {fileID: 1678368192}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -81192,7 +81226,7 @@ Transform:
   m_GameObject: {fileID: 1870136810}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -22.060207, y: 0.6504514, z: -13.84}
+  m_LocalPosition: {x: -23.154453, y: 0.6604636, z: -13.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -90853,7 +90887,7 @@ Transform:
   m_GameObject: {fileID: 2105159280}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.503, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

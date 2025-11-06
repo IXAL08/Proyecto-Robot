@@ -46,15 +46,11 @@ namespace Robot
             rb = GetComponent<Rigidbody>();
             jumpsLeft = extraJumps;
             jumpCooldown = jumpDelay;
-        }
-
-        private void OnEnable()
-        {
             InputManager.Source.MovePlayer += HandleMovement;
             InputManager.Source.Jump += HandleJump;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             InputManager.Source.MovePlayer -= HandleMovement;
             InputManager.Source.Jump -= HandleJump;
