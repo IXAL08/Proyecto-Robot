@@ -13,6 +13,9 @@ public class CraftingUIManager : MonoBehaviour
     [SerializeField] private List<RecipeData> _recipesToCraft;
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _descriptionText;
+    [SerializeField] private TextMeshProUGUI _errorText;
+    [SerializeField] private Color _errorColor = Color.red;
+    [SerializeField] private Color _successColor = Color.green;
     [SerializeField] private Image _icon;
     [SerializeField] private GameObject _itemUIPrefab;
     [SerializeField] private GameObject _itemsNeededContainer;
@@ -24,6 +27,7 @@ public class CraftingUIManager : MonoBehaviour
         LateStartSystem.ExecuteOnLateStart(LoadCurrentRecipeData);
         InputManager.Source.OpenCraftingMenu += ShowOrHideCrafting;
         InputManager.Source.CloseCraftingMenu += ShowOrHideCrafting;
+        _errorText.gameObject.SetActive(false);
     }
 
     private void ShowOrHideCrafting()
@@ -33,6 +37,7 @@ public class CraftingUIManager : MonoBehaviour
 
     public void SelectNextRecipe()
     {
+        _errorText.gameObject.SetActive(false);
         _currentSelectedRecipeIndex++;
         if (_currentSelectedRecipeIndex >= _recipesToCraft.Count)
         {
@@ -43,6 +48,7 @@ public class CraftingUIManager : MonoBehaviour
     
     public void SelectPreviousRecipe()
     {
+        _errorText.gameObject.SetActive(false);
         _currentSelectedRecipeIndex--;
         if (_currentSelectedRecipeIndex < 0)
         {
@@ -99,10 +105,15 @@ public class CraftingUIManager : MonoBehaviour
             if (!inventory.IsItemQuantityInInventory(item.Item, item.Quantity))
             {
                 print($"Not enough resources {item.Item.Name} quantity {item.Quantity}");
+                _errorText.gameObject.SetActive(true);
+                _errorText.text = "No tienes suficientes recursos";
+                _errorText.color = _errorColor;
+                _errorText.GetComponent<RectTransform>().ShakeAnimation();
                 return;
             }
         }
         CraftCurrentRecipe();
+        
     }
 
     private bool CraftCurrentRecipe()
@@ -117,6 +128,9 @@ public class CraftingUIManager : MonoBehaviour
             _recipesToCraft.Remove(_currentSelectedRecipe);
             RefreshUI();
             print("Item Crafted successfully");
+            _errorText.gameObject.SetActive(true);
+            _errorText.text = "Objeto fabricado exitosamente";
+            _errorText.color = _successColor;
             return true;
         }
         catch (Exception e)
