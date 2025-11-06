@@ -19,7 +19,6 @@ public class EnemigoMelee : MonoBehaviour
     [Header("Referencias")]
     public Transform attackPoint;
     public LayerMask playerMask;
-    public GameObject attackEffect;
     
     [Header("Sistema de Drops")]
     public GameObject[] drops;
@@ -42,11 +41,13 @@ public class EnemigoMelee : MonoBehaviour
     private bool isWaiting = false;
     private Rigidbody rb;
     private Transform player;
+    private Animator animator;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
         EnemyRenderer = GetComponentInChildren<Renderer>();
         
         currentHealth = maxHealth;
@@ -81,6 +82,8 @@ public class EnemigoMelee : MonoBehaviour
         {
             Patrol();
         }
+        
+        UpdateAnimations();
     }
 
     void UpdateTimers()
@@ -101,7 +104,7 @@ public class EnemigoMelee : MonoBehaviour
 
         if (isWaiting) return;
         
-        Vector3 targetPoint = movingRight ? rightPatrolPoint : leftPatrolPoint;
+        Vector3 targetPoint = movingRight ? leftPatrolPoint : rightPatrolPoint ;
         
         Vector3 direction = (targetPoint - transform.position).normalized;
         Vector3 movement = new Vector3(direction.x * moveSpeed, rb.linearVelocity.y, 0);
@@ -109,11 +112,11 @@ public class EnemigoMelee : MonoBehaviour
 
         if (direction.x > 0)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         } 
         else if (direction.x < 0)
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
         if (Vector3.Distance(transform.position, targetPoint) < 0.5f)
@@ -140,11 +143,11 @@ public class EnemigoMelee : MonoBehaviour
             
             if (direction.x > 0)
             {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.rotation = Quaternion.Euler(0, 180, 0);
             }
             else if (direction.x < 0)
             {
-                transform.rotation = Quaternion.Euler(0, 180, 0);
+                transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         } 
         else
@@ -167,10 +170,10 @@ public class EnemigoMelee : MonoBehaviour
     
     IEnumerator AttackRoutine()
     {
-        // Feedback visual de preparación
-        if (EnemyRenderer != null)
+        
+        if (animator != null)
         {
-            EnemyRenderer.material.color = attackColor;
+            animator.SetTrigger("Attack");
         }
         
         yield return new WaitForSeconds(0.3f);
@@ -180,10 +183,6 @@ public class EnemigoMelee : MonoBehaviour
             ApplyDamage();
         }
         
-        if (attackEffect != null)
-        {
-            Instantiate(attackEffect, attackPoint.position, Quaternion.identity);
-        }
         
         yield return new WaitForSeconds(0.2f);
         
@@ -228,6 +227,15 @@ public class EnemigoMelee : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+        }
+    }
+    
+    void UpdateAnimations()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("IsMoving", rb.velocity.magnitude > 0.1f);
+            animator.SetBool("IsAttacking", isAttacking);
         }
     }
     
