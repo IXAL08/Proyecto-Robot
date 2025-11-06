@@ -32,10 +32,12 @@ public class RangeEnemy : MonoBehaviour
     private float attackTimer;
     private bool isRetreating = false;
     private Rigidbody rb;
+    private Animator animator;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
 
         // Buscar al jugador automáticamente
         if (player == null)
@@ -80,6 +82,8 @@ public class RangeEnemy : MonoBehaviour
             // Rotar hacia el jugador
             LookAtPlayer();
         }
+
+        UpdateAnimations();
     }
     
     void RetreatFromPlayer()
@@ -116,7 +120,7 @@ public class RangeEnemy : MonoBehaviour
         if (player != null)
         {
             Vector3 lookDirection = (player.position - transform.position).normalized;
-            lookDirection.y = 0; // Mantener rotación solo en eje Y
+            //lookDirection.y = 0; // Mantener rotación solo en eje Y
             
             if (lookDirection != Vector3.zero)
             {
@@ -161,6 +165,11 @@ public class RangeEnemy : MonoBehaviour
     void Attack()
     {
         if (bulletPrefab == null) return;
+        
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
 
         // Reiniciar cooldown
         attackTimer = attackCooldown;
@@ -188,6 +197,15 @@ public class RangeEnemy : MonoBehaviour
                 Vector3 attackDirection = (player.position - firePoint.position).normalized;
                 rb.linearVelocity = attackDirection * bulletSpeed;
             }
+        }
+    }
+    
+    void UpdateAnimations()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("IsMoving", rb.velocity.magnitude > 0.1f);
+            animator.SetBool("IsAttacking", canAttack);
         }
     }
     void OnDrawGizmosSelected()
