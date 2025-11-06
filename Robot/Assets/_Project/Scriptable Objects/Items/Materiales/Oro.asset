@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc43efef99680314fb786a24529fec04, type: 3}
-  m_Name: Elemento raro
+  m_Name: Oro
   m_EditorClassIdentifier: 
-  Name: Elemento raro
-  Icon: {fileID: 0}
-  Description: No hay forma de describir lo que se muestra.
+  Name: Oro
+  Icon: {fileID: 21300000, guid: 866674038ca819a4ca08f8ed3aa6ff03, type: 3}
+  Description: Material abundante en el planeta.

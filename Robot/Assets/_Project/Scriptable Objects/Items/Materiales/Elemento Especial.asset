@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc43efef99680314fb786a24529fec04, type: 3}
-  m_Name: Zinc
+  m_Name: Elemento Especial
   m_EditorClassIdentifier: 
-  Name: Zinc
-  Icon: {fileID: 0}
-  Description: Material abundante en el planeta.
+  Name: Elemento Especial
+  Icon: {fileID: 21300000, guid: d9a83c54c73ffd64e9b2a4b9a364fd89, type: 3}
+  Description: No hay forma de describir lo que se muestra.
