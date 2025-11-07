@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: b776c2c0a7fa05845876eaa841915aa6, type: 2}
     - target: {fileID: 919132149155446097, guid: 904c7dd1560f8f0418a77e30da27ca8d, type: 3}
       propertyPath: m_Name
-      value: Cobres
+      value: Cobre Solo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d19c8d0c8dbd84199799259d0b8e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemData: {fileID: 11400000, guid: e3cae71f246a4504fb7696f439e6607c, type: 2}
+  _itemData: {fileID: 11400000, guid: 7656c966292263a449c4abce1e30b9d3, type: 2}
   _amount: 1
 --- !u!65 &-6358880938827363753
 BoxCollider:

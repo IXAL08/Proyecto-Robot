@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Database
   m_EditorClassIdentifier: 
   keys:
-  - Dummy1_cbdf57b7-70e4-4b75-adb8-17f00c936f49
-  - Dummy2_5ff2c827-85df-4a1c-91a7-34cff0a8d889
-  - CraftableItem_8b235fe3-52cc-40e8-92cc-0d144480da31
+  - Planta_ae9a67cc-b2ae-43ef-87f5-467624d056f1
+  - Hueso_e58ffd83-fb72-4e6d-a4fa-71d820de7681
+  - Cobre_4f64512e-bd67-474d-b6b3-3a34f672f58c
+  - Oro_7d8361ad-9f1a-44bf-af53-0a7def2555df
+  - MeleeAttack_f462d473-46ef-4a98-8474-5252b30d2e8e
   values:
-  - {fileID: 11400000, guid: e3cae71f246a4504fb7696f439e6607c, type: 2}
-  - {fileID: 11400000, guid: ffa7b275939563241b3acf0de0f03b0d, type: 2}
-  - {fileID: 11400000, guid: 6e661e2e242e0ac43a949e53cf042f69, type: 2}
+  - {fileID: 11400000, guid: 0697f1a18624bc144b9e91b689cfe60b, type: 2}
+  - {fileID: 11400000, guid: 1fbe6349d8b5fa74d863abc1a87205d3, type: 2}
+  - {fileID: 11400000, guid: 7656c966292263a449c4abce1e30b9d3, type: 2}
+  - {fileID: 11400000, guid: b166da5b6eaec0a439d23b66c39398c0, type: 2}
+  - {fileID: 11400000, guid: 2ddde31c576a5c64cbb0ede8e45e9344, type: 2}

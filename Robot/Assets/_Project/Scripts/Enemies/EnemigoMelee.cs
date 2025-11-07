@@ -25,7 +25,6 @@ public class EnemigoMelee : MonoBehaviour
     public float dropChance = 0.5f;
     
     [Header("Efectos Visuales")]
-    public Color attackColor = Color.red;
     public Color normalColor = Color.white;
     public Renderer EnemyRenderer;
     
@@ -244,13 +243,13 @@ public class EnemigoMelee : MonoBehaviour
         if (EnemyRenderer != null)
         {
             Color originalColor = EnemyRenderer.material.color;
-            EnemyRenderer.material.color = Color.white;
+            EnemyRenderer.material.color = Color.red;
             
             yield return new WaitForSeconds(0.1f);
             
             if (EnemyRenderer != null)
             {
-                EnemyRenderer.material.color = isAttacking ? attackColor : normalColor;
+                EnemyRenderer.material.color = isAttacking ? normalColor:  originalColor;
             }
         }
     }
