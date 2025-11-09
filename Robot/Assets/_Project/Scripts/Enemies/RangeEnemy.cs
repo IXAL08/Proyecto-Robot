@@ -204,7 +204,7 @@ public class RangeEnemy : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.SetBool("IsMoving", rb.velocity.magnitude > 0.1f);
+            animator.SetBool("IsMoving", rb.linearVelocity.magnitude > 0.1f);
             animator.SetBool("IsAttacking", canAttack);
         }
     }
