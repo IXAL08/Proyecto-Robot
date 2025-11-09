@@ -24,7 +24,7 @@ public class MeleeAttack : MonoBehaviour
     {
         InputManager.Source.Attack += OnButtonPressed;
         PlayerStatsManager.Source.OnMeleeChipActivation += ActivateMeleeAttack;
-        UpdateAttackDirection();
+
     }
 
     private void OnDisable()
@@ -47,11 +47,7 @@ public class MeleeAttack : MonoBehaviour
             }
         }
 
-        // Detectar dirección automáticamente
-        if (useFacingDirection)
-        {
-            DetectFacingDirection();
-        }
+
 
     }
 

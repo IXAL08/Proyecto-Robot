@@ -12,6 +12,14 @@ namespace Robot
         [SerializeField] private float _currentMaxHealth;
         [SerializeField] private float _currentDamage;
         [SerializeField] private float _currentMovementSpeed;
+        [Header("CurrentBaseStats")]
+        [SerializeField] private float _baseHealth;
+        [SerializeField] private float _baseDamage;
+        [SerializeField] private float _baseMovementSpeed;
+        [Header("CurrentBonusStats")]
+        [SerializeField] private float _bonusHealth;
+        [SerializeField] private float _bonusDamage;
+        [SerializeField] private float _bonusMovementSpeed;
         [Header("GUIElements")]
         [SerializeField] private GameObject _healthBar, _consumiblesUI;
         [Header("PlayerState")]
@@ -64,9 +72,13 @@ namespace Robot
 
         public void AddModifierToPlayer(BonusStatsChip bonusStats)
         {
-            _currentMaxHealth += bonusStats.BonusHealth;
-            _currentMovementSpeed += bonusStats.BonusSpeed;
-            _currentDamage += bonusStats.BonusDamage;
+            _bonusHealth += bonusStats.BonusHealth;
+            _bonusMovementSpeed += bonusStats.BonusSpeed;
+            _bonusDamage += bonusStats.BonusDamage;
+
+            _currentMaxHealth = _baseHealth + _bonusHealth;
+            _currentMovementSpeed = _baseMovementSpeed + _bonusMovementSpeed;
+            _currentDamage = _baseDamage + _bonusDamage;
             OnBaseStatsChanged?.Invoke(_currentMaxHealth, _currentMovementSpeed, _currentDamage);
 
             //float healthPercentage = _currentHealth / (_currentMaxHealth - bonusStats.BonusHealth);
@@ -76,9 +88,13 @@ namespace Robot
 
         public void SubstractModifierToPlayer(BonusStatsChip bonusStats)
         {
-            _currentMaxHealth -= bonusStats.BonusHealth;
-            _currentMovementSpeed -= bonusStats.BonusSpeed;
-            _currentDamage -= bonusStats.BonusDamage;
+            _bonusHealth -= bonusStats.BonusHealth;
+            _bonusMovementSpeed -= bonusStats.BonusSpeed;
+            _bonusDamage -= bonusStats.BonusDamage;
+
+            _currentMaxHealth = _baseHealth - _bonusHealth;
+            _currentMovementSpeed = _baseMovementSpeed - _bonusMovementSpeed;
+            _currentDamage = _baseDamage - _bonusDamage;
             OnBaseStatsChanged?.Invoke(_currentMaxHealth, _currentMovementSpeed, _currentDamage);
 
             if (_currentHealth > _currentMaxHealth)
@@ -202,13 +218,19 @@ namespace Robot
 
         private void RefreshBaseStats()
         {
-            _currentDamage = _currentBasePlayerStats.AttackPower;
-            _currentMovementSpeed = _currentBasePlayerStats.SpeedPower;
-            _currentMaxHealth = _currentBasePlayerStats.MaxHealth;
-            if(_currentHealth > _currentMaxHealth)
+            _baseDamage = _currentBasePlayerStats.AttackPower;
+            _baseMovementSpeed = _currentBasePlayerStats.SpeedPower;
+            _baseHealth = _currentBasePlayerStats.MaxHealth;
+
+            _currentMaxHealth = _baseHealth + _bonusHealth;
+            _currentMovementSpeed = _baseMovementSpeed + _bonusMovementSpeed;
+            _currentDamage = _baseDamage + _bonusDamage;
+            if (_currentHealth > _currentMaxHealth)
             {
                 _currentHealth = _currentMaxHealth;
             }
+            OnBaseStatsChanged?.Invoke(_currentMaxHealth, _currentMovementSpeed, _currentDamage);
+
         }
     }
 }

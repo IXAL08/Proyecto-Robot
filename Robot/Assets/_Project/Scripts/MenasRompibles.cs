@@ -112,7 +112,7 @@ public class MenasRompibles : MonoBehaviour
             if (bullet != null)
             {
                 Vector3 hitDirection = other.contacts[0].point - transform.position;
-                HitByBullet(bullet.damage, hitDirection.normalized);
+                HitByBullet(bullet.BulletDamage(), hitDirection.normalized);
                 
                 return;
             }
