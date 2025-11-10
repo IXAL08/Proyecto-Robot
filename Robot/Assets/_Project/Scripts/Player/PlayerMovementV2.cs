@@ -12,8 +12,10 @@ namespace Robot
         [SerializeField] private Transform groundCheckerPoint;
         [SerializeField] private LayerMask groundLayerMask;
         [SerializeField] private float groundCheckRadius = 0.3f;
-        [SerializeField] private Transform leftWallCheckPoints;
-        [SerializeField] private Transform rightWallCheckPoints;
+        [Header("Wall Check")]
+        [SerializeField] private Transform TopWallCheckPoints;
+        [SerializeField] private Transform MidWallCheckPoints;
+        [SerializeField] private Transform BottomWallCheckPoints;
         [SerializeField] private LayerMask wallLayerMask;
         [SerializeField] private float wallCheckRadius = 0.3f;
 
@@ -40,15 +42,15 @@ namespace Robot
         [Header("State")]
         [SerializeField] private bool freeze = false;
         private bool isGrounded;
-        private bool isRWall;
-        private bool isLWall;
+        private bool isFacingAWall;
 
         private float horizontalInput;
-
+        private CapsuleCollider _playerCollider;
 
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
+            _playerCollider = rb.GetComponent<CapsuleCollider>();
             jumpsLeft = extraJumps;
             jumpCooldown = jumpDelay;
             InputManager.Source.MovePlayer += HandleMovement;
@@ -86,8 +88,10 @@ namespace Robot
 
         private void CheckisWalls()
         {
-            isLWall = Physics.CheckSphere(leftWallCheckPoints.position, wallCheckRadius, wallLayerMask);
-            isRWall = Physics.CheckSphere(rightWallCheckPoints.position, wallCheckRadius, wallLayerMask);
+            isFacingAWall = 
+                Physics.CheckSphere(TopWallCheckPoints.position, wallCheckRadius, wallLayerMask) ||
+                Physics.CheckSphere(MidWallCheckPoints.position, wallCheckRadius, wallLayerMask) ||
+                Physics.CheckSphere(BottomWallCheckPoints.position, wallCheckRadius, wallLayerMask);
         }
 
         private void HandleMovement(float input)
@@ -102,7 +106,7 @@ namespace Robot
 
             if (InputManager.Source.IsMoving)
             {
-                if ((isRWall && horizontalInput > 0) || (isLWall && horizontalInput < 0))
+                if ((isFacingAWall && horizontalInput > 0) || (isFacingAWall && horizontalInput < 0))
                 {
                     velocity.x = 0;
                 }
@@ -142,7 +146,8 @@ namespace Robot
                 velocity.y = jumpForce;
                 rb.linearVelocity = velocity;
                 anim.SetTrigger("Jump");
-
+                _playerCollider.center = new Vector3(0,0.5f,0);
+                _playerCollider.height = 1.7f;
                 if (!isGrounded)
                     jumpsLeft--;
 
@@ -157,10 +162,14 @@ namespace Robot
             if (velocity.y < 0)
             {
                 velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+                _playerCollider.center = new Vector3(0, 0, 0);
+                _playerCollider.height = 1.5f;
             }
             else if (velocity.y > 0 && !InputManager.Source.IsJumpPressed)
             {
                 velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+                _playerCollider.center = new Vector3(0, 0, 0);
+                _playerCollider.height = 1.5f;
             }
 
             rb.linearVelocity = velocity;
