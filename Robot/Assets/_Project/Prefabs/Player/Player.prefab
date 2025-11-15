@@ -265,10 +265,11 @@ GameObject:
   m_Component:
   - component: {fileID: 9097877008801992403}
   - component: {fileID: 4938939265432001996}
-  - component: {fileID: 4619443059796094321}
-  - component: {fileID: 9136046502771523595}
-  - component: {fileID: 3302709443686962643}
   - component: {fileID: 455002771213397384}
+  - component: {fileID: 9136046502771523595}
+  - component: {fileID: 1860886658447139492}
+  - component: {fileID: 4619443059796094321}
+  - component: {fileID: 3302709443686962643}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -319,33 +320,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   attackParticles: {fileID: 8192811149522809767, guid: 3bcb1acc22e9575428d0b078d457fa20, type: 3}
---- !u!54 &4619443059796094321
-Rigidbody:
+--- !u!114 &455002771213397384
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6528852831807157320}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 120
-  m_CollisionDetection: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4d118e08c77c848b5b98d0d3200745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletPrefab: {fileID: 8827590450794369698, guid: f8562b1c62d6f254188bdeecff259903, type: 3}
+  _bulletDamage: 10
+  _bulletSpeed: 10
+  _direction: {fileID: 5045482277261304864}
+  _firePoint: {fileID: 2759896734255056608}
+  _fireRate: 1
 --- !u!114 &9136046502771523595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,12 +366,55 @@ MonoBehaviour:
   moveSpeed: 10
   jumpForce: 11
   drag: 1
+  _playerDash: {fileID: 1860886658447139492}
   rotationSpeed: 10
   extraJumps: 0
   jumpDelay: 0.2
   fallMultiplier: 2.5
   lowJumpMultiplier: 2
   freeze: 0
+--- !u!114 &1860886658447139492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6528852831807157320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d518b7b65a18223418ed47ae57340186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dashSpeed: 25
+  _dashDuration: 0.3
+  _dashCooldown: 1.5
+--- !u!54 &4619443059796094321
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6528852831807157320}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 120
+  m_CollisionDetection: 0
 --- !u!136 &3302709443686962643
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -403,24 +438,6 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &455002771213397384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6528852831807157320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b4d118e08c77c848b5b98d0d3200745, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 8827590450794369698, guid: f8562b1c62d6f254188bdeecff259903, type: 3}
-  _bulletDamage: 10
-  _bulletSpeed: 10
-  _direction: {fileID: 5045482277261304864}
-  _firePoint: {fileID: 2759896734255056608}
-  _fireRate: 1
 --- !u!1 &8335549528232044150
 GameObject:
   m_ObjectHideFlags: 0
