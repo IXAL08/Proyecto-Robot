@@ -23,6 +23,7 @@ namespace Robot
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float jumpForce = 5f;
         [SerializeField] private float drag = 60f;
+        [SerializeField] private PlayerDash _playerDash;
         private Vector3 linearDrag;
         
         [SerializeField] private float rotationSpeed = 10f;
@@ -55,12 +56,14 @@ namespace Robot
             jumpCooldown = jumpDelay;
             InputManager.Source.MovePlayer += HandleMovement;
             InputManager.Source.Jump += HandleJump;
+            InputManager.Source.Dash += HandleDash;
         }
 
         private void OnDestroy()
         {
             InputManager.Source.MovePlayer -= HandleMovement;
             InputManager.Source.Jump -= HandleJump;
+            InputManager.Source.Dash -= HandleDash;
         }
 
         private void FixedUpdate()
@@ -69,7 +72,8 @@ namespace Robot
 
             CheckGround();
             CheckisWalls();
-            
+
+            if (_playerDash.GetDashing()) return;
             ApplyMovement();
             ApplyBetterFalling();
         }
@@ -155,6 +159,11 @@ namespace Robot
             }
         }
         
+        private void HandleDash()
+        {
+            _playerDash.DoDash();
+        }
+
         private void ApplyBetterFalling()
         {
             var velocity = rb.linearVelocity;
