@@ -36,5 +36,8 @@ namespace Robot
 
         //OnCraftingMenu
         event Action CloseCraftingMenu;
+
+        //Ontutorial
+        event Action CloseTutorial;
     }
 }
