@@ -28,6 +28,7 @@ namespace Robot
         public event Action CloseInventory;
         public event Action OpenCraftingMenu;
         public event Action CloseCraftingMenu;
+        public event Action CloseTutorial;
 
         private void Start()
         {
@@ -67,6 +68,9 @@ namespace Robot
                     break;
                 case GameState.OnInventoryMenu:
                     CheckOnInventoryMenuInputs();
+                    break;
+                case GameState.OnTutorial:
+                    CheckOnTutorialMenu();
                     break;
 
             }
@@ -189,6 +193,14 @@ namespace Robot
             {
                 CloseInventory?.Invoke();
                 BackToOnPlay?.Invoke();
+            }
+        }
+
+        private void CheckOnTutorialMenu()
+        {
+            if (Input.anyKeyDown)
+            {
+                CloseTutorial?.Invoke();
             }
         }
     }

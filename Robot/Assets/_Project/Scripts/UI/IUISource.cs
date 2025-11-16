@@ -8,5 +8,6 @@ namespace Robot
         void ClosePause();
         void OpenSetting();
         void CloseSetting();
+        void OpenTutorialMenu();
     }
 }

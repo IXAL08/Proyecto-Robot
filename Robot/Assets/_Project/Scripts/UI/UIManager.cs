@@ -10,10 +10,24 @@ namespace Robot
         [SerializeField] private GameObject _chipUIInventory, _pauseMenu, _settingsMenu;
         [SerializeField] private CanvasGroup _guiUI, _backgroundUI;
 
+        [Header("Tutorial Menu")]
+        [SerializeField] private GameObject _tutorialMenu;
+        [SerializeField] private GameObject _tutorialContext;
+        [SerializeField] private GameObject _tutorialControls;
+        [SerializeField] private GameObject _tutorialObjective;
+
         private void Start()
         {
             InputManager.Source.OpenChipsInventory += OpenChipInventory;
             InputManager.Source.CloseChipsInventory += CloseChipInventory;
+            InputManager.Source.CloseTutorial += CloseTutorialMenu;
+        }
+
+        private void OnDisable()
+        {
+            InputManager.Source.OpenChipsInventory -= OpenChipInventory;
+            InputManager.Source.CloseChipsInventory -= CloseChipInventory;
+            InputManager.Source.CloseTutorial -= CloseTutorialMenu;
         }
 
         public void OpenPause()
@@ -33,6 +47,16 @@ namespace Robot
                 HidePauseMenu().Forget();
             }
 
+        }
+
+        public void OpenTutorialMenu()
+        {
+            ShowTutorialMenus().Forget();
+        }
+
+        private void CloseTutorialMenu()
+        {
+            HideTutorialMenus().Forget();
         }
 
         public void OpenSetting()
@@ -96,6 +120,35 @@ namespace Robot
             await _backgroundUI.DOFade(0, 0.5f).AsyncWaitForCompletion();
             ShowGUI();
             _backgroundUI.gameObject.SetActive(false);
+        }
+
+        private async UniTask ShowTutorialMenus()
+        {
+            GameStateManager.Source.ChangeState(GameState.InTransition);
+            _guiUI.alpha = 0;
+            _tutorialMenu.SetActive(true);
+            Sequence sequence = DOTween.Sequence();
+
+            sequence.Append(_tutorialContext.transform.DOLocalMoveX(-800, 1f)); 
+            sequence.AppendInterval(1);
+            sequence.Append(_tutorialControls.transform.DOLocalMoveY(0, 1f)); 
+            sequence.AppendInterval(1);
+            sequence.Append(_tutorialObjective.transform.DOLocalMoveX(800, 1f)); 
+            sequence.AppendCallback(() => GameStateManager.Source.ChangeState(GameState.OnTutorial));
+            await sequence.AsyncWaitForCompletion();
+        }
+
+        private async UniTask HideTutorialMenus()
+        {
+            Sequence sequence = DOTween.Sequence();
+
+            sequence.Append(_tutorialContext.transform.DOLocalMoveX(-1300, 1f));
+            sequence.Append(_tutorialControls.transform.DOLocalMoveY(1080, 1f)); 
+            sequence.Append(_tutorialObjective.transform.DOLocalMoveX(1300, 1f)); 
+            sequence.AppendCallback(() => GameStateManager.Source.ChangeState(GameState.OnPlay));
+            await sequence.AsyncWaitForCompletion();
+            _guiUI.alpha = 1;
+            _tutorialMenu.SetActive(false);
         }
     }
 }

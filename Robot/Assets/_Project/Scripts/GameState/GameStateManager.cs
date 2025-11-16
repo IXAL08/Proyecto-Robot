@@ -45,6 +45,9 @@ namespace Robot
                 case GameState.OnCraftingMenu:
                     ChangeState(GameState.OnPlay);
                     break;
+                case GameState.OnTutorial:
+                    ChangeState(GameState.OnPlay);
+                    break;
                 case GameState.OnGameOver:
                     ChangeState(GameState.OnGameOver);
                     break;
@@ -61,6 +64,7 @@ namespace Robot
         OnInventoryMenu,
         OnCraftingMenu,
         OnGameOver,
-        InTransition
+        InTransition,
+        OnTutorial
     }
 }
