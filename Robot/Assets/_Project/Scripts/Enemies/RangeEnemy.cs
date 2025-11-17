@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RangeEnemy : MonoBehaviour
@@ -27,19 +28,25 @@ public class RangeEnemy : MonoBehaviour
     public GameObject[] drops;
     public float dropChance = 0.5f;
     
+    [Header("Efectos Visuales")]
+    public Color normalColor = Color.white;
+    public Renderer EnemyRenderer;
+    
     // Variables privadas
     public int currentHealth;
     private float attackTimer;
     private bool isRetreating = false;
+    private bool isAttacking = false;
     private Rigidbody rb;
     private Animator animator;
+    private Vector3 animationRotation = new Vector3(0, 90, 0);
+    
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-
-        // Buscar al jugador automáticamente
+        
         if (player == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -48,6 +55,8 @@ public class RangeEnemy : MonoBehaviour
         }
         
         currentHealth = maxHealth;
+        
+        transform.rotation = Quaternion.Euler(animationRotation);
     }
     
     void Update()
@@ -96,15 +105,29 @@ public class RangeEnemy : MonoBehaviour
         // Mover alejándose
         if (rb != null)
         {
-            rb.linearVelocity = new Vector3(movement.x, rb.linearVelocity.y, movement.z);
+            rb.linearVelocity = new Vector3(movement.x, rb.linearVelocity.y, 0);
         }
         else
         {
             transform.position += movement * Time.deltaTime;
         }
-        
-        // Rotar hacia el jugador (pero moverse en dirección opuesta)
-        LookAtPlayer();
+        LookAwayFromPlayer();
+    }
+    
+    void LookAwayFromPlayer()
+    {
+        if (player != null)
+        {
+            Vector3 lookDirection = (transform.position - player.position).normalized;
+            lookDirection.y = 0; // Mantener rotación solo en eje Y
+            
+            if (lookDirection != Vector3.zero)
+            {
+                // Aplicar la rotación de huida más la corrección para las animaciones
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(animationRotation);
+                transform.rotation = targetRotation;
+            }
+        }
     }
     
     void StopMoving()
@@ -120,11 +143,12 @@ public class RangeEnemy : MonoBehaviour
         if (player != null)
         {
             Vector3 lookDirection = (player.position - transform.position).normalized;
-            //lookDirection.y = 0; // Mantener rotación solo en eje Y
+            lookDirection.y = 0; // Mantener rotación solo en eje Y
             
             if (lookDirection != Vector3.zero)
             {
-                transform.rotation = Quaternion.LookRotation(lookDirection);
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(animationRotation);
+                transform.rotation = targetRotation;
             }
         }
     }
@@ -133,12 +157,25 @@ public class RangeEnemy : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        
-        
+
+        StartCoroutine(DamageFlash());
        
         if (currentHealth <= 0)
         {
             Die();
+        }
+    }
+    
+    IEnumerator DamageFlash()
+    {
+        if (EnemyRenderer != null)
+        {
+            Color originalColor = EnemyRenderer.material.color;
+            EnemyRenderer.material.color = Color.red;
+            
+            yield return new WaitForSeconds(0.1f);
+            
+            EnemyRenderer.material.color = originalColor;
         }
     }
 
@@ -165,6 +202,8 @@ public class RangeEnemy : MonoBehaviour
     void Attack()
     {
         if (bulletPrefab == null) return;
+
+        isAttacking = true;
         
         if (animator != null)
         {
@@ -198,14 +237,26 @@ public class RangeEnemy : MonoBehaviour
                 rb.linearVelocity = attackDirection * bulletSpeed;
             }
         }
+        Invoke("ResetAttack", 0.5f);
+    }
+    
+    void ResetAttack()
+    {
+        isAttacking = false;
     }
     
     void UpdateAnimations()
     {
         if (animator != null)
         {
-            animator.SetBool("IsMoving", rb.linearVelocity.magnitude > 0.1f);
-            animator.SetBool("IsAttacking", canAttack);
+            bool isIdle = rb.linearVelocity.magnitude < 0.1f && !isAttacking;
+            
+            // Caminata: cuando se está moviendo
+            bool isWalking = rb.linearVelocity.magnitude > 0.1f && !isAttacking;
+            
+            animator.SetBool("IsIdle", isIdle);
+            animator.SetBool("IsWalking", isWalking);
+            animator.SetBool("IsAttacking", isAttacking);
         }
     }
     void OnDrawGizmosSelected()

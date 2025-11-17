@@ -171,6 +171,8 @@ MonoBehaviour:
   - {fileID: 2143135355272814630, guid: a33a940d067203041aaef7acb87f3e6b, type: 3}
   - {fileID: 6428363534944223248, guid: 47e4fb0934bd1934fb0d9172cd3da593, type: 3}
   dropChance: 0.5
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  EnemyRenderer: {fileID: 5765465479442631438}
   currentHealth: 0
 --- !u!54 &109611396112391632
 Rigidbody:

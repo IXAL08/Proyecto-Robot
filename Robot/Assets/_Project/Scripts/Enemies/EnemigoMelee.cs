@@ -12,7 +12,7 @@ public class EnemigoMelee : MonoBehaviour
     [Header("Combate")]
     public int maxHealth = 60;
     public float attackDamage = 5;
-    public float attackCooldown = 2f;
+    public float attackCooldown = 1.5f;
     public float detectionRange = 4f;
     public float attackRange = 1.5f;
 
@@ -25,7 +25,6 @@ public class EnemigoMelee : MonoBehaviour
     public float dropChance = 0.5f;
     
     [Header("Efectos Visuales")]
-    public Color normalColor = Color.white;
     public Renderer EnemyRenderer;
     
     public int currentHealth;
@@ -56,11 +55,7 @@ public class EnemigoMelee : MonoBehaviour
         rightPatrolPoint = startPosition + Vector3.right * patrolDistance;
         
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
-        if (EnemyRenderer != null)
-        {
-            EnemyRenderer.material.color = normalColor;
-        }
+        
     }
 
     // Update is called once per frame
@@ -185,11 +180,6 @@ public class EnemigoMelee : MonoBehaviour
         
         yield return new WaitForSeconds(0.2f);
         
-        if (EnemyRenderer != null)
-        {
-            EnemyRenderer.material.color = normalColor;
-        }
-        
         isAttacking = false;
     }
     
@@ -249,7 +239,7 @@ public class EnemigoMelee : MonoBehaviour
             
             if (EnemyRenderer != null)
             {
-                EnemyRenderer.material.color = isAttacking ? normalColor:  originalColor;
+                EnemyRenderer.material.color = originalColor;
             }
         }
     }
