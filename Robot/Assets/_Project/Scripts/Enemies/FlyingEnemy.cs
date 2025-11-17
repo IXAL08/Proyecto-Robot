@@ -27,8 +27,6 @@ public class FlyingEnemy : MonoBehaviour
     public float dropChance = 0.5f;
     
     [Header("Feedback")]
-    public Color attackColor = Color.red;
-    public Color idleColor = Color.green;
     public Renderer enemyRenderer;
     
     private int currentHealth;
@@ -40,11 +38,13 @@ public class FlyingEnemy : MonoBehaviour
     private Vector3 startPos;
     private bool isChasing = false;
     private Rigidbody rb;
+    private Animator animator;
     
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         enemyRenderer = GetComponentInChildren<Renderer>();
+        animator = GetComponent<Animator>();
         
         startPos = transform.position;
         currentHealth = 50;
@@ -52,11 +52,6 @@ public class FlyingEnemy : MonoBehaviour
         if (player == null)
         {
             FindPlayer();
-        }
-
-        if (enemyRenderer != null)
-        {
-            enemyRenderer.material.color = idleColor;
         }
 
         if (rb != null)
@@ -104,6 +99,8 @@ public class FlyingEnemy : MonoBehaviour
             }
 
         }
+
+        UpdateAnimations();
     }
 
     void FindPlayer()
@@ -208,18 +205,13 @@ public class FlyingEnemy : MonoBehaviour
             {
                 rb.linearVelocity = Vector3.zero;
             }
-        
-            
-            if (enemyRenderer != null)
-            {
-                enemyRenderer.material.color = attackColor;
-            }
             
             yield return new WaitForSeconds(0.3f);
             
             if (IsPlayerInRange(attackRange))
             {
                 ApplyDamage();
+                animator.SetTrigger("Attack");
             }
         
             
@@ -230,10 +222,6 @@ public class FlyingEnemy : MonoBehaviour
             
             yield return new WaitForSeconds(0.2f);
             
-            if (enemyRenderer != null)
-            {
-                enemyRenderer.material.color = idleColor;
-            }
         
             isAttacking = false;
             
@@ -273,19 +261,31 @@ public class FlyingEnemy : MonoBehaviour
             }
         }
         
+        void UpdateAnimations()
+        {
+            if (animator != null)
+            {
+                //bool isIdle = rb.linearVelocity.magnitude < 0.1f && !isAttacking;
+            
+                // Caminata: cuando se está moviendo
+                bool isWalking = rb.linearVelocity.magnitude > 0.1f && !isAttacking;
+            
+                //animator.SetBool("IsIdle", isIdle);
+                animator.SetBool("IsWalking", isWalking);
+                animator.SetBool("IsAttacking", isAttacking);
+            }
+        }
+        
         IEnumerator DamageFlash()
         {
             if (enemyRenderer != null)
             {
                 Color originalColor = enemyRenderer.material.color;
-                enemyRenderer.material.color = Color.white;
+                enemyRenderer.material.color = Color.red;
             
                 yield return new WaitForSeconds(0.1f);
-            
-                if (enemyRenderer != null)
-                {
-                    enemyRenderer.material.color = isAttacking ? attackColor : idleColor;
-                }
+                
+                enemyRenderer.material.color =  originalColor;
             }
         }
 

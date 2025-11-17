@@ -10,13 +10,13 @@ public class Plataformas : MonoBehaviour
     public float bottomAreaHeight = 1.5f;
     
     private Collider platformCollider;
-    private GameObject topTrigger;
-    private GameObject bottomTrigger;
+    public GameObject topTrigger;
+    public GameObject bottomTrigger;
     
     void Start()
     {
         platformCollider = GetComponent<Collider>();
-        CreateTriggers();
+        //CreateTriggers();
     }
     
     void Update()
@@ -33,7 +33,7 @@ public class Plataformas : MonoBehaviour
         }
     }
     
-    void CreateTriggers()
+    /*void CreateTriggers()
     {
         Vector3 platformSize = GetComponent<Collider>().bounds.size;
         
@@ -46,9 +46,9 @@ public class Plataformas : MonoBehaviour
         bottomTrigger = CreateTrigger("BottomTrigger",
             new Vector3(0, -7  - bottomAreaHeight / 2, 0),
             new Vector3(platformSize.x, bottomAreaHeight, platformSize.z));
-    }
+    }*/
     
-    GameObject CreateTrigger(string name, Vector3 localPosition, Vector3 size)
+    /*GameObject CreateTrigger(string name, Vector3 localPosition, Vector3 size)
     {
         GameObject trigger = new GameObject(name);
         trigger.transform.SetParent(transform);
@@ -61,16 +61,16 @@ public class Plataformas : MonoBehaviour
         trigger.AddComponent<SimplePlatformTrigger>().parentPlatform = this;
         
         return trigger;
-    }
+    }*/
     
     bool IsPlayerInTopTrigger()
     {
-        return topTrigger.GetComponent<SimplePlatformTrigger>().playerInside;
+        return topTrigger.GetComponent<TriggersPlatform>().playerInside;
     }
     
     bool IsPlayerInBottomTrigger()
     {
-        return bottomTrigger.GetComponent<SimplePlatformTrigger>().playerInside;
+        return bottomTrigger.GetComponent<TriggersPlatform>().playerInside;
     }
     
     void TogglePlatform(bool enabled)
@@ -88,24 +88,3 @@ public class Plataformas : MonoBehaviour
     }
 }
 
-public class SimplePlatformTrigger : MonoBehaviour
-{
-    public Plataformas parentPlatform;
-    public bool playerInside = false;
-    
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInside = true;
-        }
-    }
-    
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInside = false;
-        }
-    }
-}

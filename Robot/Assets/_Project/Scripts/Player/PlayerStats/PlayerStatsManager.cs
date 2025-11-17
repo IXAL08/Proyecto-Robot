@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Robot
@@ -7,6 +8,7 @@ namespace Robot
     {
         [SerializeField] private PlayerStats _currentBasePlayerStats;
         [SerializeField] private PlayerStats[] _basePlayerStats;
+        [SerializeField] private Renderer playerRenderer;
         [Header("CurrentStats")]
         [SerializeField] private float _currentHealth;
         [SerializeField] private float _currentMaxHealth;
@@ -24,6 +26,7 @@ namespace Robot
         [SerializeField] private GameObject _healthBar, _consumiblesUI;
         [Header("PlayerState")]
         [SerializeField] private bool _isDead;
+        [Header("Daño Visual")]
 
         public float CurrentHealth => _currentHealth;
         public float PlayerMaxHealth => _currentMaxHealth;
@@ -110,6 +113,8 @@ namespace Robot
 
             _currentHealth -= damage;
             _currentHealth = Mathf.Max(0, _currentHealth);
+            
+            StartCoroutine(DamageFlashEffect());
 
             OnDamageRecieved?.Invoke();
             Debug.Log(_currentHealth);
@@ -117,6 +122,19 @@ namespace Robot
             if (_currentHealth <= 0)
             {
                 Die();
+            }
+        }
+        
+        private IEnumerator DamageFlashEffect()
+        {
+            if (playerRenderer != null)
+            {
+                Color originalColor = playerRenderer.material.color;
+                playerRenderer.material.color = Color.red;
+            
+                yield return new WaitForSeconds(0.1f);
+            
+                playerRenderer.material.color = originalColor;
             }
         }
 
