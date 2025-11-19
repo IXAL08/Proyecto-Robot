@@ -2,7 +2,7 @@ using System.Collections;
 using Robot;
 using UnityEngine;
 
-public class HeavyEnemy : MonoBehaviour
+public class HeavyEnemy : MonoBehaviour, IAttackable
 {
     [Header("Movimiento")] 
     public float speed = 1f;
@@ -247,10 +247,15 @@ public class HeavyEnemy : MonoBehaviour
         StartCoroutine(DamageFlash());
         if (currentHealth <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
     }
-    
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+
     IEnumerator DamageFlash()
     {
         if (enemyRenderer != null)

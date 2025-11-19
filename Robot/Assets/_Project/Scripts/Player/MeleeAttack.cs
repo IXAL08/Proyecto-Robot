@@ -90,29 +90,14 @@ public class MeleeAttack : MonoBehaviour
         }
 
         // Detectar enemigos
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+        Collider[] hittedItems = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
-        foreach (Collider enemy in hitEnemies)
+        foreach (Collider item in hittedItems)
         {
-            EnemigoMelee meleeHealth = enemy.GetComponent<EnemigoMelee>();
-            if (meleeHealth != null)
+            IAttackable attackable = item.GetComponent<IAttackable>();
+            if (attackable != null)
             {
-                meleeHealth.TakeDamage(damage);
-            }
-            RangeEnemy rangeHealth = enemy.GetComponent<RangeEnemy>();
-            if (rangeHealth != null)
-            {
-                rangeHealth.TakeDamage(damage);
-            }
-            FlyingEnemy flyingHealth = enemy.GetComponent<FlyingEnemy>();
-            if (flyingHealth != null)
-            {
-                flyingHealth.TakeDamage(damage);
-            }
-            HeavyEnemy heavyHealth = enemy.GetComponent<HeavyEnemy>();
-            if (heavyHealth != null)
-            {
-                heavyHealth.TakeDamage(damage);
+                attackable.TakeDamage(damage);
             }
         }
     }

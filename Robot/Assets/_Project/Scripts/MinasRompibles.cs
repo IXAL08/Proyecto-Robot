@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class MenasRompibles : MonoBehaviour
+public class MinasRompibles : MonoBehaviour, IAttackable
 {
     [Header("Vida")] 
-    public int maxHits = 3;
+    public int maxHealth = 3;
     public bool canBeShot = true;
     public bool canBeHit = true;
 
@@ -17,30 +17,24 @@ public class MenasRompibles : MonoBehaviour
     public float dropForce = 3f;
     public Vector3 dropArea = new Vector3(1, 0, 0);
     
-
-    private int currentHits;
     private int currentHealth;
     private bool isBroken = false;
     private Material originalMaterial;
 
     private void Start()
     {
-        currentHits = 0;
-        currentHealth = maxHits;
+        currentHealth = maxHealth;
         
     }
 
     public void TakeDamage(int damage = 1, Vector3 hitDirection = default(Vector3))
     {
         if (isBroken) return;
-        
-        currentHits += damage;
-        currentHealth = maxHits - currentHits;
-        
-
-        if (currentHits >= maxHits)
+      
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
-            BreakObject(hitDirection);
+            Die();
         }
     }
     
@@ -88,41 +82,13 @@ public class MenasRompibles : MonoBehaviour
         }
     }
 
-    void HitByBullet(float damage = 1, Vector3 hitDirection = default(Vector3))
+    public void TakeDamage(int damage)
     {
-        if (canBeShot)
-        {
-            TakeDamage((int)damage, hitDirection);
-        }
-    }
-    
-    public void HitByMelee(int damage = 1, Vector3 hitDirection = default(Vector3))
-    {
-        if (canBeHit)
-        {
-            TakeDamage(damage, hitDirection);
-        }
+        TakeDamage(damage, Vector3.zero);
     }
 
-    private void OnCollisionEnter(Collision other)
+    public void Die()
     {
-        if (canBeShot)
-        {
-            Bullet bullet = other.gameObject.GetComponent<Bullet>();
-            if (bullet != null)
-            {
-                Vector3 hitDirection = other.contacts[0].point - transform.position;
-                HitByBullet(bullet.BulletDamage(), hitDirection.normalized);
-                
-                return;
-            }
-        }
-
-        if (canBeHit)
-        {
-            MeleeAttack attack = other.gameObject.GetComponent<MeleeAttack>();
-            Vector3 hitDirection = other.contacts[0].point - transform.position;
-            HitByMelee(attack.damage, hitDirection.normalized);
-        }
+        BreakObject();
     }
 }

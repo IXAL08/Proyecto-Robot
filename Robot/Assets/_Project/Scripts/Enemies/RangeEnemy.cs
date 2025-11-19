@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class RangeEnemy : MonoBehaviour
+public class RangeEnemy : MonoBehaviour, IAttackable
 {
     [Header("Configuración de Movimiento")]
     public float moveSpeed = 3f;
@@ -179,7 +179,7 @@ public class RangeEnemy : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         TryDropItem();
         Destroy(gameObject);

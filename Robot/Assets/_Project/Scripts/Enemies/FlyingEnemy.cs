@@ -2,7 +2,7 @@ using System.Collections;
 using Robot;
 using UnityEngine;
 
-public class FlyingEnemy : MonoBehaviour
+public class FlyingEnemy : MonoBehaviour, IAttackable
 {
     [Header("Movimiento")]
     public float flySpeed = 4f;
@@ -289,7 +289,7 @@ public class FlyingEnemy : MonoBehaviour
             }
         }
 
-        void Die()
+        public void Die()
         {
             TryDropItem();
             Destroy(gameObject);

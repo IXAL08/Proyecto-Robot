@@ -2,7 +2,7 @@ using System.Collections;
 using Robot;
 using UnityEngine;
 
-public class EnemigoMelee : MonoBehaviour
+public class EnemigoMelee : MonoBehaviour, IAttackable
 {
     [Header("Movimiento")]
     public float moveSpeed = 2f;
@@ -244,7 +244,7 @@ public class EnemigoMelee : MonoBehaviour
         }
     }
     
-    void Die()
+    public void Die()
     {
         TryDropItem();
         Destroy(gameObject);
