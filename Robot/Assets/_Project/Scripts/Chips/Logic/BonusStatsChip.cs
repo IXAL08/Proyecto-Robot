@@ -18,5 +18,7 @@ namespace Robot
         public bool ActiveMeleeAttack;
         public bool ActiveRangeAttack;
         public bool ActiveDash;
+        [Header("Healing")]
+        public float HealingAmount;
     }
 }
