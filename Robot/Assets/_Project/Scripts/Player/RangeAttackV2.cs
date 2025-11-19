@@ -1,9 +1,12 @@
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 namespace Robot
 {
     public class RangeAttackV2 : MonoBehaviour
     {
+        [SerializeField] private Animator anim;
         [Header("Bullet Setup")]
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private float _bulletDamage;
@@ -15,8 +18,9 @@ namespace Robot
 
         [Header("Attack setup")]
         [SerializeField] private float _fireRate = 1f;
+        [SerializeField] private float _shootDelay = 0.2f;
 
-        private float _nextFireTime = 0;
+        private float _nextFireTime = 0f;
         private bool _isActive = false;
 
         private void Start()
@@ -48,12 +52,18 @@ namespace Robot
         {
             if (GameStateManager.Source.CurrentGameState != GameState.OnPlay) return;
             if (!_isActive) return;
+            if (Time.time < _nextFireTime) return;
 
-            if (Time.time >= _nextFireTime)
-            {
-                Shoot();
-                _nextFireTime = Time.time + _fireRate;
-            }
+            ShootWithAnimationAsync().Forget();
+        }
+
+        private async UniTask ShootWithAnimationAsync()
+        {
+            _nextFireTime = Time.time + _fireRate;
+            anim.SetBool("RangeAttack", true);
+            await UniTask.Delay(TimeSpan.FromSeconds(_shootDelay));
+            Shoot();
+            anim.SetBool("RangeAttack", false);
         }
 
         private void ActiveRangeAttack(bool value)

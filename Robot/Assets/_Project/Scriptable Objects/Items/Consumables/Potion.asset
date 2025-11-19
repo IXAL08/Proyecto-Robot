@@ -17,4 +17,4 @@ MonoBehaviour:
   Description: Permite recuperar vida perdida.
   isTemporaryEffect: 0
   tempEffectTime: 0
-  BonusStats: {fileID: 0}
+  BonusStats: {fileID: 11400000, guid: d02cc3e2e16d57f468637458a01e43c7, type: 2}

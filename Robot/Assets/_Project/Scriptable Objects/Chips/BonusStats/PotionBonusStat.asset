@@ -18,7 +18,8 @@ MonoBehaviour:
   ActiveHealthBar: 0
   ActiveEnemyHealth: 0
   ActiveDamageVisualizer: 0
-  ActiveConsumiblesVisualizer: 1
+  ActiveConsumiblesVisualizer: 0
   ActiveMeleeAttack: 0
   ActiveRangeAttack: 0
   ActiveDash: 0
+  HealingAmount: 5

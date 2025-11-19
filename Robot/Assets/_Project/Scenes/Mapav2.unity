@@ -10595,6 +10595,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2330649711304528848, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: _potion
+      value: 
+      objectReference: {fileID: 11400000, guid: b1e83219b0e67ae47be55f17a6fffec3, type: 2}
+    - target: {fileID: 2330649711304528848, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
       propertyPath: _healthBar
       value: 
       objectReference: {fileID: 2128083897}
@@ -10704,6 +10708,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1586783962098446687, guid: 6e4fb5d716663084cb2f9428cc58bf1c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6528852831807157320, guid: 6e4fb5d716663084cb2f9428cc58bf1c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -17065,13 +17073,17 @@ PrefabInstance:
       propertyPath: _chipUIInventory
       value: 
       objectReference: {fileID: 584265638}
+    - target: {fileID: 4342626380149373361, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5979463105993264911, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5979463105993264911, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7488284852756153475, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
       propertyPath: m_Name
@@ -17095,7 +17107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7704242891895717151, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7704242891895717151, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -17107,7 +17119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8056429299838371772, guid: c71cc32f7d02eb646abd19fb653a8d76, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

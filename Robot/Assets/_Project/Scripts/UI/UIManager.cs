@@ -140,6 +140,7 @@ namespace Robot
 
         private async UniTask HideTutorialMenus()
         {
+            GameStateManager.Source.ChangeState(GameState.InTransition);
             Sequence sequence = DOTween.Sequence();
 
             sequence.Append(_tutorialContext.transform.DOLocalMoveX(-1300, 1f));
