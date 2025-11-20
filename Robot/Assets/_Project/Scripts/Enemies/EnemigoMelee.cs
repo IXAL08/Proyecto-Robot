@@ -15,6 +15,7 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
     public float attackCooldown = 1.5f;
     public float detectionRange = 4f;
     public float attackRange = 1.5f;
+    public float attackAnimationDelay = 0.3f;
 
     [Header("Referencias")]
     public Transform attackPoint;
@@ -32,6 +33,7 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
     private float cooldownTimer;
     private bool isAttacking;
     private bool isChasing;
+    private bool isDead = false;
     private Vector3 startPosition;
     private Vector3 rightPatrolPoint;
     private Vector3 leftPatrolPoint;
@@ -61,6 +63,8 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
     // Update is called once per frame
     void Update()
     {
+        if (isDead) return;
+        
         UpdateTimers();
 
         if (player == null)
@@ -170,7 +174,7 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
             animator.SetTrigger("Attack");
         }
         
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(attackAnimationDelay);
         
         if (IsPlayerInRange(attackRange))
         {
@@ -206,6 +210,8 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
     
     public void TakeDamage(int damage)
     {
+        if (isDead) return;
+        
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
@@ -223,7 +229,12 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
     {
         if (animator != null)
         {
-            animator.SetBool("IsMoving", rb.linearVelocity.magnitude > 0.1f);
+            bool isIdle = rb.linearVelocity.magnitude < 0.1f && !isAttacking;
+            
+            bool isMoving = rb.linearVelocity.magnitude > 0.1f && !isAttacking;
+            
+            animator.SetBool("isIdle", isIdle);
+            animator.SetBool("IsMoving", isMoving);
             animator.SetBool("IsAttacking", isAttacking);
         }
     }
@@ -246,7 +257,31 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
     
     public void Die()
     {
+        if (isDead) return;
+        
+        isDead = true;
+        
+        
+        if (animator != null)
+        {
+            animator.SetTrigger("Die");
+        }
+        
+        
+        rb.linearVelocity = Vector3.zero;
+        
+        
+        canAttack = false;
+        
+        
         TryDropItem();
+        
+        
+        Invoke("DestroyEnemy", 1.5f);
+    }
+    
+    void DestroyEnemy()
+    {
         Destroy(gameObject);
     }
 

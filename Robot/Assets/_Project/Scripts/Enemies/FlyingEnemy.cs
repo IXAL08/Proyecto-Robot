@@ -35,8 +35,10 @@ public class FlyingEnemy : MonoBehaviour, IAttackable
     private bool isAttacking = false;
     private bool isReturning = false;
     private bool playerDetected = false;
+    private bool isDead = false;
     private Vector3 startPos;
     private bool isChasing = false;
+    private Vector3 animationRotation = new Vector3(0, -90, 0);
     private Rigidbody rb;
     private Animator animator;
     
@@ -59,6 +61,7 @@ public class FlyingEnemy : MonoBehaviour, IAttackable
             rb.useGravity = false;
             rb.constraints = RigidbodyConstraints.FreezeRotation;
         }
+        transform.rotation = Quaternion.Euler(animationRotation);
     }
 
     void Update()
@@ -157,7 +160,8 @@ public class FlyingEnemy : MonoBehaviour, IAttackable
 
             if (direction != Vector3.zero)
             {
-                transform.rotation = Quaternion.LookRotation(direction);
+                Quaternion targetRotation = Quaternion.LookRotation(direction) * Quaternion.Euler(animationRotation);
+                transform.rotation = targetRotation;
             }
 
             if (Vector3.Distance(transform.position, startPos) < 0.5f)
@@ -183,7 +187,8 @@ public class FlyingEnemy : MonoBehaviour, IAttackable
             
                 if (lookDirection != Vector3.zero)
                 {
-                    transform.rotation = Quaternion.LookRotation(lookDirection);
+                    Quaternion targetRotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(animationRotation);
+                    transform.rotation = targetRotation;
                 }
             }
         }
@@ -265,12 +270,9 @@ public class FlyingEnemy : MonoBehaviour, IAttackable
         {
             if (animator != null)
             {
-                //bool isIdle = rb.linearVelocity.magnitude < 0.1f && !isAttacking;
-            
-                // Caminata: cuando se está moviendo
+                
                 bool isWalking = rb.linearVelocity.magnitude > 0.1f && !isAttacking;
-            
-                //animator.SetBool("IsIdle", isIdle);
+                
                 animator.SetBool("IsWalking", isWalking);
                 animator.SetBool("IsAttacking", isAttacking);
             }
@@ -291,8 +293,23 @@ public class FlyingEnemy : MonoBehaviour, IAttackable
 
         public void Die()
         {
+            if (isDead) return;
+        
+            isDead = true;
+        
+        
+            if (animator != null)
+            {
+                animator.SetTrigger("Die");
+            }
+            
+            rb.linearVelocity = Vector3.zero;
+        
+            canAttack = false;
+            
             TryDropItem();
-            Destroy(gameObject);
+            
+            Destroy(gameObject, 1.5f);
         }
         
         void TryDropItem()

@@ -221,4 +221,7 @@ MonoBehaviour:
   dropChance: 0.5
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   EnemyRenderer: {fileID: 5127494303806970002}
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 72
   currentHealth: 0

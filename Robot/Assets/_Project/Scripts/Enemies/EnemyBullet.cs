@@ -55,6 +55,11 @@ public class EnemyBullet : MonoBehaviour
         {
             HandleCollision(other.collider);
         }
+
+        if (other.collider.gameObject.layer == 6 || other.collider.gameObject.layer == 3)
+        {
+            DestroyBullet();
+        }
     }
     
     void HandleCollision(Collider other)

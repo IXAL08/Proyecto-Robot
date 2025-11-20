@@ -162,6 +162,7 @@ namespace Robot
         private void HandleDash()
         {
             _playerDash.DoDash();
+            anim.SetTrigger("Dash");
         }
 
         private void ApplyBetterFalling()
