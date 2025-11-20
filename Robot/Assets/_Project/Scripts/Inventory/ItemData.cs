@@ -8,7 +8,6 @@ namespace  Robot
         public string Name;
         public Sprite Icon;
         public string Description;
-        
     }
    
 }

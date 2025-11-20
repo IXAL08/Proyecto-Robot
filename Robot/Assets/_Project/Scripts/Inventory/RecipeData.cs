@@ -8,5 +8,6 @@ namespace Robot
     {
         public ItemData _itemToCraft;
         public List<InventorySlot> _itemsNeeded;
+        public bool IsMultiCraft;
     }
 }

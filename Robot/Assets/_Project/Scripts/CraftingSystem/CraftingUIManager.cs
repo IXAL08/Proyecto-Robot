@@ -125,7 +125,10 @@ public class CraftingUIManager : MonoBehaviour
                 Inventory.Source.RemoveItemFromInventory(item.Item, item.Quantity*-1);
             }
             Inventory.Source.AddItemToInventory(_currentSelectedRecipe._itemToCraft);
-            _recipesToCraft.Remove(_currentSelectedRecipe);
+            if (!_currentSelectedRecipe.IsMultiCraft)
+            {
+                _recipesToCraft.Remove(_currentSelectedRecipe);
+            }
             RefreshUI();
             print("Item Crafted successfully");
             _errorText.gameObject.SetActive(true);

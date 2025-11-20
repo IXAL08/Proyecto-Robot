@@ -18,3 +18,4 @@ MonoBehaviour:
     _quantity: 1
   - _item: {fileID: 11400000, guid: b166da5b6eaec0a439d23b66c39398c0, type: 2}
     _quantity: 1
+  IsMultiCraft: 1
