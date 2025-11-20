@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.904212
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
       propertyPath: m_LocalRotation.w
@@ -62,38 +62,16 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2855258513864772888}
+      addedObject: {fileID: 8050083959680718713}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8050083959680718713}
+      addedObject: {fileID: 6905775087254928669}
   m_SourcePrefab: {fileID: 100100000, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
 --- !u!1 &1730342465206782784 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
   m_PrefabInstance: {fileID: 1495758696496608785}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &2855258513864772888
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1730342465206782784}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8002641844445287896, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
 --- !u!114 &8050083959680718713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,3 +93,26 @@ MonoBehaviour:
   minMaterials: 3
   dropForce: 3
   dropArea: {x: 3, y: 0, z: 0}
+--- !u!136 &6905775087254928669
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730342465206782784}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.009158542
+  m_Height: 0.027631111
+  m_Direction: 0
+  m_Center: {x: -0.0007584476, y: 0.00020693422, z: -0.0037388122}

@@ -66,18 +66,39 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8404536741873704573}
+      addedObject: {fileID: 2459725234546855448}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2459725234546855448}
+      addedObject: {fileID: 753626836198590767}
   m_SourcePrefab: {fileID: 100100000, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
 --- !u!1 &9076912537016347953 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
   m_PrefabInstance: {fileID: 8157921138369564768}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &8404536741873704573
-MeshCollider:
+--- !u!114 &2459725234546855448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9076912537016347953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbdd9703bd3dafb4991231035eb77ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  canBeShot: 1
+  canBeHit: 1
+  materialPrefabs:
+  - {fileID: 5599830830845277905, guid: 328b7db7ec870f14ba3b00432b87e8d9, type: 3}
+  maxMaterials: 5
+  minMaterials: 3
+  dropForce: 3
+  dropArea: {x: 3, y: 0, z: 0}
+--- !u!136 &753626836198590767
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,28 +115,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8002641844445287896, guid: 4e29b42f47c96054db38b29c02c39254, type: 3}
---- !u!114 &2459725234546855448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9076912537016347953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbdd9703bd3dafb4991231035eb77ee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHits: 3
-  canBeShot: 1
-  canBeHit: 1
-  materialPrefabs:
-  - {fileID: 5599830830845277905, guid: 328b7db7ec870f14ba3b00432b87e8d9, type: 3}
-  maxMaterials: 5
-  minMaterials: 3
-  dropForce: 3
-  dropArea: {x: 3, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.00915447
+  m_Height: 0.028749054
+  m_Direction: 0
+  m_Center: {x: -0.00051780225, y: -0.00015321255, z: -0.00249856}
