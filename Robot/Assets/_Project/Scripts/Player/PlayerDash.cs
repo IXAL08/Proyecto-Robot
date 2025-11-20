@@ -5,6 +5,8 @@ namespace Robot
 {
     public class PlayerDash : MonoBehaviour
     {
+        [SerializeField] private Animator anim;
+        [Header("Dash Setup")]
         [SerializeField] private float _dashSpeed = 22f;
         [SerializeField] private float _dashDuration = 0.15f;
         [SerializeField] private float _dashCooldown = 0.35f;
@@ -35,9 +37,7 @@ namespace Robot
         public void DoDash()
         {
             if (!_isActive) return;
-            {
-                
-            }
+
             if (!_isDashing && _dashCooldownTimer <= 0)
             {
                 
@@ -54,6 +54,7 @@ namespace Robot
         {
             _isDashing = true;
             _dashCooldownTimer = _dashCooldown;
+            anim.SetBool("Dash", true);
 
             float startTime = Time.time;
             float dashDirection = transform.eulerAngles.y >= 90f ? -1f : 1f;
@@ -69,6 +70,7 @@ namespace Robot
             }
 
             _rb.useGravity = prevGravity;
+            anim.SetBool("Dash", false);
             _isDashing = false;
         }
 

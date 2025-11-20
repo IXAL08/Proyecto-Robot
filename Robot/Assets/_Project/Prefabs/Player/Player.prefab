@@ -387,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d518b7b65a18223418ed47ae57340186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 7840126918231042916}
   _dashSpeed: 25
   _dashDuration: 0.3
   _dashCooldown: 1.5
