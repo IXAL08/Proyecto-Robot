@@ -40,6 +40,7 @@ namespace Robot
             }
             if (!_isDashing && _dashCooldownTimer <= 0)
             {
+                
                 DashMovement().Forget();
             }
         }

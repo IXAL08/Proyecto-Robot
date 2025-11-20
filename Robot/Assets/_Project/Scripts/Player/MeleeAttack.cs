@@ -73,7 +73,7 @@ public class MeleeAttack : MonoBehaviour
         if (!isActivate) return;
 
         if (canAttack)
-        {
+        { 
             Attack();
         }
     }
@@ -82,8 +82,7 @@ public class MeleeAttack : MonoBehaviour
     {
         canAttack = false;
         cooldownTimer = attackCooldown;
-
-        // Reproducir efecto de partículas
+        
         if (attackParticles != null)
         {
             Instantiate(attackParticles, attackPoint.position, Quaternion.identity);

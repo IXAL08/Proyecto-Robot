@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RangeEnemy : MonoBehaviour, IAttackable
 {
-    [Header("Configuración de Movimiento")]
+   [Header("Configuración de Movimiento")]
     public float moveSpeed = 3f;
     public float retreatDistance = 3f;
     public float stoppingDistance = 5f;
@@ -14,6 +14,7 @@ public class RangeEnemy : MonoBehaviour, IAttackable
     public float attackCooldown = 2f;
     public int damage = 10;
     public float bulletSpeed = 8f;
+    public float attackAnimationDelay = 0.3f;
     
     [Header("Referencias")]
     public Transform player;
@@ -32,11 +33,16 @@ public class RangeEnemy : MonoBehaviour, IAttackable
     public Color normalColor = Color.white;
     public Renderer EnemyRenderer;
     
+    [Header("Detección")]
+    public LayerMask obstacleLayers; // Capas que bloquean la visión (paredes)
+    
     // Variables privadas
     public int currentHealth;
     private float attackTimer;
     private bool isRetreating = false;
     private bool isAttacking = false;
+    private bool isDead = false;
+    private bool isActive = false; // Si ha detectado al jugador
     private Rigidbody rb;
     private Animator animator;
     private Vector3 animationRotation = new Vector3(0, 90, 0);
@@ -55,19 +61,43 @@ public class RangeEnemy : MonoBehaviour, IAttackable
         }
         
         currentHealth = maxHealth;
-        
         transform.rotation = Quaternion.Euler(animationRotation);
     }
     
     void Update()
     {
-        if (player == null) return;
+        if (player == null || isDead) return;
+        
+        // Verificar si puede ver al jugador para activarse
+        if (!isActive)
+        {
+            if (CanSeePlayer())
+            {
+                isActive = true;
+                Debug.Log("Enemigo activado - Jugador detectado");
+            }
+            else
+            {
+                return; // No hacer nada hasta que vea al jugador
+            }
+        }
         
         // Actualizar timers
         attackTimer -= Time.deltaTime;
         
         // Calcular distancia al jugador
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        
+        // Verificar si el jugador sigue siendo visible
+        bool canSeePlayer = CanSeePlayer();
+        
+        // Si pierde de vista al jugador, desactivarse
+        if (!canSeePlayer)
+        {
+            isActive = false;
+            StopMoving();
+            return;
+        }
         
         // Determinar comportamiento según distancia
         if (distanceToPlayer <= retreatDistance)
@@ -91,7 +121,6 @@ public class RangeEnemy : MonoBehaviour, IAttackable
             // Rotar hacia el jugador
             LookAtPlayer();
         }
-
         UpdateAnimations();
     }
     
@@ -107,10 +136,6 @@ public class RangeEnemy : MonoBehaviour, IAttackable
         {
             rb.linearVelocity = new Vector3(movement.x, rb.linearVelocity.y, 0);
         }
-        else
-        {
-            transform.position += movement * Time.deltaTime;
-        }
         LookAwayFromPlayer();
     }
     
@@ -119,11 +144,10 @@ public class RangeEnemy : MonoBehaviour, IAttackable
         if (player != null)
         {
             Vector3 lookDirection = (transform.position - player.position).normalized;
-            lookDirection.y = 0; // Mantener rotación solo en eje Y
+            lookDirection.y = 0;
             
             if (lookDirection != Vector3.zero)
             {
-                // Aplicar la rotación de huida más la corrección para las animaciones
                 Quaternion targetRotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(animationRotation);
                 transform.rotation = targetRotation;
             }
@@ -143,7 +167,7 @@ public class RangeEnemy : MonoBehaviour, IAttackable
         if (player != null)
         {
             Vector3 lookDirection = (player.position - transform.position).normalized;
-            lookDirection.y = 0; // Mantener rotación solo en eje Y
+            lookDirection.y = 0;
             
             if (lookDirection != Vector3.zero)
             {
@@ -153,8 +177,29 @@ public class RangeEnemy : MonoBehaviour, IAttackable
         }
     }
     
+    bool CanSeePlayer()
+    {
+        if (player == null) return false;
+        
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, directionToPlayer, out hit, distanceToPlayer, obstacleLayers))
+        {
+            if (!hit.collider.CompareTag("Player"))
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     public void TakeDamage(int damage)
     {
+        if (isDead) return;
+        
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
@@ -181,7 +226,26 @@ public class RangeEnemy : MonoBehaviour, IAttackable
 
     public void Die()
     {
+        if (isDead) return;
+        
+        isDead = true;
+        
+        if (animator != null)
+        {
+            animator.SetTrigger("Die");
+        }
+        
+        canMove = false;
+        canAttack = false;
+        StopMoving();
+        
+        Invoke("DestroyEnemy", 2f);
+        
         TryDropItem();
+    }
+    
+    void DestroyEnemy()
+    {
         Destroy(gameObject);
     }
     
@@ -194,7 +258,6 @@ public class RangeEnemy : MonoBehaviour, IAttackable
             if (itemToDrop != null)
             {
                 Instantiate(itemToDrop, transform.position, Quaternion.identity);
-                Debug.Log("Enemigo soltó un item: " + itemToDrop.name);
             }
         }
     }
@@ -213,6 +276,28 @@ public class RangeEnemy : MonoBehaviour, IAttackable
         // Reiniciar cooldown
         attackTimer = attackCooldown;
 
+        // Iniciar corrutina para disparar después del delay de animación
+        StartCoroutine(ShootAfterAnimation());
+    }
+    
+    IEnumerator ShootAfterAnimation()
+    {
+        // Esperar el tiempo de la animación antes de disparar
+        yield return new WaitForSeconds(attackAnimationDelay);
+        
+        // Disparar solo si sigue viendo al jugador
+        if (bulletPrefab != null && CanSeePlayer() && !isDead)
+        {
+            ShootBullet();
+        }
+        
+        // Resetear estado de ataque
+        yield return new WaitForSeconds(0.2f);
+        isAttacking = false;
+    }
+    
+    void ShootBullet()
+    {
         // Instanciar proyectil
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
@@ -237,28 +322,22 @@ public class RangeEnemy : MonoBehaviour, IAttackable
                 rb.linearVelocity = attackDirection * bulletSpeed;
             }
         }
-        Invoke("ResetAttack", 0.5f);
-    }
-    
-    void ResetAttack()
-    {
-        isAttacking = false;
     }
     
     void UpdateAnimations()
     {
-        if (animator != null)
+        if (animator != null && !isDead)
         {
             bool isIdle = rb.linearVelocity.magnitude < 0.1f && !isAttacking;
-            
-            // Caminata: cuando se está moviendo
             bool isWalking = rb.linearVelocity.magnitude > 0.1f && !isAttacking;
             
             animator.SetBool("IsIdle", isIdle);
-            animator.SetBool("IsWalking", isWalking);
+            animator.SetBool("IsMoving", isWalking);
             animator.SetBool("IsAttacking", isAttacking);
+            //animator.SetBool("IsActive", isActive);
         }
     }
+    
     void OnDrawGizmosSelected()
     {
         // Rango de ataque
@@ -269,18 +348,11 @@ public class RangeEnemy : MonoBehaviour, IAttackable
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, retreatDistance);
         
-        // Distancia de detención
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, stoppingDistance);
-        
-        // Dirección actual
-        if (Application.isPlaying)
+        // Línea de visión al jugador
+        if (Application.isPlaying && player != null)
         {
-            Gizmos.color = isRetreating ? Color.magenta : Color.green;
-            Vector3 direction = isRetreating ? 
-                (transform.position - (player != null ? player.position : transform.position)).normalized :
-                ((player != null ? player.position : transform.position + transform.forward) - transform.position).normalized;
-            Gizmos.DrawRay(transform.position, direction * 2f);
+            Gizmos.color = CanSeePlayer() ? (isActive ? Color.green : Color.yellow) : Color.red;
+            Gizmos.DrawLine(transform.position, player.position);
         }
     }
 }
