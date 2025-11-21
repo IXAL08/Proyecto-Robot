@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace Robot
 {
-    public class PlayerStatsManager : Singleton<IPlayerStats>, IPlayerStats
+    public class PlayerStatsManager : Singleton<IPlayerStats>, IPlayerStats, IAttackable
     {
+        [SerializeField] private Animator _playerAnim;
         [SerializeField] private PlayerStats _currentBasePlayerStats;
         [SerializeField] private PlayerStats[] _basePlayerStats;
         [SerializeField] private Renderer playerRenderer;
@@ -159,12 +160,23 @@ namespace Robot
             OnHealRecieved?.Invoke();
         }
 
-        private void Die()
+        public void TakeDamage(int damage, bool isMelee)
+        {
+            TakeDamage(damage);
+        }
+
+        public void Die()
         {
             _isDead = true;
 
             OnPlayerDeath?.Invoke();
+            _playerAnim.SetTrigger("Die");
+            StartCoroutine(WaitBeforeTeleport(4));
+        }
 
+        private IEnumerator WaitBeforeTeleport(float secondsToWait = 3)
+        {
+            yield return new WaitForSeconds(secondsToWait);
             if (CheckpointSystem.Instance != null)
             {
                 CheckpointSystem.Instance.OnPlayerDeath();
@@ -175,7 +187,7 @@ namespace Robot
         {
             _isDead = false;
             _currentHealth = _currentMaxHealth;
-
+            _playerAnim.SetTrigger("Jump");
             OnHealthChanges?.Invoke();
         }
 

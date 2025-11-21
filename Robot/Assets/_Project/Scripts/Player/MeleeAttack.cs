@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MeleeAttack : MonoBehaviour
 {
+    [Header("Animaciones")]
+    [SerializeField] private Animator _playerAnim;
+    
     [Header("Configuración del Ataque")] public float attackRange = 1.5f;
     public int damage = 10;
     public float attackCooldown = 0.5f;
@@ -12,8 +15,6 @@ public class MeleeAttack : MonoBehaviour
 
     [Header("Referencias")] public Transform attackPoint;
     public LayerMask enemyLayers;
-
-    [Header("Efecto de Partículas")] public ParticleSystem attackParticles;
 
     private bool isActivate = false;
     private float cooldownTimer = 0f;
@@ -82,12 +83,8 @@ public class MeleeAttack : MonoBehaviour
     {
         canAttack = false;
         cooldownTimer = attackCooldown;
+        _playerAnim.SetTrigger("Attack");
         
-        if (attackParticles != null)
-        {
-            Instantiate(attackParticles, attackPoint.position, Quaternion.identity);
-        }
-
         // Detectar enemigos
         Collider[] hittedItems = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
