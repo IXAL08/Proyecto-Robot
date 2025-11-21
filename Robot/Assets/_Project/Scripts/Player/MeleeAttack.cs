@@ -96,7 +96,7 @@ public class MeleeAttack : MonoBehaviour
             IAttackable attackable = item.GetComponent<IAttackable>();
             if (attackable != null)
             {
-                attackable.TakeDamage(damage);
+                attackable.TakeDamage(damage, true);
             }
         }
     }

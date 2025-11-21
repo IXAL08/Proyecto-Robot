@@ -196,7 +196,7 @@ public class RangeEnemy : MonoBehaviour, IAttackable
         return true;
     }
     
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool isMelee)
     {
         if (isDead) return;
         

@@ -208,7 +208,7 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
         isWaiting = false;
     }
     
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool isMelee)
     {
         if (isDead) return;
         

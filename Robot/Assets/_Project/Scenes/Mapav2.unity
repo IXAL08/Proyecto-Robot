@@ -9243,6 +9243,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0244763db22f31f439b03c03b8ed5451, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1457039252}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0244763db22f31f439b03c03b8ed5451, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1457039258}
   m_SourcePrefab: {fileID: 100100000, guid: 0244763db22f31f439b03c03b8ed5451, type: 3}
 --- !u!1001 &1038176422
 PrefabInstance:
@@ -10184,6 +10187,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0244763db22f31f439b03c03b8ed5451, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1148481284}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0244763db22f31f439b03c03b8ed5451, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1148481290}
   m_SourcePrefab: {fileID: 100100000, guid: 0244763db22f31f439b03c03b8ed5451, type: 3}
 --- !u!1 &1148481283 stripped
 GameObject:
@@ -10216,6 +10222,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0244763db22f31f439b03c03b8ed5451, type: 3}
   m_PrefabInstance: {fileID: 1148481282}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1148481290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148481283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ed23e07e9c51f40add048b1bc33ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackableByMelee: 0
+  _attackableByRange: 1
+  _healthPoints: 80
+  _destroyEffect: {fileID: 0}
+  _destroyEffectDuration: 1
 --- !u!1 &1152727044
 GameObject:
   m_ObjectHideFlags: 0
@@ -12760,6 +12783,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0244763db22f31f439b03c03b8ed5451, type: 3}
   m_PrefabInstance: {fileID: 1032969389}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1457039258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457039248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ed23e07e9c51f40add048b1bc33ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackableByMelee: 1
+  _attackableByRange: 0
+  _healthPoints: 80
+  _destroyEffect: {fileID: 0}
+  _destroyEffectDuration: 1
 --- !u!1001 &1464579179
 PrefabInstance:
   m_ObjectHideFlags: 0

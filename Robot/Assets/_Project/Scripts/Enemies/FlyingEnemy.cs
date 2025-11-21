@@ -253,7 +253,7 @@ public class FlyingEnemy : MonoBehaviour, IAttackable
             }
         }
         
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, bool isMelee)
         {
             currentHealth -= damage;
             currentHealth = Mathf.Clamp(currentHealth, 0, 50);

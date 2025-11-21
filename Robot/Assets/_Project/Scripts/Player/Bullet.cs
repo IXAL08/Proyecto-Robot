@@ -66,31 +66,11 @@ public class Bullet : MonoBehaviour
         
         hasCollided = true;
 
-        EnemigoMelee meleeHealth = other.GetComponent<EnemigoMelee>();
-        if (meleeHealth != null)
+        IAttackable attackable = other.GetComponent<IAttackable>();
+        if (attackable != null)
         {
-            meleeHealth.TakeDamage((int)damage);
+            attackable.TakeDamage((int)damage, false);
         }
-        
-        RangeEnemy rangeHealth = other.GetComponent<RangeEnemy>();
-        if (rangeHealth != null)
-        {
-            rangeHealth.TakeDamage((int)damage);
-        }
-        
-        FlyingEnemy flyingHealth = other.GetComponent<FlyingEnemy>();
-        if (flyingHealth != null)
-        {
-            flyingHealth.TakeDamage((int)damage);
-        }
-        
-        HeavyEnemy heavyHealth = other.GetComponent<HeavyEnemy>();
-        if (heavyHealth != null)
-        {
-            heavyHealth.TakeDamage((int)damage);
-        }
-        
-
         DestroyBullet();
     }
 

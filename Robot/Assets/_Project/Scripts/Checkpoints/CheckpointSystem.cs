@@ -126,7 +126,7 @@ public class CheckpointSystem : MonoBehaviour
         switch (enemy)
         {
             case EnemigoMelee melee:
-                melee.TakeDamage(-1000); // "Curar" al enemigo
+                melee.TakeDamage(-1000, false); // "Curar" al enemigo
                 break;
             case RangeEnemy ranged:
                 // Resetear estado de ranged enemy

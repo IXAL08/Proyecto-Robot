@@ -82,7 +82,7 @@ public class MinasRompibles : MonoBehaviour, IAttackable
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool isMelee)
     {
         TakeDamage(damage, Vector3.zero);
     }

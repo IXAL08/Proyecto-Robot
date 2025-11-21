@@ -232,7 +232,7 @@ public class HeavyEnemy : MonoBehaviour, IAttackable
         }
     }
     
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool isMelee)
     {
         // Provocar al enemigo cuando recibe daño por primera vez
         if (!hasBeenProvoked)
