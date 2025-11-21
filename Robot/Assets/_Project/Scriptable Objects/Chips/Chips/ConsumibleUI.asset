@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: ConsumibleUI
   m_EditorClassIdentifier: 
   Name: Consumibles UI
-  Icon: {fileID: 21300000, guid: 2730deb3a5b20f8428be387c88eaf703, type: 3}
+  Icon: {fileID: 21300000, guid: a561fb2fa4d8f164cbabbff2ebff6048, type: 3}
   Description: Te permite ver la cantidad de pociones actual.
   ID: 7
-  ChipSprite: {fileID: 21300000, guid: 2730deb3a5b20f8428be387c88eaf703, type: 3}
+  ChipSprite: {fileID: 21300000, guid: a561fb2fa4d8f164cbabbff2ebff6048, type: 3}
   ChipName: Consumibles UI
   ChipEffectDescription: Creado para que seas consciente de tu limitantes. Permite
     ver las pociones en posesion en la interfaz del robot.

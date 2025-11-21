@@ -11,7 +11,8 @@ namespace Robot
         private CanvasGroup _chipCanvasGroup;
         private RectTransform _chipPivotRectTransform;
         private Chip _chip;
-        private bool _isDragging, _firsttouch;
+        public bool _isDragging {  get; private set; }
+        private bool _firsttouch;
 
         private void Awake()
         {

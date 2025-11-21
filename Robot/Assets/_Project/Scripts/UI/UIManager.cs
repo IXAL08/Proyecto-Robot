@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using UnityEditor;
+using System.Linq;
 using UnityEngine;
 
 namespace Robot
@@ -71,8 +71,15 @@ namespace Robot
 
         private void CloseChipInventory()
         {
-            _chipUIInventory.SetActive(false);
-            ShowGUI();
+            var chips = FindObjectsByType<ChipUIHandler>(FindObjectsSortMode.None);
+            bool isChipDragging = chips.Any(c => c._isDragging);
+
+            if (!isChipDragging)
+            {
+                _chipUIInventory.SetActive(false);
+                ShowGUI();
+                GameStateManager.Source.ChangeState(GameState.OnPlay);
+            }
         }
 
         private void OpenChipInventory()
@@ -140,6 +147,7 @@ namespace Robot
 
         private async UniTask HideTutorialMenus()
         {
+            GameStateManager.Source.ChangeState(GameState.InTransition);
             Sequence sequence = DOTween.Sequence();
 
             sequence.Append(_tutorialContext.transform.DOLocalMoveX(-1300, 1f));

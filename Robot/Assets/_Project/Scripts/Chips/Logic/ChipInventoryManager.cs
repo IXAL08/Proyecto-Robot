@@ -74,7 +74,7 @@ namespace Robot
             OccupySlotsForChip(chip, row, column);
 
             chip.SaveCurrentStepAndShape();
-
+            _currentChipOnDisplay = null;
             PrintInventory();
             if (chip.HasBeenPlaced) return;
 

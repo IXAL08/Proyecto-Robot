@@ -9,6 +9,7 @@ namespace Robot
         [SerializeField] private PlayerStats _currentBasePlayerStats;
         [SerializeField] private PlayerStats[] _basePlayerStats;
         [SerializeField] private Renderer playerRenderer;
+        [SerializeField] private ItemData _potion;
         [Header("CurrentStats")]
         [SerializeField] private float _currentHealth;
         [SerializeField] private float _currentMaxHealth;
@@ -53,12 +54,15 @@ namespace Robot
         {
             ChipInventoryManager.Source.OnChipPlaced += ActiveChipEffects;
             ChipInventoryManager.Source.OnChipRemoved += DeactiveChipEffects;
+            InputManager.Source.Consumable1 += HealPlayer;
+
         }
 
         private void OnDisable()
         {
             ChipInventoryManager.Source.OnChipPlaced -= ActiveChipEffects;
             ChipInventoryManager.Source.OnChipRemoved -= DeactiveChipEffects;
+            InputManager.Source.Consumable1 += HealPlayer;
         }
 
         private void InitializeStatManager()
@@ -136,6 +140,13 @@ namespace Robot
             
                 playerRenderer.material.color = originalColor;
             }
+        }
+        
+        private void HealPlayer()
+        {
+            if (Inventory.Source.GetItemQuantity(_potion) < 1 || _currentHealth == _currentMaxHealth) return;
+
+            Heal(5);
         }
 
         public void Heal(float healAmount)

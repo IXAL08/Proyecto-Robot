@@ -164,7 +164,6 @@ namespace Robot
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 CloseChipsInventory?.Invoke();
-                BackToOnPlay?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.X))

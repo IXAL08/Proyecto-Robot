@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: HealthBar
   m_EditorClassIdentifier: 
   Name: Visualizador de Vida
-  Icon: {fileID: 21300000, guid: 0e77d278663c21d4191d67858283dd6e, type: 3}
+  Icon: {fileID: 21300000, guid: 943e0586b538aa348976dc55f7e025f7, type: 3}
   Description: Te permite ver tu vida actual.
   ID: 6
-  ChipSprite: {fileID: 21300000, guid: 0e77d278663c21d4191d67858283dd6e, type: 3}
+  ChipSprite: {fileID: 21300000, guid: 943e0586b538aa348976dc55f7e025f7, type: 3}
   ChipName: Visualizador de Vida
   ChipEffectDescription: Creado para que seas consciente de tu limitantes. Permite
     ver tu vida actual en la interfaz del robot.
