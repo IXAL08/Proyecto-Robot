@@ -1,7 +1,9 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Linq;
+using TerrorConsole;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Robot
 {
@@ -15,6 +17,11 @@ namespace Robot
         [SerializeField] private GameObject _tutorialContext;
         [SerializeField] private GameObject _tutorialControls;
         [SerializeField] private GameObject _tutorialObjective;
+
+        [Header("EndGame")]
+        [SerializeField] private CanvasGroup _endgameUI;
+        [SerializeField] private CanvasGroup _titleEndgameUI;
+        [SerializeField] private CanvasGroup _subtitleEndgameUI;
 
         private void Start()
         {
@@ -67,6 +74,11 @@ namespace Robot
         public void CloseSetting()
         {
             HideSettingsMenu().Forget();
+        }
+
+        public void OpenEndgame()
+        {
+            ShowEndgame().Forget();
         }
 
         private void CloseChipInventory()
@@ -157,6 +169,22 @@ namespace Robot
             await sequence.AsyncWaitForCompletion();
             _guiUI.alpha = 1;
             _tutorialMenu.SetActive(false);
+        }
+
+        private async UniTask ShowEndgame()
+        {
+            GameStateManager.Source.ChangeState(GameState.InTransition);
+            _endgameUI.gameObject.SetActive(true);
+            Sequence sequence = DOTween.Sequence();
+
+            sequence.Append(_endgameUI.DOFade(1, 1f));
+            sequence.Append(_titleEndgameUI.DOFade(1, 1f));
+            sequence.Append(_subtitleEndgameUI.DOFade(1, 1f));
+            sequence.Append(_titleEndgameUI.DOFade(0, 1f));
+            sequence.Join(_subtitleEndgameUI.DOFade(0, 1f));
+            await sequence.AsyncWaitForCompletion();
+
+            SceneManager.LoadScene("Menu Inicial");
         }
     }
 }

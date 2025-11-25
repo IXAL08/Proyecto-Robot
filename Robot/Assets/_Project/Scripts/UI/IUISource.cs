@@ -9,5 +9,6 @@ namespace Robot
         void OpenSetting();
         void CloseSetting();
         void OpenTutorialMenu();
+        void OpenEndgame();
     }
 }

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -57,6 +58,7 @@ namespace Robot
             InputManager.Source.MovePlayer += HandleMovement;
             InputManager.Source.Jump += HandleJump;
             InputManager.Source.Dash += HandleDash;
+            PlayerStatsManager.Source.OnPlayerDeath += OnDeathPlayer;
         }
 
         private void OnDestroy()
@@ -64,6 +66,7 @@ namespace Robot
             InputManager.Source.MovePlayer -= HandleMovement;
             InputManager.Source.Jump -= HandleJump;
             InputManager.Source.Dash -= HandleDash;
+            PlayerStatsManager.Source.OnPlayerDeath -= OnDeathPlayer;
         }
 
         private void FixedUpdate()
@@ -162,7 +165,6 @@ namespace Robot
         private void HandleDash()
         {
             _playerDash.DoDash();
-            anim.SetTrigger("Dash");
         }
 
         private void ApplyBetterFalling()
@@ -185,6 +187,18 @@ namespace Robot
             rb.linearVelocity = velocity;
         }
 
+
+        public void OnDeathPlayer()
+        {
+            DeathAnimation().Forget();
+        }
+
+        private async UniTask DeathAnimation()
+        {
+            freeze = true;
+            await UniTask.WaitForSeconds(4);
+            freeze = false;
+        }
 
         private void OnDrawGizmosSelected()
         {
