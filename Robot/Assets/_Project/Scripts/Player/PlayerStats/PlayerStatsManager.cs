@@ -56,6 +56,7 @@ namespace Robot
             ChipInventoryManager.Source.OnChipPlaced += ActiveChipEffects;
             ChipInventoryManager.Source.OnChipRemoved += DeactiveChipEffects;
             InputManager.Source.Consumable1 += HealPlayer;
+            RefreshBaseStats();
 
         }
 
@@ -229,29 +230,29 @@ namespace Robot
 
         public void DeactiveChipEffects(Chip chip)
         {
-            if (!chip.ChipData.BonusStatsChip.ActiveHealthBar)
+            if (chip.ChipData.BonusStatsChip.ActiveHealthBar)
             {
                 _healthBar.GetComponent<CanvasGroup>().alpha = 0;
                 OnHealthBarActivation?.Invoke(false);
             }
 
-            if (!chip.ChipData.BonusStatsChip.ActiveConsumiblesVisualizer)
+            if (chip.ChipData.BonusStatsChip.ActiveConsumiblesVisualizer)
             {
                 _consumiblesUI.GetComponent<CanvasGroup>().alpha = 0;
                 OnConsumiblesUIActivation?.Invoke(false);
             }
 
-            if (!chip.ChipData.BonusStatsChip.ActiveMeleeAttack)
+            if (chip.ChipData.BonusStatsChip.ActiveMeleeAttack)
             {
                 OnMeleeChipActivation?.Invoke(false);
             }
 
-            if (!chip.ChipData.BonusStatsChip.ActiveRangeAttack)
+            if (chip.ChipData.BonusStatsChip.ActiveRangeAttack)
             {
                 OnRangeChipActivation?.Invoke(false);
             }
 
-            if (!chip.ChipData.BonusStatsChip.ActiveDash)
+            if (chip.ChipData.BonusStatsChip.ActiveDash)
             {
                 OnDashChipActivation?.Invoke(false);
             }

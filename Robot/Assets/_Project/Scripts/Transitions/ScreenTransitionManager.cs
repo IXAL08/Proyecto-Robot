@@ -71,7 +71,6 @@ namespace TerrorConsole
             
             await _mainCanvasGroup.DOFade(0, _transitionDuration).AsyncWaitForCompletion();
             _mainCanvasGroup.gameObject.SetActive(false);
-            ChangeGameState(GameState.OnPlay);
         }
         
         private async UniTaskVoid TransitionSlide(Action onTransition)

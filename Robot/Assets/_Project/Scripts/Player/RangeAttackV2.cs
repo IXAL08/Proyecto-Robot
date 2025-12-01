@@ -24,7 +24,7 @@ namespace Robot
         [SerializeField] private string rangeSFX = "RangeAttack";
 
         private float _nextFireTime = 0f;
-        private bool _isActive = false;
+        [SerializeField] private bool _isActive = false;
 
         private void Start()
         {

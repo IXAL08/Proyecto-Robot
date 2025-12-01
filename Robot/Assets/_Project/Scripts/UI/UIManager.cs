@@ -9,7 +9,7 @@ namespace Robot
 {
     public class UIManager : Singleton<IUISource>, IUISource
     {
-        [SerializeField] private GameObject _chipUIInventory, _pauseMenu, _settingsMenu;
+        [SerializeField] private GameObject _chipUIInventory, _pauseMenu, _settingsMenu, _shiftControl;
         [SerializeField] private CanvasGroup _guiUI, _backgroundUI;
 
         [Header("Tutorial Menu")]
@@ -28,6 +28,7 @@ namespace Robot
             InputManager.Source.OpenChipsInventory += OpenChipInventory;
             InputManager.Source.CloseChipsInventory += CloseChipInventory;
             InputManager.Source.CloseTutorial += CloseTutorialMenu;
+            PlayerStatsManager.Source.OnDashChipActivation += IsDashActivate;
         }
 
         private void OnDisable()
@@ -35,6 +36,7 @@ namespace Robot
             InputManager.Source.OpenChipsInventory -= OpenChipInventory;
             InputManager.Source.CloseChipsInventory -= CloseChipInventory;
             InputManager.Source.CloseTutorial -= CloseTutorialMenu;
+            PlayerStatsManager.Source.OnDashChipActivation -= IsDashActivate;
         }
 
         public void OpenPause()
@@ -110,6 +112,12 @@ namespace Robot
         {
             _guiUI.alpha = 1;
         }
+
+        public void IsDashActivate(bool value)
+        {
+            _shiftControl.SetActive(value);
+        }
+
 
         private async UniTask ShowSettingsMenu()
         {
