@@ -6,7 +6,10 @@ namespace Robot
     {
         private void OnTriggerEnter(Collider other)
         {
+            if (other.CompareTag("Player"))
+            {
             UIManager.Source.OpenEndgame();
+            }
         }
     }
 }
