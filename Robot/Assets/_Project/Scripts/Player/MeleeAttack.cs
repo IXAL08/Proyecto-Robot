@@ -15,6 +15,9 @@ public class MeleeAttack : MonoBehaviour
 
     [Header("Referencias")] public Transform attackPoint;
     public LayerMask enemyLayers;
+    
+    [Header("Audio")]
+    [SerializeField] private string meleeSFX = "MeleeAttack";
 
     private bool isActivate = false;
     private float cooldownTimer = 0f;
@@ -84,6 +87,11 @@ public class MeleeAttack : MonoBehaviour
         canAttack = false;
         cooldownTimer = attackCooldown;
         _playerAnim.SetTrigger("Attack");
+        
+        if (!string.IsNullOrEmpty(meleeSFX))
+        {
+            Robot.AudioManager.Source.PlayOneShot(meleeSFX);
+        }
         
         // Detectar enemigos
         Collider[] hittedItems = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);

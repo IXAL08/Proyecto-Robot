@@ -444,6 +444,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7247993689066166609, guid: 8ca731239109f794b9c79a7cc0896d40, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -500,6 +504,9 @@ MonoBehaviour:
   fadeDuration: 0.2
   opciones: {fileID: 1774001466}
   menuInicial: {fileID: 2033191414}
+  hoverSFX: Hover
+  clickSFX: Click
+  menuMusic: MainMenuMusic
 --- !u!4 &1264101849
 Transform:
   m_ObjectHideFlags: 0
