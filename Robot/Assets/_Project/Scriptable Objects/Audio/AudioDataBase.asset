@@ -12,4 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af9597f724d1e6b43ac1be34ad3b31b7, type: 3}
   m_Name: AudioDataBase
   m_EditorClassIdentifier: 
-  _audioData: []
+  _audioData:
+  - audio: {fileID: 8300000, guid: a560c3a6b2be34e4ba16421f0adff8d0, type: 3}
+    audioName: MainMenuMusic
+  - audio: {fileID: 8300000, guid: ae2a5c146119c224e873905edfc73e01, type: 3}
+    audioName: GameMusic
+  - audio: {fileID: 8300000, guid: 718869ec9d3c389418bdd8a0349d6cd4, type: 3}
+    audioName: Hover
+  - audio: {fileID: 8300000, guid: 5bba27d169d1bbb4093d73f8ed82f7a0, type: 3}
+    audioName: Jump
+  - audio: {fileID: 8300000, guid: b50ea0da81338c84e8a804683d3a5057, type: 3}
+    audioName: Dash
+  - audio: {fileID: 8300000, guid: 73fcd695424c09947a2258573a625958, type: 3}
+    audioName: Walk
+  - audio: {fileID: 8300000, guid: 4d040aaa1beaede488f09dfbb0ff679d, type: 3}
+    audioName: MeleeAttack
+  - audio: {fileID: 8300000, guid: 4d52d68ff148ec149ac3dd9b29a6b8af, type: 3}
+    audioName: RangeAttack
+  - audio: {fileID: 8300000, guid: a1f73690fe5222f49b26601aa5408068, type: 3}
+    audioName: Click
+  - audio: {fileID: 8300000, guid: 634e9ea1e6659a647961944c3d351e93, type: 3}
+    audioName: Break
+  - audio: {fileID: 8300000, guid: 23b9d91f560a0484dbc7c6964a0a9cfe, type: 3}
+    audioName: Pickup
+  - audio: {fileID: 8300000, guid: b7dfa24bb6e204c43a9ce5f81593726a, type: 3}
+    audioName: Death

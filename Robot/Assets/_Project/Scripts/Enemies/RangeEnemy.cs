@@ -1,4 +1,5 @@
 using System.Collections;
+using Robot;
 using UnityEngine;
 
 public class RangeEnemy : MonoBehaviour, IAttackable
@@ -35,6 +36,9 @@ public class RangeEnemy : MonoBehaviour, IAttackable
     
     [Header("Detección")]
     public LayerMask obstacleLayers; // Capas que bloquean la visión (paredes)
+    
+    [Header("Audio")]
+    [SerializeField] private string DeathSFX = "Death";
     
     // Variables privadas
     public int currentHealth;
@@ -234,6 +238,8 @@ public class RangeEnemy : MonoBehaviour, IAttackable
         {
             animator.SetTrigger("Die");
         }
+        
+        AudioManager.Source.PlayOneShot(DeathSFX);
         
         canMove = false;
         canAttack = false;

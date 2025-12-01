@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Robot;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,6 +17,9 @@ public class MinasRompibles : MonoBehaviour, IAttackable
     public int minMaterials = 20;
     public float dropForce = 3f;
     public Vector3 dropArea = new Vector3(1, 0, 0);
+    
+    [Header("Audio")]
+    [SerializeField] private string DestroySFX = "Break";
     
     private int currentHealth;
     private bool isBroken = false;
@@ -46,6 +50,8 @@ public class MinasRompibles : MonoBehaviour, IAttackable
         isBroken = true;
 
         DropMaterials(hitDirection);
+        
+        AudioManager.Source.PlayOneShot(DestroySFX);
         
         Destroy(gameObject, 0.1f);
     }

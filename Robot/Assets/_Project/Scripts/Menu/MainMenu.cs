@@ -21,9 +21,21 @@ public class MainMenu : MonoBehaviour
     public GameObject opciones;
     public GameObject menuInicial;
     
+    [Header("Audio")]
+    [SerializeField] private string hoverSFX = "Hover";
+    [SerializeField] private string clickSFX = "Click";
+    [SerializeField] private string menuMusic = "MainMenuMusic";
+    [SerializeField] private string gameMusic = "GameMusic";
+    [SerializeField] private float musicTransitionDelay = 1.5f;
+    
     void Start()
     {
         InitializeMenuOptions();
+        
+        if (!string.IsNullOrEmpty(menuMusic))
+        {
+            Robot.AudioManager.Source.PlayLevelMusic(menuMusic);
+        }
     }
     
     void Update()
@@ -99,6 +111,11 @@ public class MainMenu : MonoBehaviour
         if(!canInteract) return;
         
         StartCoroutine(ChangeColorSmooth(menuOptions[index].textMesh, hoverColor));
+        
+        if (!string.IsNullOrEmpty(hoverSFX))
+        {
+            Robot.AudioManager.Source.PlayOneShot(hoverSFX);
+        }
     }
 
     public void OnOptionExit(int index)
@@ -136,6 +153,11 @@ public class MainMenu : MonoBehaviour
     void SelectOption(int index)
     {
         if (!canInteract) return;
+        
+        if (!string.IsNullOrEmpty(clickSFX))
+        {
+            Robot.AudioManager.Source.PlayOneShot(clickSFX);
+        }
 
         if (menuOptions[index].textMesh != null)
         {
@@ -173,8 +195,26 @@ public class MainMenu : MonoBehaviour
 
     void StartGame()
     {
+        StartCoroutine(TransitionToGameMusic());
         SaveSystemManager.Source.ResetSaveSlot(SaveSystemManager.Source.GetCurrentSaveSlot());
         SaveSystemManager.Source.LoadGame();
+    }
+    
+    IEnumerator TransitionToGameMusic()
+    {
+        // Detener música del menú inmediatamente al hacer click
+        StopMenuMusic();
+    
+        // Esperar el tiempo de transición
+        yield return new WaitForSeconds(musicTransitionDelay);
+    
+        // Reproducir música del juego
+        if (!string.IsNullOrEmpty(gameMusic))
+        {
+            Robot.AudioManager.Source.PlayLevelMusic(gameMusic);
+        }
+    
+        // Cambiar a la siguiente escena después de la transición
         GoToNextScene();
     }
 
@@ -195,7 +235,7 @@ public class MainMenu : MonoBehaviour
 
     void ContinueGame()
     {
-        GoToNextScene();
+        StartCoroutine(TransitionToGameMusic());
     }
 
     void ShowOptions()
@@ -222,6 +262,15 @@ public class MainMenu : MonoBehaviour
         
         opciones.SetActive(false);
         menuInicial.SetActive(true);
+    }
+    
+    private void StopMenuMusic()
+    {
+        var bgmAudioSource = FindObjectOfType<Robot.AudioManager>().GetComponent<AudioSource>();
+        if (bgmAudioSource != null)
+        {
+            bgmAudioSource.Stop();
+        }
     }
     
     void ReenableInteraction()

@@ -19,6 +19,9 @@ namespace Robot
         [Header("Attack setup")]
         [SerializeField] private float _fireRate = 1f;
         [SerializeField] private float _shootDelay = 0.2f;
+        
+        [Header("Audio")]
+        [SerializeField] private string rangeSFX = "RangeAttack";
 
         private float _nextFireTime = 0f;
         private bool _isActive = false;
@@ -39,6 +42,11 @@ namespace Robot
 
         private void Shoot()
         {
+            if (!string.IsNullOrEmpty(rangeSFX))
+            {
+                Robot.AudioManager.Source.PlayOneShot(rangeSFX);
+            }
+            
             var bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
             var bulletSetup = bullet.GetComponent<Bullet>();
             var direction = (_direction.AimDirection - _firePoint.position).normalized;

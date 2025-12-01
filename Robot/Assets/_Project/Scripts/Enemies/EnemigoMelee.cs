@@ -28,6 +28,9 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
     [Header("Efectos Visuales")]
     public Renderer EnemyRenderer;
     
+    [Header("Audio")]
+    [SerializeField] private string DeathSFX = "Death";
+    
     public int currentHealth;
     private bool canAttack;
     private float cooldownTimer;
@@ -266,6 +269,8 @@ public class EnemigoMelee : MonoBehaviour, IAttackable
         {
             animator.SetTrigger("Die");
         }
+        
+        AudioManager.Source.PlayOneShot(DeathSFX);
         
         
         rb.linearVelocity = Vector3.zero;

@@ -45,6 +45,11 @@ namespace Robot
         [SerializeField] private bool freeze = false;
         private bool isGrounded;
         private bool isFacingAWall;
+        
+        [Header("Audio")]
+        [SerializeField] private string jumpSFX = "Jump";
+        [SerializeField] private string dashSFX = "Dash";
+        [SerializeField] private string walkSFX = "Walk";
 
         private float horizontalInput;
         private CapsuleCollider _playerCollider;
@@ -149,6 +154,11 @@ namespace Robot
 
             if (isGrounded || jumpsLeft > 0)
             {
+                if (!string.IsNullOrEmpty(jumpSFX))
+                {
+                    AudioManager.Source.PlayOneShot(jumpSFX);
+                }
+                
                 var velocity = rb.linearVelocity;
                 velocity.y = jumpForce;
                 rb.linearVelocity = velocity;
@@ -164,6 +174,11 @@ namespace Robot
         
         private void HandleDash()
         {
+            if (!string.IsNullOrEmpty(dashSFX))
+            {
+                AudioManager.Source.PlayOneShot(dashSFX);
+            }
+            
             _playerDash.DoDash();
         }
 
