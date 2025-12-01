@@ -13,6 +13,9 @@ namespace Robot
         
         [SerializeField] private GameObject _destroyEffect;
         [SerializeField] private float _destroyEffectDuration = 1;
+        
+        [Header("Audio")]
+        [SerializeField] private string DestroySFX = "DestroyedWall";
         public void TakeDamage(int damage, bool isMelee)
         {
             if (isMelee && _attackableByMelee || !isMelee && _attackableByRange)
@@ -23,6 +26,7 @@ namespace Robot
             if (_healthPoints <= 0)
             {
                 Die();
+                AudioManager.Source.PlayOneShot(DestroySFX);
             }
         }
 
