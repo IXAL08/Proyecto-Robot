@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Menu")]
     public MenuOption[] menuOptions;
+    public GameObject _startGameMenu;
     
     [Header("Visual")]
     public Color normalColor = Color.white;
@@ -176,7 +177,7 @@ public class MainMenu : MonoBehaviour
         switch (menuOptions[index].optionType)
         {
             case MenuOptionType.StartGame:
-                StartGame();
+                ShowStartGameMenu();
                 break;
             case MenuOptionType.Continue:
                 ContinueGame();
@@ -192,12 +193,17 @@ public class MainMenu : MonoBehaviour
                 break;
         }
     }
-
-    void StartGame()
+    
+    public void ShowStartGameMenu()
     {
-        StartCoroutine(TransitionToGameMusic());
+        _startGameMenu.SetActive(true);
+    }
+    
+    public void StartGame()
+    {
         SaveSystemManager.Source.ResetSaveSlot(SaveSystemManager.Source.GetCurrentSaveSlot());
         SaveSystemManager.Source.LoadGame();
+        StartCoroutine(TransitionToGameMusic());
     }
     
     IEnumerator TransitionToGameMusic()

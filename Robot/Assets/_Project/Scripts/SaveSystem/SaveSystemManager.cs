@@ -71,6 +71,7 @@ public class SaveSystemManager : Singleton<ISaveSystemSource>, ISaveSystemSource
     public void LoadGame(int saveSlot = 0)
     {
         var json = PlayerPrefs.GetString($"GameSave{_saveSlot}");
+        _saveFilesToSave.Clear();
         if (!string.IsNullOrEmpty(json))
         {
             LoadAll(json);
