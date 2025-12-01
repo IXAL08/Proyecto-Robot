@@ -16452,6 +16452,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 549304289}
     - target: {fileID: 2330649711304528848, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
+      propertyPath: _isPersistent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330649711304528848, guid: 7f43463da8810b34894d4b141aa4a59e, type: 3}
       propertyPath: _consumiblesUI
       value: 
       objectReference: {fileID: 556535413}
